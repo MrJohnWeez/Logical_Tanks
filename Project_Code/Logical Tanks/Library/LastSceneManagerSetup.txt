@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Scroll Rect POC.unity
+- path: Assets/Scenes/Nodes POC.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

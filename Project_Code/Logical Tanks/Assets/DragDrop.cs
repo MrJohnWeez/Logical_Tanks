@@ -7,20 +7,18 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(CanvasGroup))]
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    [SerializeField] private Canvas canvas;
-    [SerializeField] private RectTransform scrollView;
-    [SerializeField] private RectTransform contentWindow;
+    private RectTransform _contentWindow;
+    private Canvas _canvas;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
+    private RectTransform _scrollView;
      void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
-    }
-
-    private void Update() {
-        Debug.Log("RectContainsAnother: " + RectContainsAnother(contentWindow, rectTransform));
-        contentWindow.DebugDrawRect();
+        _canvas = GameObject.FindGameObjectWithTag("NodeCanvas").GetComponent<Canvas>();
+        _scrollView = GameObject.FindGameObjectWithTag("NodeScrollView").GetComponent<RectTransform>();
+        _contentWindow = GameObject.FindGameObjectWithTag("ContentWindow").GetComponent<RectTransform>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -38,10 +36,10 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     {
         if(eventData != null)
         {
-            Vector2 delta = eventData.delta / canvas.scaleFactor / contentWindow.localScale;
+            Vector2 delta = eventData.delta / _canvas.scaleFactor / _contentWindow.localScale;
             rectTransform.anchoredPosition += delta;
 
-            if(!GetWorldSapceRect(scrollView).Contains(eventData.position) || !RectContainsAnother(contentWindow, rectTransform))
+            if(!GetWorldSapceRect(_scrollView).Contains(eventData.position) || !RectContainsAnother(_contentWindow, rectTransform))
             {
                 rectTransform.anchoredPosition -= delta;
             }
