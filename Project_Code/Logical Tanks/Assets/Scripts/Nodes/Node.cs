@@ -19,7 +19,9 @@ public class Node : MonoBehaviour
     {
         foreach(NodeConnectionPoint ncp in _nodeConnectionPoints)
         {
-            ncp.OnPointerDownEvent += OnNodeConnectionClicked;
+            ncp.OnBeginDragEvent += OnNodeConnectionPointDragged;
+            ncp.OnDropEvent += OnNodeConnectionPointDropped;
+            ncp.OnEndDragEvent += OnNodeConnectionPointEndDrag;
         }
     }
 
@@ -27,13 +29,25 @@ public class Node : MonoBehaviour
     {
         foreach(NodeConnectionPoint ncp in _nodeConnectionPoints)
         {
-            ncp.OnPointerDownEvent -= OnNodeConnectionClicked;
+            ncp.OnBeginDragEvent -= OnNodeConnectionPointDragged;
+            ncp.OnDropEvent -= OnNodeConnectionPointDropped;
+            ncp.OnEndDragEvent -= OnNodeConnectionPointEndDrag;
         }
     }
 
-    private void OnNodeConnectionClicked(PointerEventData eventData, NodeConnectionPoint nodeConnectionPoint)
+    private void OnNodeConnectionPointDragged(PointerEventData eventData, NodeConnectionPoint nodeConnectionPoint)
     {
-        _nodeManager.NodeConnectionPointClicked(this, nodeConnectionPoint);
+        _nodeManager.NodeConnectionPointDragged(this, nodeConnectionPoint);
+    }
+
+    private void OnNodeConnectionPointDropped(PointerEventData eventData, NodeConnectionPoint nodeConnectionPoint)
+    {
+        _nodeManager.NodeConnectionPointDropped(this, nodeConnectionPoint);
+    }
+
+    private void OnNodeConnectionPointEndDrag(PointerEventData eventData, NodeConnectionPoint nodeConnectionPoint)
+    {
+        _nodeManager.NodeConnectionPointDragEnded(this, nodeConnectionPoint);
     }
 
     public void AddConnection(NodeConnection newConnection)

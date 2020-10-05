@@ -18,10 +18,10 @@ public class NodeConnection : MonoBehaviour
         _uILineRenderer = GetComponent<UILineRenderer>();
     }
 
-    public void SetEndpoints(NodeConnectionPoint start, NodeConnectionPoint end)
+    public void SetEndpoints(RectTransform start, RectTransform end)
     {
-        _start = start.GetRect();
-        _end = end.GetRect();
+        _start = start;
+        _end = end;
     }
 
     private void Update()

@@ -11,13 +11,15 @@ public class NodeManager : MonoBehaviour
     private Node _lastSelectedConnectionNode = null;
     private Node _lastSelectedNode = null;
     private GameObject _nodeCanvas = null;
+    private bool _lookingForEndNode = false;
+    private NodeConnection _currentNodeConnection;
     
     private void Awake()
     {
         _nodeCanvas = GameObject.FindGameObjectWithTag("NodeCanvas");
     }
 
-    public void NodeConnectionPointClicked(Node node, NodeConnectionPoint nodeConnectionPoint)
+    public void NodeConnectionPointDragged(Node node, NodeConnectionPoint nodeConnectionPoint)
     {
         if (_lastSelectedConnectionNode == null && nodeConnectionPoint.IsOutNode())
         {
@@ -27,32 +29,45 @@ public class NodeManager : MonoBehaviour
         if (_lastSelectedConnectionPoint == null && nodeConnectionPoint.IsOutNode())
         {
             _lastSelectedConnectionPoint = nodeConnectionPoint;
-        }
-        else if (_lastSelectedConnectionPoint != nodeConnectionPoint && _lastSelectedConnectionNode != node && !nodeConnectionPoint.IsOutNode())
-        {
-            // Connect nodes
-            ConnectNodeConnectionPoints(_lastSelectedConnectionNode, _lastSelectedConnectionPoint, node, nodeConnectionPoint);
-            _lastSelectedConnectionPoint = null;
-            _lastSelectedConnectionNode = null;
+            _lookingForEndNode = true;
+
+            GameObject nodeConnectionObject = Instantiate(_nodeConnection, _nodeConnectionsParent.transform);
+            nodeConnectionObject.transform.position = _nodeConnectionsParent.transform.position;
+
+            _currentNodeConnection = nodeConnectionObject.GetComponent<NodeConnection>();
+            _currentNodeConnection.SetEndpoints(_lastSelectedConnectionPoint.GetRect(), nodeConnectionPoint.GetDummyTransform());
+            Debug.Log("Dragging connection!");
         }
     }
 
-    private void ConnectNodeConnectionPoints(Node firstNode,
-                                                NodeConnectionPoint firstNodeConnectionPoint,
-                                                Node secondNode,
-                                                NodeConnectionPoint secondNodeConnectionPoint)
+    public void NodeConnectionPointDropped(Node node, NodeConnectionPoint nodeConnectionPoint)
     {
-        GameObject nodeConnectionObject = Instantiate(_nodeConnection, _nodeConnectionsParent.transform);
-        nodeConnectionObject.transform.position = _nodeConnectionsParent.transform.position;
+        if(_lookingForEndNode && _lastSelectedConnectionPoint != nodeConnectionPoint && _lastSelectedConnectionNode != node && !nodeConnectionPoint.IsOutNode())
+        {
+            _currentNodeConnection.SetEndpoints(_lastSelectedConnectionPoint.GetRect(), nodeConnectionPoint.GetRect());
 
-        firstNodeConnectionPoint.isConnected = true;
-        secondNodeConnectionPoint.isConnected = true;
+            _lastSelectedConnectionPoint.isConnected = true;
+            nodeConnectionPoint.isConnected = true;
 
-        NodeConnection nodeConnection = nodeConnectionObject.GetComponent<NodeConnection>();
-        nodeConnection.SetEndpoints(firstNodeConnectionPoint, secondNodeConnectionPoint);
-        firstNode.AddConnection(nodeConnection);
-        secondNode.AddConnection(nodeConnection);
+            _lastSelectedConnectionNode.AddConnection(_currentNodeConnection);
+            node.AddConnection(_currentNodeConnection);
 
-        Debug.Log("Set Up connection!");
+            _lastSelectedConnectionPoint = null;
+            _lastSelectedConnectionNode = null;
+            _currentNodeConnection = null;
+            _lookingForEndNode = false;
+            Debug.Log("Set Up connection!");
+        }
+    }
+
+    public void NodeConnectionPointDragEnded(Node node, NodeConnectionPoint nodeConnectionPoint)
+    {
+        if(_currentNodeConnection)
+        {
+            Destroy(_currentNodeConnection.gameObject);
+            _lastSelectedConnectionPoint = null;
+            _lastSelectedConnectionNode = null;
+            _lookingForEndNode = false;
+        }
     }
 }
