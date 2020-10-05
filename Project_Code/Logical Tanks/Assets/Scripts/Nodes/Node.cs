@@ -33,7 +33,7 @@ public class Node : MonoBehaviour
 
     private void OnNodeConnectionClicked(PointerEventData eventData, NodeConnectionPoint nodeConnectionPoint)
     {
-        _nodeManager.NodeConnectionClicked(this, nodeConnectionPoint);
+        _nodeManager.NodeConnectionPointClicked(this, nodeConnectionPoint);
     }
 
     public void AddConnection(NodeConnection newConnection)

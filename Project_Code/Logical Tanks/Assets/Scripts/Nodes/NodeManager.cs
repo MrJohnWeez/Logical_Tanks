@@ -17,18 +17,18 @@ public class NodeManager : MonoBehaviour
         _nodeCanvas = GameObject.FindGameObjectWithTag("NodeCanvas");
     }
 
-    public void NodeConnectionClicked(Node node, NodeConnectionPoint nodeConnectionPoint)
+    public void NodeConnectionPointClicked(Node node, NodeConnectionPoint nodeConnectionPoint)
     {
-        if (_lastSelectedConnectionNode == null)
+        if (_lastSelectedConnectionNode == null && nodeConnectionPoint.IsOutNode())
         {
             _lastSelectedConnectionNode = node;
         }
 
-        if (_lastSelectedConnectionPoint == null)
+        if (_lastSelectedConnectionPoint == null && nodeConnectionPoint.IsOutNode())
         {
             _lastSelectedConnectionPoint = nodeConnectionPoint;
         }
-        else if (_lastSelectedConnectionPoint != nodeConnectionPoint && _lastSelectedConnectionNode != node)
+        else if (_lastSelectedConnectionPoint != nodeConnectionPoint && _lastSelectedConnectionNode != node && !nodeConnectionPoint.IsOutNode())
         {
             // Connect nodes
             ConnectNodeConnectionPoints(_lastSelectedConnectionNode, _lastSelectedConnectionPoint, node, nodeConnectionPoint);
@@ -44,6 +44,9 @@ public class NodeManager : MonoBehaviour
     {
         GameObject nodeConnectionObject = Instantiate(_nodeConnection, _nodeConnectionsParent.transform);
         nodeConnectionObject.transform.position = _nodeConnectionsParent.transform.position;
+
+        firstNodeConnectionPoint.isConnected = true;
+        secondNodeConnectionPoint.isConnected = true;
 
         NodeConnection nodeConnection = nodeConnectionObject.GetComponent<NodeConnection>();
         nodeConnection.SetEndpoints(firstNodeConnectionPoint, secondNodeConnectionPoint);

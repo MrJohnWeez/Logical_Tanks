@@ -79,9 +79,9 @@ MonoBehaviour:
   relativeSize: 0
   lineList: 0
   lineCaps: 0
-  bezierSegmentsPerCurve: 10
+  bezierSegmentsPerCurve: 15
   LineJoins: 0
-  BezierMode: 1
+  BezierMode: 3
   drivenExternally: 0
 --- !u!114 &3193473036821638251
 MonoBehaviour:
@@ -95,3 +95,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3cc8d00d74dd0419719f8eb52b2d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  percentageOfDistance: 0.33
