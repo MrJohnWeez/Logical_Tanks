@@ -4,7 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// Implement buttons programmatically instead of using built in buttons. Allows for more control IPointerEnterHandler
+// ToDo:
+// Implement Correct node connections: Out connection point only has one outgoing line but in connection point can have many
+// Delete connections: User must click on the in connection point and connection is reattached to users mouse like normal
+// Select node when clicked and then options appear. Does not select node when draging node to move it around
+// Delete selected node and it's connections
 
 public class NodeConnectionPoint : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
