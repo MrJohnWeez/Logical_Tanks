@@ -17,7 +17,7 @@ public class Node : MonoBehaviour
 
     private void Start()
     {
-        foreach(NodeLink ncp in _nodeLinks)
+        foreach (NodeLink ncp in _nodeLinks)
         {
             ncp.OnBeginDragEvent += _nodeManager.NodeLinkDragStarted;
             ncp.OnDropEvent += _nodeManager.NodeLinkDropped;
@@ -27,7 +27,7 @@ public class Node : MonoBehaviour
 
     private void OnDestroy()
     {
-        foreach(NodeLink ncp in _nodeLinks)
+        foreach (NodeLink ncp in _nodeLinks)
         {
             ncp.OnBeginDragEvent -= _nodeManager.NodeLinkDragStarted;
             ncp.OnDropEvent -= _nodeManager.NodeLinkDropped;
@@ -35,8 +35,13 @@ public class Node : MonoBehaviour
         }
     }
 
-    public void AddConnection(NodeBridge newConnection)
+    public void AddNodeBridge(NodeBridge newConnection)
     {
         _nodeConnections.Add(newConnection);
+    }
+
+    public void RemoveNodeBridge(NodeBridge newConnection)
+    {
+        _nodeConnections.Remove(newConnection);
     }
 }

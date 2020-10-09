@@ -20,24 +20,43 @@ public class NodeManager : MonoBehaviour
 
     public void NodeLinkDragStarted(NodeLink nodeLink)
     {
-        // If valid visually start node bridge
-        if (_state == State.Idle && nodeLink.IsValidStartLink())
+        if (_state == State.Idle)
         {
-            _state = State.ConnectingNodeLink;
-            _selectedNodeLink = nodeLink;
-            GameObject nodeConnectionObject = Instantiate(_nodeBridgePrefab, _nodeBridgesParent.transform);
-            nodeConnectionObject.transform.position = _nodeBridgesParent.transform.position;
-            _currentNodeBridge = nodeConnectionObject.GetComponent<NodeBridge>();
-            _currentNodeBridge.SetTempConnection(_selectedNodeLink, nodeLink.GetDummyTransform());
+            if (nodeLink.IsValidStartLink())
+            {
+                // visually start node bridge
+                _state = State.ConnectingNodeLink;
+                GameObject nodeConnectionObject = Instantiate(_nodeBridgePrefab, _nodeBridgesParent.transform);
+                nodeConnectionObject.transform.position = _nodeBridgesParent.transform.position;
+                _currentNodeBridge = nodeConnectionObject.GetComponent<NodeBridge>();
+                _currentNodeBridge.SetTempBridge(nodeLink);
+                _selectedNodeLink = nodeLink;
+            }
+            else if (!nodeLink.IsOutNode())
+            {
+                if (nodeLink.BridgeCount() == 1)
+                {
+                    // Remove bridge but keep active
+                    _state = State.ConnectingNodeLink;
+                    _currentNodeBridge = nodeLink.GetSingleNodeBridge();
+                    _currentNodeBridge.ReplaceWithTempBridge();
+                    _selectedNodeLink = nodeLink;
+                }
+                else if (nodeLink.BridgeCount() > 1)
+                {
+                    // Remove bridge entirely
+                    Destroy(_currentNodeBridge);
+                }
+            }
         }
     }
 
     public void NodeLinkDropped(NodeLink nodeLink)
     {
         // If valid, visually and programatically finish node bridge
-        if(_state == State.ConnectingNodeLink && nodeLink.IsValidEndLink(_selectedNodeLink))
+        if (_state == State.ConnectingNodeLink && nodeLink.IsValidEndLink(_selectedNodeLink))
         {
-            _currentNodeBridge.SetConnection(_selectedNodeLink, nodeLink);
+            _currentNodeBridge.Create(_selectedNodeLink, nodeLink);
             _selectedNodeLink = null;
             _currentNodeBridge = null;
             _state = State.Idle;
@@ -47,7 +66,7 @@ public class NodeManager : MonoBehaviour
     public void NodeLinkDragEnded(NodeLink nodeConnectionPoint)
     {
         // Remove node bridge if canceled
-        if(_currentNodeBridge)
+        if (_currentNodeBridge)
         {
             Destroy(_currentNodeBridge.gameObject);
             _selectedNodeLink = null;

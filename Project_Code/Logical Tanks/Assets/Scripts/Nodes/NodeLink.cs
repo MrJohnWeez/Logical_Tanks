@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 // ToDo:
+// Fix errors
 // Delete connections: User must click on the in connection point and connection is reattached to users mouse like normal
 // Select node when clicked and then options appear. Does not select node when draging node to move it around
 // Delete selected node and it's connections
@@ -14,14 +15,16 @@ public class NodeLink : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public event Action<NodeLink> OnBeginDragEvent;
     public event Action<NodeLink> OnEndDragEvent;
     public event Action<NodeLink> OnDropEvent;
-    
+
     public RectTransform GetRect() => _rectTransform;
     public Node GetOwnerNode() => _ownerNode;
     public RectTransform GetDummyTransform() => _dummyTransform;
-
-    public bool isConnected = false;
-
+    public bool HasBridges() => _nodeBridges.Count != 0;
+    public bool IsOutNode() => _isOutNode;
+    public int BridgeCount() => _nodeBridges.Count;
+    
     [SerializeField] private bool _isOutNode = true;
+    private List<NodeBridge> _nodeBridges = new List<NodeBridge>();
     private RectTransform _rectTransform;
     private RectTransform _dummyTransform;
     private Node _ownerNode;
@@ -61,11 +64,32 @@ public class NodeLink : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public bool IsValidStartLink()
     {
-        return _isOutNode && !isConnected;
+        return _isOutNode && !HasBridges();
     }
 
     public bool IsValidEndLink(NodeLink startNodeLink)
     {
-        return !IsValidStartLink() && _ownerNode != startNodeLink.GetOwnerNode() && startNodeLink != this;
+        return !_isOutNode && _ownerNode != startNodeLink.GetOwnerNode() && startNodeLink != this;
+    }
+
+    public void AddNodeBridge(NodeBridge nodeBridge)
+    {
+        _nodeBridges.Add(nodeBridge);
+        _ownerNode.AddNodeBridge(nodeBridge);
+    }
+
+    public void RemoveNodeBridge(NodeBridge nodeBridge)
+    {
+        _nodeBridges.Remove(nodeBridge);
+        _ownerNode.RemoveNodeBridge(nodeBridge);
+    }
+
+    public NodeBridge GetSingleNodeBridge()
+    {
+        if(BridgeCount() == 1)
+        {
+            return _nodeBridges[0];
+        }
+        return null;
     }
 }

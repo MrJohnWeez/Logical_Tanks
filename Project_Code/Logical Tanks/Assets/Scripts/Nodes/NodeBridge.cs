@@ -24,29 +24,46 @@ public class NodeBridge : MonoBehaviour
         _uILineRenderer = GetComponent<UILineRenderer>();
     }
 
-    public void SetConnection(NodeLink startLink, NodeLink endLink)
+    public void Create(NodeLink startLink, NodeLink endLink)
     {
         _startNodeLink = startLink;
         _endNodeLink = endLink;
-        startLink.isConnected = true;
-        endLink.isConnected = true;
-        startLink.GetOwnerNode().AddConnection(this);
-        endLink.GetOwnerNode().AddConnection(this);
+        startLink.AddNodeBridge(this);
+        endLink.AddNodeBridge(this);
         _startRect = startLink.GetRect();
         _endRect = endLink.GetRect();
     }
 
-    public void SetTempConnection(NodeLink startLink, RectTransform endRect)
+    public void Remove()
+    {
+        _startNodeLink?.RemoveNodeBridge(this);
+        _endNodeLink?.RemoveNodeBridge(this);
+    }
+
+    private void OnDestroy()
+    {
+        Remove();
+    }
+
+    public void SetTempBridge(NodeLink startLink)
     {
         _startNodeLink = startLink;
         _startRect = startLink.GetRect();
-        _endRect = endRect;
+        _endRect = startLink.GetDummyTransform();
+    }
+
+    public void ReplaceWithTempBridge()
+    {
+        // Remove end connection but keep it active
+        _endNodeLink?.RemoveNodeBridge(this);
+        _endNodeLink = null;
+        _endRect = _startNodeLink.GetDummyTransform();
     }
 
     private void Update()
     {
         // Determine if an update needs to happen
-        if(_prevStartRectPos != _startRect.position || _prevEndRectPos != _endRect.position)
+        if (_prevStartRectPos != _startRect.position || _prevEndRectPos != _endRect.position)
         {
             // Must assign a new Vector2 to update lineRenderer
             Vector2[] points = new Vector2[4];
