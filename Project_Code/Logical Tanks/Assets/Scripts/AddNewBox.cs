@@ -8,7 +8,7 @@ public class AddNewBox : MonoBehaviour
     [SerializeField] private GameObject _nodePrefab = null;
     [SerializeField] private RectTransform _spawnPoint;
     [SerializeField] private GameObject _content;
-    [SerializeField] private NodeConnectionPoint[] _nodeConnectionPoints;
+    [SerializeField] private NodeLink[] _nodeConnectionPoints;
 
     public void AddNewBoxToLayout()
     {

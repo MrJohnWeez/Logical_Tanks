@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class Node : MonoBehaviour
 {
-    [SerializeField] private NodeConnectionPoint[] _nodeConnectionPoints;
-    private List<NodeConnection> _nodeConnections = new List<NodeConnection>();
+    [SerializeField] private NodeLink[] _nodeLinks;
+    private List<NodeBridge> _nodeConnections = new List<NodeBridge>();
     private NodeManager _nodeManager;
 
     private void Awake()
@@ -17,40 +17,25 @@ public class Node : MonoBehaviour
 
     private void Start()
     {
-        foreach(NodeConnectionPoint ncp in _nodeConnectionPoints)
+        foreach(NodeLink ncp in _nodeLinks)
         {
-            ncp.OnBeginDragEvent += OnNodeConnectionPointDragged;
-            ncp.OnDropEvent += OnNodeConnectionPointDropped;
-            ncp.OnEndDragEvent += OnNodeConnectionPointEndDrag;
+            ncp.OnBeginDragEvent += _nodeManager.NodeLinkDragStarted;
+            ncp.OnDropEvent += _nodeManager.NodeLinkDropped;
+            ncp.OnEndDragEvent += _nodeManager.NodeLinkDragEnded;
         }
     }
 
     private void OnDestroy()
     {
-        foreach(NodeConnectionPoint ncp in _nodeConnectionPoints)
+        foreach(NodeLink ncp in _nodeLinks)
         {
-            ncp.OnBeginDragEvent -= OnNodeConnectionPointDragged;
-            ncp.OnDropEvent -= OnNodeConnectionPointDropped;
-            ncp.OnEndDragEvent -= OnNodeConnectionPointEndDrag;
+            ncp.OnBeginDragEvent -= _nodeManager.NodeLinkDragStarted;
+            ncp.OnDropEvent -= _nodeManager.NodeLinkDropped;
+            ncp.OnEndDragEvent -= _nodeManager.NodeLinkDragEnded;
         }
     }
 
-    private void OnNodeConnectionPointDragged(PointerEventData eventData, NodeConnectionPoint nodeConnectionPoint)
-    {
-        _nodeManager.NodeConnectionPointDragged(this, nodeConnectionPoint);
-    }
-
-    private void OnNodeConnectionPointDropped(PointerEventData eventData, NodeConnectionPoint nodeConnectionPoint)
-    {
-        _nodeManager.NodeConnectionPointDropped(this, nodeConnectionPoint);
-    }
-
-    private void OnNodeConnectionPointEndDrag(PointerEventData eventData, NodeConnectionPoint nodeConnectionPoint)
-    {
-        _nodeManager.NodeConnectionPointDragEnded(this, nodeConnectionPoint);
-    }
-
-    public void AddConnection(NodeConnection newConnection)
+    public void AddConnection(NodeBridge newConnection)
     {
         _nodeConnections.Add(newConnection);
     }

@@ -89,7 +89,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isConnected: 0
-  _tangentRect: {fileID: 0}
   _isOutNode: 0
 --- !u!1 &2269839180562706779
 GameObject:
@@ -207,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f4b5f6e6d55f674f8a1eac19f673db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nodeConnectionPoints:
+  _nodeLinks:
   - {fileID: 7744945041293177542}
   - {fileID: 7245796373406491880}
 --- !u!1 &7749580761353375493
@@ -299,5 +298,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isConnected: 0
-  _tangentRect: {fileID: 0}
   _isOutNode: 1
