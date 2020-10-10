@@ -26,7 +26,7 @@ public class NodeManager : MonoBehaviour
                 // Connect one side of bridge
                 _state = State.ConnectingNodeLinks;
                 NodeBridge newBridge = CreateNewBridgeObject();
-                if(nodeLink.IsOutNode)
+                if (nodeLink.IsOutNode)
                     newBridge.SetStartNodeLink(nodeLink);
                 else
                     newBridge.SetEndNodeLink(nodeLink);
@@ -37,9 +37,9 @@ public class NodeManager : MonoBehaviour
                 // Disconnect one side of bridge
                 _state = State.ConnectingNodeLinks;
                 _currentNodeBridges = new List<NodeBridge>(nodeLink.Bridges);
-                for(int i = 0; i < _currentNodeBridges.Count; i++)
+                for (int i = 0; i < _currentNodeBridges.Count; i++)
                 {
-                    if(!nodeLink.IsOutNode)
+                    if (!nodeLink.IsOutNode)
                         _currentNodeBridges[i].RemoveEndNodeLink();
                     else
                         _currentNodeBridges[i].RemoveStartNodeLink();
@@ -52,7 +52,7 @@ public class NodeManager : MonoBehaviour
     {
         if (_state == State.ConnectingNodeLinks)
         {
-            for(int i = _currentNodeBridges.Count - 1; i >= 0 ; i--)
+            for (int i = _currentNodeBridges.Count - 1; i >= 0; i--)
             {
                 if (!nodeLink.IsOutNode && nodeLink.WillBridgeBeValid(_currentNodeBridges[i].StartNodeLink))
                 {
@@ -69,12 +69,17 @@ public class NodeManager : MonoBehaviour
         }
     }
 
-    public void NodeLinkDragEnded(NodeLink nodeConnectionPoint)
+    public void NodeLinkDragEnded(NodeLink nodeLink)
     {
-        for(int i = 0; i < _currentNodeBridges.Count; i++)
+        for (int i = 0; i < _currentNodeBridges.Count; i++)
             Destroy(_currentNodeBridges[i].gameObject);
         _currentNodeBridges.Clear();
         _state = State.Idle;
+    }
+
+    public void NodeOnSelect(Node node)
+    {
+        Debug.Log("NodeOnSelect: " + node.name + " is selected: " + node.IsSelected);
     }
 
     private NodeBridge CreateNewBridgeObject()

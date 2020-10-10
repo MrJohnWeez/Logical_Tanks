@@ -8,7 +8,8 @@ using System;
 // Select node when clicked and then options appear. Does not select node when draging node to move it around
 // Delete selected node and it's connections
 
-public class NodeLink : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+[RequireComponent(typeof(RectTransform))]
+public class NodeLink : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
     public event Action<NodeLink> OnBeginDragEvent;
     public event Action<NodeLink> OnEndDragEvent;
@@ -20,7 +21,7 @@ public class NodeLink : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public bool IsOutNode => _isOutNode;
     public int BridgeCount => _nodeBridges.Count;
     public List<NodeBridge> Bridges => _nodeBridges;
-    
+
     [SerializeField] private bool _isOutNode = true;
     private List<NodeBridge> _nodeBridges = new List<NodeBridge>();
     private RectTransform _rectTransform;
@@ -32,28 +33,12 @@ public class NodeLink : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         _ownerNode = GetComponentInParent<Node>();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        //Debug.Log("OnBeginDrag: " + gameObject.transform.parent.name);
-        OnBeginDragEvent?.Invoke(this);
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        // Debug.Log("OnPointerDown: " + gameObject.transform.parent.name);
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        // Debug.Log("OnDrop: " + gameObject.transform.parent.name);
-        OnDropEvent?.Invoke(this);
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        //Debug.Log("OnEndDrag: " + gameObject.transform.parent.name);
-        OnEndDragEvent?.Invoke(this);
-    }
+    public void OnPointerDown(PointerEventData eventData) { }
+    public void OnBeginDrag(PointerEventData eventData) { OnBeginDragEvent?.Invoke(this); }
+    public void OnDrag(PointerEventData eventData) { }
+    public void OnDrop(PointerEventData eventData) { OnDropEvent?.Invoke(this); }
+    public void OnEndDrag(PointerEventData eventData) { OnEndDragEvent?.Invoke(this); }
+    public void OnPointerUp(PointerEventData eventData) { }
 
     public bool WillBridgeBeValid(NodeLink otherNodeLink)
     {
@@ -62,7 +47,7 @@ public class NodeLink : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void AddNodeBridge(NodeBridge nodeBridge)
     {
-        if(!_nodeBridges.Contains(nodeBridge))
+        if (!_nodeBridges.Contains(nodeBridge))
             _nodeBridges.Add(nodeBridge);
     }
 

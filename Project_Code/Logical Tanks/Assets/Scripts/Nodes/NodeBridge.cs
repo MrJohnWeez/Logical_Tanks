@@ -40,10 +40,10 @@ public class NodeBridge : MonoBehaviour
         _endNodeLink.AddNodeBridge(this);
         _endRect = _endNodeLink.Rect;
     }
-    
+
     public void RemoveStartNodeLink()
     {
-        if(_startNodeLink)
+        if (_startNodeLink)
         {
             _startNodeLink.RemoveNodeBridge(this);
             _startNodeLink = null;
@@ -53,7 +53,7 @@ public class NodeBridge : MonoBehaviour
 
     public void RemoveEndNodeLink()
     {
-        if(_endNodeLink)
+        if (_endNodeLink)
         {
             _endNodeLink.RemoveNodeBridge(this);
             _endNodeLink = null;
@@ -78,7 +78,7 @@ public class NodeBridge : MonoBehaviour
         _currEndPos = _endRect ? _endRect.position : Input.mousePosition;
 
         // Determine if an update needs to happen
-        if(_prevStartPos != _currStartPos || _prevEndPos != _currEndPos)
+        if (_prevStartPos != _currStartPos || _prevEndPos != _currEndPos)
         {
             // Must assign a new Vector2 to update lineRenderer
             Vector2[] points = new Vector2[4];
