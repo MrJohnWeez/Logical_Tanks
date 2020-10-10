@@ -34,14 +34,4 @@ public class Node : MonoBehaviour
             ncp.OnEndDragEvent -= _nodeManager.NodeLinkDragEnded;
         }
     }
-
-    public void AddNodeBridge(NodeBridge newConnection)
-    {
-        _nodeConnections.Add(newConnection);
-    }
-
-    public void RemoveNodeBridge(NodeBridge newConnection)
-    {
-        _nodeConnections.Remove(newConnection);
-    }
 }

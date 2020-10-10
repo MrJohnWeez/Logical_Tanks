@@ -6,8 +6,8 @@ using UnityEngine.UI.Extensions;
 [RequireComponent(typeof(UILineRenderer))]
 public class NodeBridge : MonoBehaviour
 {
-    public NodeLink GetStartNodeLink => _startNodeLink;
-    public NodeLink GetEndNodeLink => _endNodeLink;
+    public NodeLink StartNodeLink => _startNodeLink;
+    public NodeLink EndNodeLink => _endNodeLink;
 
     private const float PERCENTAGE_OF_DISTANCE = 0.4f;
     private const float MAX_DISTANCE = 640f;
@@ -16,28 +16,46 @@ public class NodeBridge : MonoBehaviour
     private RectTransform _endRect = null;
     private NodeLink _startNodeLink = null;
     private NodeLink _endNodeLink = null;
-    private Vector3 _prevStartRectPos;
-    private Vector3 _prevEndRectPos;
+    private Vector3 _prevStartPos;
+    private Vector3 _prevEndPos;
+    private Vector3 _currStartPos;
+    private Vector3 _currEndPos;
+
+    public void Remove()
+    {
+        Debug.Log("Remove: Removing node bridges");
+        _startNodeLink?.RemoveNodeBridge(this);
+        _endNodeLink?.RemoveNodeBridge(this);
+    }
+
+    public void SetStartNodeLink(NodeLink startLink)
+    {
+        _startNodeLink = startLink;
+        _startRect = startLink.Rect;
+    }
+
+    public void SetEndNodeLink(NodeLink endLink)
+    {
+        _endNodeLink = endLink;
+        _startNodeLink.AddNodeBridge(this);
+        _endNodeLink.AddNodeBridge(this);
+        _endRect = _endNodeLink.Rect;
+    }
+    
+    public void RemoveEndNodeLink()
+    {
+        // Remove end connection
+        if(_endNodeLink)
+        {
+            _endNodeLink.RemoveNodeBridge(this);
+            _endNodeLink = null;
+            _endRect = null;
+        }
+    }
 
     private void Awake()
     {
         _uILineRenderer = GetComponent<UILineRenderer>();
-    }
-
-    public void Create(NodeLink startLink, NodeLink endLink)
-    {
-        _startNodeLink = startLink;
-        _endNodeLink = endLink;
-        startLink.AddNodeBridge(this);
-        endLink.AddNodeBridge(this);
-        _startRect = startLink.GetRect();
-        _endRect = endLink.GetRect();
-    }
-
-    public void Remove()
-    {
-        _startNodeLink?.RemoveNodeBridge(this);
-        _endNodeLink?.RemoveNodeBridge(this);
     }
 
     private void OnDestroy()
@@ -45,43 +63,32 @@ public class NodeBridge : MonoBehaviour
         Remove();
     }
 
-    public void SetTempBridge(NodeLink startLink)
-    {
-        _startNodeLink = startLink;
-        _startRect = startLink.GetRect();
-        _endRect = startLink.GetDummyTransform();
-    }
-
-    public void ReplaceWithTempBridge()
-    {
-        // Remove end connection but keep it active
-        _endNodeLink?.RemoveNodeBridge(this);
-        _endNodeLink = null;
-        _endRect = _startNodeLink.GetDummyTransform();
-    }
-
     private void Update()
     {
+        _currStartPos = _startRect.position;
+        _currEndPos = _endRect ? _endRect.position : Input.mousePosition;
+
         // Determine if an update needs to happen
-        if (_prevStartRectPos != _startRect.position || _prevEndRectPos != _endRect.position)
+        if(_prevStartPos != _currStartPos || _prevEndPos != _currEndPos)
         {
             // Must assign a new Vector2 to update lineRenderer
             Vector2[] points = new Vector2[4];
-            points[0] = transform.InverseTransformPoint(_startRect.position);
-            points[3] = transform.InverseTransformPoint(_endRect.position);
+            points[0] = transform.InverseTransformPoint(_currStartPos);
+            points[3] = transform.InverseTransformPoint(_currEndPos);
             // Make bezier curve smooth
             float distance = Vector2.Distance(points[0], points[3]);
             distance = Mathf.Clamp(distance, 0, MAX_DISTANCE);
             Vector2 startLocal = Vector3.Normalize(transform.InverseTransformDirection(_startRect.up));
             points[1].x = points[0].x + distance * PERCENTAGE_OF_DISTANCE * startLocal.x;
             points[1].y = points[0].y + distance * PERCENTAGE_OF_DISTANCE * startLocal.y;
-            Vector2 endLocal = Vector3.Normalize(transform.InverseTransformDirection(_endRect.up));
+            Vector3 upDirection = _endRect ? _endRect.up : Vector3.up;
+            Vector2 endLocal = Vector3.Normalize(transform.InverseTransformDirection(upDirection));
             points[2].x = points[3].x + distance * PERCENTAGE_OF_DISTANCE * endLocal.x;
             points[2].y = points[3].y + distance * PERCENTAGE_OF_DISTANCE * endLocal.y;
             // Set new points to render
             _uILineRenderer.Points = points;
-            _prevStartRectPos = _startRect.position;
-            _prevEndRectPos = _endRect.position;
+            _prevStartPos = _startRect.position;
+            _prevEndPos = Input.mousePosition;
         }
     }
 }
