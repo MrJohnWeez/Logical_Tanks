@@ -21,11 +21,7 @@ public class NodeBridge : MonoBehaviour
     private Vector3 _currStartPos;
     private Vector3 _currEndPos;
 
-    public void RemoveAllLinks()
-    {
-        RemoveStartNodeLink();
-        RemoveEndNodeLink();
-    }
+    
 
     public void SetStartNodeLink(NodeLink startLink)
     {
@@ -39,6 +35,12 @@ public class NodeBridge : MonoBehaviour
         _endNodeLink = endLink;
         _endNodeLink.AddNodeBridge(this);
         _endRect = _endNodeLink.Rect;
+    }
+
+    public void RemoveAllLinks()
+    {
+        RemoveStartNodeLink();
+        RemoveEndNodeLink();
     }
 
     public void RemoveStartNodeLink()

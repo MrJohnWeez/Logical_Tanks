@@ -59,6 +59,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             ncp.OnDropEvent -= _nodeManager.NodeLinkDropped;
             ncp.OnEndDragEvent -= _nodeManager.NodeLinkDragEnded;
         }
+        DeleteBridges();
     }
 
     public void OnPointerDown(PointerEventData eventData) { _didDrag = false; }
@@ -90,6 +91,31 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         {
             ChangeIsSelected(!_isSelected);
             OnSelect?.Invoke(this);
+        }
+    }
+
+    public List<NodeBridge> GetAllBridges()
+    {
+        List<NodeBridge> nodeBridges = new List<NodeBridge>();
+
+        foreach(NodeLink nl in _nodeLinks)
+        {
+            foreach(NodeBridge nb in nl.Bridges)
+            {
+                if(!nodeBridges.Contains(nb))
+                    nodeBridges.Add(nb);
+            }
+        }
+
+        return nodeBridges;
+    }
+
+    public void DeleteBridges()
+    {
+        List<NodeBridge> nodeBridges = GetAllBridges();
+        for(int i = nodeBridges.Count - 1; i >= 0; i--)
+        {
+            Destroy(nodeBridges[i].gameObject);
         }
     }
 

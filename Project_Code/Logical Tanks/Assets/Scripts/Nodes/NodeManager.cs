@@ -130,11 +130,11 @@ public class NodeManager : MonoBehaviour
 
     public void DeleteSelectedNodes()
     {
-        Debug.Log("Deleting Selected nodes");
+        // Delete bridges, links, nodes that are selected
         for (int i = _selectedNodes.Count - 1; i >= 0; i--)
         {
-            // Delete bridges, links, nodes that are selected
-
+            Destroy(_selectedNodes[i].gameObject);
+            _selectedNodes.RemoveAt(i);
         }
     }
 

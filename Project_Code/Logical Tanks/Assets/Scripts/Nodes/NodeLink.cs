@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
-// ToDo:
-// Select node when clicked and then options appear. Does not select node when draging node to move it around
-// Delete selected node and it's connections
 
 [RequireComponent(typeof(RectTransform))]
 public class NodeLink : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
@@ -42,7 +39,7 @@ public class NodeLink : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
     public bool WillBridgeBeValid(NodeLink otherNodeLink)
     {
-        return _ownerNode != otherNodeLink.OwnerNode && otherNodeLink != this;
+        return otherNodeLink && _ownerNode != otherNodeLink.OwnerNode && otherNodeLink != this;
     }
 
     public void AddNodeBridge(NodeBridge nodeBridge)
