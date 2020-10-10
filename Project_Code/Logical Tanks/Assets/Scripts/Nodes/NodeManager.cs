@@ -63,6 +63,7 @@ public class NodeManager : MonoBehaviour
     {
         if (_state == State.ConnectingNodeLinks)
         {
+            // Connect bridge(s) to nodeLink if valid
             for (int i = _currentNodeBridges.Count - 1; i >= 0; i--)
             {
                 if (!nodeLink.IsOutNode && nodeLink.WillBridgeBeValid(_currentNodeBridges[i].StartNodeLink))
@@ -82,13 +83,14 @@ public class NodeManager : MonoBehaviour
 
     public void NodeLinkDragEnded(NodeLink nodeLink)
     {
+        // Delete any non-connected bridges
         for (int i = 0; i < _currentNodeBridges.Count; i++)
-            Destroy(_currentNodeBridges[i].gameObject);
+            _currentNodeBridges[i].Delete();
         _currentNodeBridges.Clear();
         _state = State.Idle;
     }
 
-    public void NodeOnSelect(Node node)
+    public void NodeSelectionChanged(Node node)
     {
         if (node.IsSelected)
             _selectedNodes.Add(node);
@@ -101,6 +103,7 @@ public class NodeManager : MonoBehaviour
         bool otherMovesWereValid = true;
         if (_selectedNodes.Count > 0)
         {
+            // If all selected objects can be dragged move them
             for (int i = 0; i < _selectedNodes.Count; i++)
             {
                 _selectedNodes[i].GetRect.anchoredPosition += delta;
@@ -117,7 +120,7 @@ public class NodeManager : MonoBehaviour
             }
         }
 
-        // Make sure to update node if it was not selected
+        // Make sure to update actual dragging node if it was not selected
         if (otherMovesWereValid && (_selectedNodes.Count == 0 || !_selectedNodes.Contains(node)))
         {
             node.GetRect.anchoredPosition += delta;
@@ -133,8 +136,9 @@ public class NodeManager : MonoBehaviour
         // Delete bridges, links, nodes that are selected
         for (int i = _selectedNodes.Count - 1; i >= 0; i--)
         {
-            Destroy(_selectedNodes[i].gameObject);
-            _selectedNodes.RemoveAt(i);
+            Node nodeToDelete = _selectedNodes[i];
+            nodeToDelete.Delete();
+            nodeToDelete?.SetIsSelected(false);
         }
     }
 
@@ -145,6 +149,12 @@ public class NodeManager : MonoBehaviour
         rt.localScale = _contentWindow.localScale;
         rt.position = _nodeSpawnPoint.position;
         newNode.transform.SetParent(_contentWindow, true);
+    }
+
+    public void ClearSelected()
+    {
+        for (int i = _selectedNodes.Count - 1; i >= 0; i--)
+            _selectedNodes[i].SetIsSelected(false);
     }
 
     private NodeBridge CreateNewBridgeObject()

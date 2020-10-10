@@ -30,12 +30,14 @@ public class NodeLink : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         _ownerNode = GetComponentInParent<Node>();
     }
 
+    #region PointerEvents
     public void OnPointerDown(PointerEventData eventData) { }
     public void OnBeginDrag(PointerEventData eventData) { OnBeginDragEvent?.Invoke(this); }
     public void OnDrag(PointerEventData eventData) { }
     public void OnDrop(PointerEventData eventData) { OnDropEvent?.Invoke(this); }
     public void OnEndDrag(PointerEventData eventData) { OnEndDragEvent?.Invoke(this); }
     public void OnPointerUp(PointerEventData eventData) { }
+    #endregion
 
     public bool WillBridgeBeValid(NodeLink otherNodeLink)
     {

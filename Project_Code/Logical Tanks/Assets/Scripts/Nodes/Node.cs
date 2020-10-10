@@ -11,12 +11,17 @@ using UnityEngine.UI.Extensions;
 [RequireComponent(typeof(CanvasGroup))]
 public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    public event Action<Node> OnSelect;
+    public event Action<Node> SelectChanged;
     public event Action<Node, Vector2, Vector2> OnNodeDragged;
+
     public bool IsSelected => _isSelected;
     public RectTransform GetRect => _rectTransform;
 
     [SerializeField] private NodeLink[] _nodeLinks = null;
+    [SerializeField] private bool _isLocked = false;
+    [SerializeField] private bool _isSelectable = true;
+    [SerializeField] private bool _isDeletable = true;
+
     private NodeManager _nodeManager;
     private RectTransform _contentWindow;
     private Canvas _canvas;
@@ -33,7 +38,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         canvasGroup = GetComponent<CanvasGroup>();
 
         _nodeManager = GameObject.FindObjectOfType<NodeManager>();
-        OnSelect += _nodeManager.NodeOnSelect;
+        SelectChanged += _nodeManager.NodeSelectionChanged;
         OnNodeDragged += _nodeManager.NodeOnDrag;
 
         // TODO: Make these lines a class type instead?
@@ -62,17 +67,21 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         DeleteBridges();
     }
 
+    #region PointerEvents
     public void OnPointerDown(PointerEventData eventData) { _didDrag = false; }
     public void OnBeginDrag(PointerEventData eventdata)
     {
-        canvasGroup.blocksRaycasts = false;
-        canvasGroup.alpha = 0.6f;
-        _didDrag = true;
+        if(!_isLocked)
+        {
+            canvasGroup.blocksRaycasts = false;
+            canvasGroup.alpha = 0.6f;
+            _didDrag = true;
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (eventData != null)
+        if (eventData != null && !_isLocked)
         {
             Vector2 delta = eventData.delta / _canvas.scaleFactor / _contentWindow.localScale;
             OnNodeDragged?.Invoke(this, delta, eventData.position);
@@ -81,18 +90,21 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.blocksRaycasts = true;
-        canvasGroup.alpha = 1f;
+        if(!_isLocked)
+        {
+            canvasGroup.blocksRaycasts = true;
+            canvasGroup.alpha = 1f;
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!_didDrag)
+        if (!_didDrag && _isSelectable)
         {
-            ChangeIsSelected(!_isSelected);
-            OnSelect?.Invoke(this);
+            SetIsSelected(!_isSelected);
         }
     }
+    #endregion
 
     public List<NodeBridge> GetAllBridges()
     {
@@ -119,9 +131,16 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         }
     }
 
-    private void ChangeIsSelected(bool newSelectedState)
+    public void SetIsSelected(bool newSelectedState)
     {
         _isSelected = newSelectedState;
         _nicerOutline.enabled = newSelectedState;
+        SelectChanged?.Invoke(this);
+    }
+
+    public void Delete()
+    {
+        if(_isDeletable)
+            Destroy(gameObject);
     }
 }
