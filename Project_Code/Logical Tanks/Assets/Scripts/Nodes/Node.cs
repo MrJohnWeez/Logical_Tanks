@@ -12,15 +12,16 @@ using UnityEngine.UI.Extensions;
 public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public event Action<Node> OnSelect;
+    public event Action<Node, Vector2, Vector2> OnNodeDragged;
     public bool IsSelected => _isSelected;
+    public RectTransform GetRect => _rectTransform;
 
-    [SerializeField] private NodeLink[] _nodeLinks;
+    [SerializeField] private NodeLink[] _nodeLinks = null;
     private NodeManager _nodeManager;
     private RectTransform _contentWindow;
     private Canvas _canvas;
     private RectTransform _rectTransform;
     private CanvasGroup canvasGroup;
-    private RectTransform _scrollView;
     private NicerOutline _nicerOutline;
     private bool _didDrag = false;
     private bool _isSelected = false;
@@ -33,10 +34,10 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
         _nodeManager = GameObject.FindObjectOfType<NodeManager>();
         OnSelect += _nodeManager.NodeOnSelect;
+        OnNodeDragged += _nodeManager.NodeOnDrag;
 
         // TODO: Make these lines a class type instead?
         _canvas = GameObject.FindGameObjectWithTag("NodeCanvas").GetComponent<Canvas>();
-        _scrollView = GameObject.FindGameObjectWithTag("NodeScrollView").GetComponent<RectTransform>();
         _contentWindow = GameObject.FindGameObjectWithTag("ContentWindow").GetComponent<RectTransform>();
     }
 
@@ -73,12 +74,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         if (eventData != null)
         {
             Vector2 delta = eventData.delta / _canvas.scaleFactor / _contentWindow.localScale;
-            _rectTransform.anchoredPosition += delta;
-
-            if (!_scrollView.GetWorldSapceRect().Contains(eventData.position) || !_contentWindow.Contains(_rectTransform))
-            {
-                _rectTransform.anchoredPosition -= delta;
-            }
+            OnNodeDragged?.Invoke(this, delta, eventData.position);
         }
     }
 

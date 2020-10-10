@@ -6,9 +6,8 @@ using UnityEngine.UI;
 public class AddNewBox : MonoBehaviour
 {
     [SerializeField] private GameObject _nodePrefab = null;
-    [SerializeField] private RectTransform _spawnPoint;
-    [SerializeField] private GameObject _content;
-    [SerializeField] private NodeLink[] _nodeConnectionPoints;
+    [SerializeField] private RectTransform _spawnPoint = null;
+    [SerializeField] private GameObject _content = null;
 
     public void AddNewBoxToLayout()
     {

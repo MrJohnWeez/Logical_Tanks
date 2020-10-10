@@ -11,11 +11,22 @@ public class NodeManager : MonoBehaviour
         NodeSelected
     }
 
-    [SerializeField] private GameObject _nodeBridgePrefab;
-    [SerializeField] private GameObject _nodeBridgesParent;
+    [SerializeField] private GameObject _nodeBridgePrefab = null;
+    [SerializeField] private GameObject _nodeBridgesParent = null;
+    [SerializeField] private GameObject _nodePrefab = null;
+    [SerializeField] private RectTransform _nodeSpawnPoint = null;
 
     private State _state = State.Idle;
     private List<NodeBridge> _currentNodeBridges = new List<NodeBridge>();
+    private List<Node> _selectedNodes = new List<Node>();
+    private RectTransform _scrollView;
+    private RectTransform _contentWindow;
+
+    private void Awake()
+    {
+        _scrollView = GameObject.FindGameObjectWithTag("NodeScrollView").GetComponent<RectTransform>();
+        _contentWindow = GameObject.FindGameObjectWithTag("ContentWindow").GetComponent<RectTransform>();
+    }
 
     public void NodeLinkDragStarted(NodeLink nodeLink)
     {
@@ -79,7 +90,61 @@ public class NodeManager : MonoBehaviour
 
     public void NodeOnSelect(Node node)
     {
-        Debug.Log("NodeOnSelect: " + node.name + " is selected: " + node.IsSelected);
+        if (node.IsSelected)
+            _selectedNodes.Add(node);
+        else
+            _selectedNodes.Remove(node);
+    }
+
+    public void NodeOnDrag(Node node, Vector2 delta, Vector2 pointerPos)
+    {
+        bool otherMovesWereValid = true;
+        if (_selectedNodes.Count > 0)
+        {
+            for (int i = 0; i < _selectedNodes.Count; i++)
+            {
+                _selectedNodes[i].GetRect.anchoredPosition += delta;
+                if (!_scrollView.GetWorldSapceRect().Contains(pointerPos) || !_contentWindow.Contains(_selectedNodes[i].GetRect))
+                {
+                    otherMovesWereValid = false;
+                    // Undo all changed deltas
+                    for (int y = i; y >= 0; y--)
+                    {
+                        _selectedNodes[y].GetRect.anchoredPosition -= delta;
+                    }
+                    break;
+                }
+            }
+        }
+
+        // Make sure to update node if it was not selected
+        if (otherMovesWereValid && (_selectedNodes.Count == 0 || !_selectedNodes.Contains(node)))
+        {
+            node.GetRect.anchoredPosition += delta;
+            if (!_scrollView.GetWorldSapceRect().Contains(pointerPos) || !_contentWindow.Contains(node.GetRect))
+            {
+                node.GetRect.anchoredPosition -= delta;
+            }
+        }
+    }
+
+    public void DeleteSelectedNodes()
+    {
+        Debug.Log("Deleting Selected nodes");
+        for (int i = _selectedNodes.Count - 1; i >= 0; i--)
+        {
+            // Delete bridges, links, nodes that are selected
+
+        }
+    }
+
+    public void AddNode()
+    {
+        GameObject newNode = Instantiate(_nodePrefab);
+        RectTransform rt = newNode.GetComponent<RectTransform>();
+        rt.localScale = _contentWindow.localScale;
+        rt.position = _nodeSpawnPoint.position;
+        newNode.transform.SetParent(_contentWindow, true);
     }
 
     private NodeBridge CreateNewBridgeObject()
