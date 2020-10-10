@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 // ToDo:
-// Detach multiple nodeBridges and follow mouse pos
-// Delete connections: User must click on the in connection point and connection is reattached to users mouse like normal
 // Select node when clicked and then options appear. Does not select node when draging node to move it around
 // Delete selected node and it's connections
 
@@ -57,14 +55,9 @@ public class NodeLink : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         OnEndDragEvent?.Invoke(this);
     }
 
-    public bool IsValidStartLink()
+    public bool WillBridgeBeValid(NodeLink otherNodeLink)
     {
-        return _isOutNode && !HasBridges;
-    }
-
-    public bool WillBridgeBeValid(NodeLink startNodeLink)
-    {
-        return !_isOutNode && _ownerNode != startNodeLink.OwnerNode && startNodeLink != this;
+        return _ownerNode != otherNodeLink.OwnerNode && otherNodeLink != this;
     }
 
     public void AddNodeBridge(NodeBridge nodeBridge)
@@ -81,14 +74,5 @@ public class NodeLink : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void RemoveAllNodeBridges()
     {
         _nodeBridges.Clear();
-    }
-
-    public NodeBridge GetSingleNodeBridge()
-    {
-        if(BridgeCount == 1)
-        {
-            return _nodeBridges[0];
-        }
-        return null;
     }
 }
