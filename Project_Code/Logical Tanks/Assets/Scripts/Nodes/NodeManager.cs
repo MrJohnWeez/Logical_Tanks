@@ -21,6 +21,7 @@ public class NodeManager : MonoBehaviour
     private List<Node> _selectedNodes = new List<Node>();
     private RectTransform _scrollView;
     private RectTransform _contentWindow;
+    private NodeCompiler _nodeCompiler = null;
 
     private void Awake()
     {

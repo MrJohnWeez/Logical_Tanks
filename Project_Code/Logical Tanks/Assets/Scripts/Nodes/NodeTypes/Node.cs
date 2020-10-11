@@ -6,6 +6,14 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.UI.Extensions;
 
+// TODO:
+// Make map
+// Make tutorial level
+// Make win condition
+// Set up game scripts
+// Add colored pressure plate that can activate colored land mines
+
+
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(NicerOutline))]
 [RequireComponent(typeof(CanvasGroup))]
