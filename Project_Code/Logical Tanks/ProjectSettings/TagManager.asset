@@ -7,6 +7,7 @@ TagManager:
   - NodeCanvas
   - NodeScrollView
   - ContentWindow
+  - MapCamera
   layers:
   - Default
   - TransparentFX
