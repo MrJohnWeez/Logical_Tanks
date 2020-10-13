@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class TankController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public ColorID GetColorID  => _colorID;
+    
+    [SerializeField] private ColorID _colorID = ColorID.Green;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Explode()
     {
-        
+        Debug.Log("Tank Exploded with color: " + _colorID);
+        Destroy(gameObject);
     }
 }

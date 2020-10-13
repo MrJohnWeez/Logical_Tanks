@@ -50,7 +50,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         OnNodeDragged += _nodeManager.NodeOnDrag;
 
         // TODO: Make these lines a class type instead?
-        _canvas = GameObject.FindGameObjectWithTag("NodeCanvas").GetComponent<Canvas>();
+        _canvas = GameObject.FindGameObjectWithTag("InGameUI").GetComponent<Canvas>();
         _contentWindow = GameObject.FindGameObjectWithTag("ContentWindow").GetComponent<RectTransform>();
     }
 
