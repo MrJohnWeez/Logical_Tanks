@@ -11,6 +11,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private Camera _mapCamera = null;
     [SerializeField] private PaneControls _paneControls = null;
 
+    private Canvas _canvas;
     private Transform _mapCameraTransform = null;
     private Transform[] _cameraWalls = new Transform[4];
     private Vector2 _xLimits = new Vector3();
@@ -19,6 +20,7 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
+        _canvas = GameObject.FindGameObjectWithTag("InGameUI").GetComponent<Canvas>();
         _mapCameraTransform = _mapCamera.transform;
         GameObject[] camWallGOs = GameObject.FindGameObjectsWithTag("CameraWall");
         if(camWallGOs.Length == 4)
