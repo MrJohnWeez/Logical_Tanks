@@ -9,6 +9,8 @@ TagManager:
   - ContentWindow
   - MapCamera
   - InGameUI
+  - FxTemporaire
+  - CameraWall
   layers:
   - Default
   - TransparentFX
