@@ -4,64 +4,77 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    // Figure out how to move the camera properly
-    private float sensitivity = 0.024f;
     private const float WALL_OFFSET = 1.5f;
-
-    [SerializeField] private Camera _mapCamera = null;
-    [SerializeField] private PaneControls _paneControls = null;
-
-    private Canvas _canvas;
+    private const float MIN_ZOOM = 5;
+    private const float MAX_ZOOM = 15;
+    [SerializeField] private InteractableRenderTexture _interactMapTexture = null;
+    private float _zoomSensitivity = 1f;
+    private Camera _mapCamera = null;
     private Transform _mapCameraTransform = null;
     private Transform[] _cameraWalls = new Transform[4];
-    private Vector2 _xLimits = new Vector3();
-    private Vector2 _zLimits = new Vector3();
-    private Vector2 _deltaBuffer = new Vector2();
+    private Vector2 _moveBuffer = new Vector2();
+    private float _zoomBuffer = 0;
+    private Rect _camLimits = new Rect();
 
     private void Awake()
     {
-        _canvas = GameObject.FindGameObjectWithTag("InGameUI").GetComponent<Canvas>();
+        // Initialize camera
+        _interactMapTexture.OnDragEvent += MoveCamera;
+        _interactMapTexture.OnScrollEvent += ZoomCamera;
+        _mapCamera = GameObject.FindGameObjectWithTag("MapCamera")?.GetComponent<Camera>();
+        _mapCamera.orthographicSize = MAX_ZOOM - MIN_ZOOM;
         _mapCameraTransform = _mapCamera.transform;
+
+        // Get camera bounds
         GameObject[] camWallGOs = GameObject.FindGameObjectsWithTag("CameraWall");
         if(camWallGOs.Length == 4)
         {
             for(int i = 0; i < camWallGOs.Length; i++) { _cameraWalls[i] = camWallGOs[i].transform; }
             float tmpXPos = _cameraWalls[0].position.x;
-            _xLimits = new Vector2(tmpXPos, tmpXPos);
+            _camLimits.xMin = tmpXPos;
+            _camLimits.xMax = tmpXPos;
             float tmpZPos = _cameraWalls[0].position.z;
-            _zLimits = new Vector2(tmpZPos, tmpZPos);
+            _camLimits.yMin = tmpZPos;
+            _camLimits.yMax = tmpZPos;
             for(int i = 0; i < camWallGOs.Length; i++)
             {
                 Vector3 currWall = _cameraWalls[i].position;
-                _xLimits.x = Mathf.Max(_xLimits.x, currWall.x);
-                _xLimits.y = Mathf.Min(_xLimits.y, currWall.x);
-                _zLimits.x = Mathf.Max(_zLimits.x, currWall.z);
-                _zLimits.y = Mathf.Min(_zLimits.y, currWall.z);
+                _camLimits.xMax = Mathf.Max(_camLimits.xMax, currWall.x);
+                _camLimits.xMin = Mathf.Min(_camLimits.xMin, currWall.x);
+                _camLimits.yMax = Mathf.Max(_camLimits.yMax, currWall.z);
+                _camLimits.yMin = Mathf.Min(_camLimits.yMin, currWall.z);
             }
         }
         else { Debug.LogError("Invalid number of CameraWall(s) in scene"); }
-        _paneControls.OnDragEvent += MoveCamera;
     }
 
     private void OnDestroy()
     {
-        _paneControls.OnDragEvent -= MoveCamera;
+        _interactMapTexture.OnDragEvent -= MoveCamera;
+        _interactMapTexture.OnScrollEvent -= ZoomCamera;
     }
 
-    private void MoveCamera(Vector2 delta)
-    {
-        _deltaBuffer += delta * sensitivity;
-    }
+    private void MoveCamera(Vector2 delta) { _moveBuffer = _interactMapTexture.ConvertToOrthoWorldSpace(delta, _mapCamera); }
+    private void ZoomCamera(float delta) { _zoomBuffer = delta; }
 
     private void LateUpdate()
     {
+        // Set Camera Position
         Vector3 camPos = _mapCameraTransform.position;
-        camPos.x -= _deltaBuffer.x;
-        camPos.z -= _deltaBuffer.y;
+        camPos.x -= _moveBuffer.x;
+        camPos.z -= _moveBuffer.y;
         float offset = _mapCamera.orthographicSize + WALL_OFFSET;
-        camPos.x = Mathf.Clamp(camPos.x, _xLimits.y + offset, _xLimits.x - offset);
-        camPos.z = Mathf.Clamp(camPos.z, _zLimits.y + offset, _zLimits.x - offset);
+        camPos.x = Mathf.Clamp(camPos.x, _camLimits.xMin + offset, _camLimits.xMax - offset);
+        camPos.z = Mathf.Clamp(camPos.z, _camLimits.yMin + offset, _camLimits.yMax - offset);
         _mapCameraTransform.position = camPos;
-        _deltaBuffer = Vector2.zero;
+
+        // Set Camera Zoom
+        // TODO: Make zoom smoother
+        _mapCamera.orthographicSize -= _zoomBuffer * _zoomSensitivity;
+        _mapCamera.orthographicSize = Mathf.Clamp(_mapCamera.orthographicSize, MIN_ZOOM, MAX_ZOOM);
+
+        // Reset deltas
+        _moveBuffer = Vector2.zero;
+        _zoomBuffer = 0;
     }
 }

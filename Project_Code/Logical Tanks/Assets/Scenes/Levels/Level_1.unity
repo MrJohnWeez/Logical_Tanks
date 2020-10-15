@@ -525,7 +525,7 @@ Transform:
   - {fileID: 1321383603}
   - {fileID: 74121230}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &259290089
 MonoBehaviour:
@@ -1920,8 +1920,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1384216108}
+  m_Children: []
   m_Father: {fileID: 259290088}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1937,8 +1936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082cfa2ce1970334f9179ef05414ebb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapCamera: {fileID: 1384216107}
-  _paneControls: {fileID: 1634869761}
+  _interactMapTexture: {fileID: 1634869761}
 --- !u!1 &1335688276
 GameObject:
   m_ObjectHideFlags: 0
@@ -2356,7 +2354,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1321383603}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1423608476
@@ -2408,8 +2406,8 @@ GameObject:
   - component: {fileID: 1634869757}
   - component: {fileID: 1634869759}
   - component: {fileID: 1634869758}
-  - component: {fileID: 1634869761}
   - component: {fileID: 1634869760}
+  - component: {fileID: 1634869761}
   m_Layer: 5
   m_Name: MapRender
   m_TagString: Untagged
@@ -2494,7 +2492,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1634869756}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8c18e3bd177cd54986f4389f5673391, type: 3}
+  m_Script: {fileID: 11500000, guid: 301dbd2be804f5e4f83e3c321df524ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1641606878 stripped
@@ -2697,7 +2695,7 @@ Transform:
   - {fileID: 1666028389}
   - {fileID: 970646163}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1849179272
 GameObject:
