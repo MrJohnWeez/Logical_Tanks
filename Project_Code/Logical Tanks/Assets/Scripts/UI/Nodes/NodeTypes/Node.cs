@@ -7,7 +7,7 @@ using System;
 using UnityEngine.UI.Extensions;
 
 // TODO:
-// Make map
+// Set up node base class to better fit dynamic nodes and then figure out the way to get the next node
 // Make tutorial level
 // Make win condition
 // Set up game scripts
@@ -25,19 +25,19 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     public bool IsSelected => _isSelected;
     public RectTransform GetRect => _rectTransform;
 
-    [SerializeField] private NodeLink[] _nodeLinks = null;
-    [SerializeField] private bool _isLocked = false;
-    [SerializeField] private bool _isSelectable = true;
-    [SerializeField] private bool _isDeletable = true;
+    [SerializeField] protected NodeLink[] _nodeLinks = null;
+    [SerializeField] protected bool _isLocked = false;
+    [SerializeField] protected bool _isSelectable = true;
+    [SerializeField] protected bool _isDeletable = true;
 
-    private NodeManager _nodeManager;
-    private RectTransform _contentWindow;
-    private Canvas _canvas;
-    private RectTransform _rectTransform;
-    private CanvasGroup canvasGroup;
-    private NicerOutline _nicerOutline;
-    private bool _didDrag = false;
-    private bool _isSelected = false;
+    protected NodeManager _nodeManager;
+    protected RectTransform _contentWindow;
+    protected Canvas _canvas;
+    protected RectTransform _rectTransform;
+    protected CanvasGroup canvasGroup;
+    protected NicerOutline _nicerOutline;
+    protected bool _didDrag = false;
+    protected bool _isSelected = false;
 
     private void Awake()
     {
@@ -150,5 +150,15 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     {
         if(_isDeletable)
             Destroy(gameObject);
+    }
+
+    public virtual IEnumerator Execute()
+    {
+        yield return null;
+    }
+
+    public virtual Node NextNode()
+    {
+        return null;
     }
 }

@@ -14,6 +14,7 @@ public class NodeManager : MonoBehaviour
     [SerializeField] private GameObject _nodeBridgePrefab = null;
     [SerializeField] private GameObject _nodeBridgesParent = null;
     [SerializeField] private GameObject _nodePrefab = null;
+    [SerializeField] private GameObject _nodesParent = null;
     [SerializeField] private RectTransform _nodeSpawnPoint = null;
 
     private State _state = State.Idle;
@@ -145,7 +146,7 @@ public class NodeManager : MonoBehaviour
 
     public void AddNode()
     {
-        GameObject newNode = Instantiate(_nodePrefab);
+        GameObject newNode = Instantiate(_nodePrefab, _nodesParent.transform);
         RectTransform rt = newNode.GetComponent<RectTransform>();
         rt.localScale = _contentWindow.localScale;
         rt.position = _nodeSpawnPoint.position;
