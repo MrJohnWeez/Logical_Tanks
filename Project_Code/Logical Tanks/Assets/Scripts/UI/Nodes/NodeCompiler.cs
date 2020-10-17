@@ -8,32 +8,37 @@ public class NodeCompiler : MonoBehaviour
     [SerializeField] private Node _startNode = null;
     [SerializeField] private GameObject _nodesParent = null;
     private Task _currentTask = null;
+    private Node _currentNode = null;
 
     public void Play()
     {
         Debug.Log("Playing!");
-        _currentTask = new Task(_startNode.Execute());
+        _currentNode = _startNode;
+        _currentTask = new Task(_currentNode.Execute());
         _currentTask.OnFinished += NextNode;
     }
 
     private void NextNode(Task task, bool forceStopped)
     {
-        _currentTask = new Task(_startNode.Execute());
-        _currentTask.OnFinished += NextNode;
-    }
-
-    public void DebugPlay()
-    {
-
-    }
-
-    public void Step()
-    {
-
+        if(!forceStopped)
+        {
+            _currentNode = _currentNode.NextNode();
+            if(_currentNode != null)
+            {
+                Debug.Log("Running node: " + _currentNode.name);
+                _currentTask = new Task(_currentNode.Execute());
+                _currentTask.OnFinished += NextNode;
+            }
+            else
+            {
+                Debug.Log("Finished!");
+            }
+        }
     }
 
     public void Stop()
     {
-
+        Debug.Log("Stopped!");
+        _currentTask.Stop();
     }
 }

@@ -192,11 +192,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f4b5f6e6d55f674f8a1eac19f673db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nodeLinks:
+  inNodeLink: {fileID: 0}
+  outNodeLinks:
   - {fileID: 1041097527691348315}
-  _isLocked: 0
-  _isSelectable: 1
-  _isDeletable: 0
+  isLocked: 0
+  isSelectable: 1
+  isDeletable: 1
 --- !u!114 &5726751075954283138
 MonoBehaviour:
   m_ObjectHideFlags: 0

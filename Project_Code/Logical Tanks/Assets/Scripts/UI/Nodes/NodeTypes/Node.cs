@@ -7,9 +7,11 @@ using System;
 using UnityEngine.UI.Extensions;
 
 // TODO:
-// Set up node base class to better fit dynamic nodes and then figure out the way to get the next node
+// Organize Node classes
+// Make tank shoot
+// Make tank rotate
 // Make tutorial level
-// Make win condition
+// Make win condition (All enemy tanks are eliminated)
 // Set up game scripts
 // Add colored pressure plate that can activate colored land mines
 
@@ -21,57 +23,72 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 {
     public event Action<Node> SelectChanged;
     public event Action<Node, Vector2, Vector2> OnNodeDragged;
-
+    
+    [Header("NodeBase")]
+    [SerializeField] protected NodeLink inNodeLink = null;
+    [SerializeField] protected NodeLink[] outNodeLinks = null;
+    [SerializeField] protected bool isLocked = false;
+    [SerializeField] protected bool isSelectable = true;
+    [SerializeField] protected bool isDeletable = true;
+    protected NodeManager nodeManager;
+    protected bool _isSelected = false;
+    private RectTransform _contentWindow;
+    private Canvas _canvas;
+    private RectTransform _rectTransform;
+    private CanvasGroup canvasGroup;
+    private NicerOutline _nicerOutline;
+    private bool _didDrag = false;
+    
     public bool IsSelected => _isSelected;
     public RectTransform GetRect => _rectTransform;
 
-    [SerializeField] protected NodeLink[] _nodeLinks = null;
-    [SerializeField] protected bool _isLocked = false;
-    [SerializeField] protected bool _isSelectable = true;
-    [SerializeField] protected bool _isDeletable = true;
-
-    protected NodeManager _nodeManager;
-    protected RectTransform _contentWindow;
-    protected Canvas _canvas;
-    protected RectTransform _rectTransform;
-    protected CanvasGroup canvasGroup;
-    protected NicerOutline _nicerOutline;
-    protected bool _didDrag = false;
-    protected bool _isSelected = false;
-
-    private void Awake()
+    public virtual void Awake()
     {
         _rectTransform = (RectTransform)transform;
         _nicerOutline = GetComponent<NicerOutline>();
         canvasGroup = GetComponent<CanvasGroup>();
 
-        _nodeManager = GameObject.FindObjectOfType<NodeManager>();
-        SelectChanged += _nodeManager.NodeSelectionChanged;
-        OnNodeDragged += _nodeManager.NodeOnDrag;
+        nodeManager = GameObject.FindObjectOfType<NodeManager>();
+        SelectChanged += nodeManager.NodeSelectionChanged;
+        OnNodeDragged += nodeManager.NodeOnDrag;
 
         // TODO: Make these lines a class type instead?
         _canvas = GameObject.FindGameObjectWithTag("InGameUI").GetComponent<Canvas>();
         _contentWindow = GameObject.FindGameObjectWithTag("ContentWindow").GetComponent<RectTransform>();
     }
 
-    private void Start()
+    public virtual void Start()
     {
-        foreach (NodeLink ncp in _nodeLinks)
+        foreach (NodeLink ncp in outNodeLinks)
         {
-            ncp.OnBeginDragEvent += _nodeManager.NodeLinkDragStarted;
-            ncp.OnDropEvent += _nodeManager.NodeLinkDropped;
-            ncp.OnEndDragEvent += _nodeManager.NodeLinkDragEnded;
+            ncp.OnBeginDragEvent += nodeManager.NodeLinkDragStarted;
+            ncp.OnDropEvent += nodeManager.NodeLinkDropped;
+            ncp.OnEndDragEvent += nodeManager.NodeLinkDragEnded;
+        }
+        if(inNodeLink)
+        {
+            inNodeLink.OnBeginDragEvent += nodeManager.NodeLinkDragStarted;
+            inNodeLink.OnDropEvent += nodeManager.NodeLinkDropped;
+            inNodeLink.OnEndDragEvent += nodeManager.NodeLinkDragEnded;
         }
     }
 
-    private void OnDestroy()
+    public virtual void OnDestroy()
     {
-        foreach (NodeLink ncp in _nodeLinks)
+        foreach (NodeLink ncp in outNodeLinks)
         {
-            ncp.OnBeginDragEvent -= _nodeManager.NodeLinkDragStarted;
-            ncp.OnDropEvent -= _nodeManager.NodeLinkDropped;
-            ncp.OnEndDragEvent -= _nodeManager.NodeLinkDragEnded;
+            ncp.OnBeginDragEvent -= nodeManager.NodeLinkDragStarted;
+            ncp.OnDropEvent -= nodeManager.NodeLinkDropped;
+            ncp.OnEndDragEvent -= nodeManager.NodeLinkDragEnded;
         }
+
+        if(inNodeLink)
+        {
+            inNodeLink.OnBeginDragEvent -= nodeManager.NodeLinkDragStarted;
+            inNodeLink.OnDropEvent -= nodeManager.NodeLinkDropped;
+            inNodeLink.OnEndDragEvent -= nodeManager.NodeLinkDragEnded;
+        }
+        
         DeleteBridges();
     }
 
@@ -79,7 +96,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     public void OnPointerDown(PointerEventData eventData) { _didDrag = false; }
     public void OnBeginDrag(PointerEventData eventdata)
     {
-        if(!_isLocked)
+        if(!isLocked)
         {
             canvasGroup.blocksRaycasts = false;
             canvasGroup.alpha = 0.6f;
@@ -89,7 +106,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (eventData != null && !_isLocked)
+        if (eventData != null && !isLocked)
         {
             Vector2 delta = eventData.delta / _canvas.scaleFactor / _contentWindow.localScale;
             OnNodeDragged?.Invoke(this, delta, eventData.position);
@@ -98,7 +115,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(!_isLocked)
+        if(!isLocked)
         {
             canvasGroup.blocksRaycasts = true;
             canvasGroup.alpha = 1f;
@@ -107,7 +124,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!_didDrag && _isSelectable)
+        if (!_didDrag && isSelectable)
         {
             SetIsSelected(!_isSelected);
         }
@@ -118,7 +135,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     {
         List<NodeBridge> nodeBridges = new List<NodeBridge>();
 
-        foreach(NodeLink nl in _nodeLinks)
+        foreach(NodeLink nl in outNodeLinks)
         {
             foreach(NodeBridge nb in nl.Bridges)
             {
@@ -126,6 +143,16 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
                     nodeBridges.Add(nb);
             }
         }
+
+        if(inNodeLink)
+        {
+            foreach(NodeBridge nb in inNodeLink.Bridges)
+            {
+                if(!nodeBridges.Contains(nb))
+                    nodeBridges.Add(nb);
+            }
+        }
+        
 
         return nodeBridges;
     }
@@ -148,7 +175,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void Delete()
     {
-        if(_isDeletable)
+        if(isDeletable)
             Destroy(gameObject);
     }
 
@@ -159,6 +186,10 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public virtual Node NextNode()
     {
+        if(outNodeLinks != null && outNodeLinks.Length == 1)
+        {
+            return outNodeLinks[0].GetNextNode();
+        }
         return null;
     }
 }

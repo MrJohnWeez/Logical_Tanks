@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoveTankNode : Node
 {
+    [Header("MoveTankNode")]
     public ColorID tankColor = ColorID.Green;
     public bool moveForward = true;
     [Range(1,100)]
@@ -14,18 +15,10 @@ public class MoveTankNode : Node
     private List<TankController> _tankControllers = new List<TankController>();
     private List<Task> _tasks = new List<Task>();
 
-    private void Awake()
-    {
-        TankController[] controllers = GameObject.FindObjectsOfType<TankController>();
-        foreach(TankController tc in controllers)
-        {
-            if(tc.GetColorID == tankColor)
-                _tankControllers.Add(tc);
-        }
-    }
-
     public override IEnumerator Execute()
     {
+        Debug.Log("MoveTankNode Execute()");
+        RefreshTankList();
         foreach(TankController tc in _tankControllers)
         {
             //StartCoroutine(tc.Move(moveForward, power, durration));
@@ -40,5 +33,16 @@ public class MoveTankNode : Node
     {
         task.OnFinished -= FinishedTask;
         _tasks.Remove(task);
+    }
+
+    private void RefreshTankList()
+    {
+        _tankControllers.Clear();
+        TankController[] controllers = GameObject.FindObjectsOfType<TankController>();
+        foreach(TankController tc in controllers)
+        {
+            if(tc.GetColorID == tankColor)
+                _tankControllers.Add(tc);
+        }
     }
 }

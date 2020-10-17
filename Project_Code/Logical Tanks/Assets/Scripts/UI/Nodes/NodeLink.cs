@@ -59,4 +59,13 @@ public class NodeLink : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     {
         _nodeBridges.Clear();
     }
+
+    public Node GetNextNode()
+    {
+        if(_isOutNode && _nodeBridges.Count > 0)
+        {
+            return _nodeBridges[0].EndNodeLink.OwnerNode;
+        }
+        return null;
+    }
 }
