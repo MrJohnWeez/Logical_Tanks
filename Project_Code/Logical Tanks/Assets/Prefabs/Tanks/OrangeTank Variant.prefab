@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4244300347109989181, guid: 80ad01a23cc6ed74996c403a40841c8d, type: 3}
+      propertyPath: _bulletPrefab
+      value: 
+      objectReference: {fileID: 4572505866694902343, guid: 26ad50c279ea0094d8b79dc66ea43933, type: 3}
     - target: {fileID: 7045826689495713341, guid: 80ad01a23cc6ed74996c403a40841c8d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -53,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7045826689495751645, guid: 80ad01a23cc6ed74996c403a40841c8d, type: 3}
       propertyPath: m_Name
-      value: OrangeTank
+      value: OrangeTank Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7045826689498006693, guid: 80ad01a23cc6ed74996c403a40841c8d, type: 3}
       propertyPath: m_Materials.Array.data[0]

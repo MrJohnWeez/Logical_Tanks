@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 126873474556378504}
   - component: {fileID: 6823080262982508420}
   - component: {fileID: 7698406221518871150}
+  - component: {fileID: 6476035660804899175}
   m_Layer: 0
   m_Name: GreenTank
   m_TagString: Untagged
@@ -308,8 +309,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.8, y: 1.9100887, z: 2.45}
-  m_Center: {x: 0, y: 0.9606361, z: -0.07000005}
+  m_Size: {x: 1.6167434, y: 1.879546, z: 2.2400188}
+  m_Center: {x: 0, y: 0.9453648, z: -0.07190895}
 --- !u!114 &7698406221518871150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +323,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4337c9c5f71c644aea1c5f79be0f17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tankTurret: {fileID: 215757964086821263}
+  _coloredModel: {fileID: 215757964086821263}
+--- !u!114 &6476035660804899175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215757964086821255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75ca578bb30ca6b4d871188ac74922d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletStart: {fileID: 5388458846901391908}
+  _bulletPrefab: {fileID: 668766633360165693, guid: 403c222ff5035e8488c1817b2b8f2ab9, type: 3}
+  _hitMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1 &215757964086821259
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +403,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.000010554959, y: 1.0796412, z: -0.025321364}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 5477646986873777713}
   m_Father: {fileID: 215757964086926443}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -439,3 +458,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5388458846901391908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5477646986873777713}
+  m_Layer: 0
+  m_Name: BulletStart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5477646986873777713
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5388458846901391908}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.000010554959, y: 0.38735878, z: 0.15132137}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 215757964086926447}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

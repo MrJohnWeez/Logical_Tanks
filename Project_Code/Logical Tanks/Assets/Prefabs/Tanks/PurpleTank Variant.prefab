@@ -53,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2733746781603368842, guid: 37de419c489294b4ba4ede1a4125df92, type: 3}
       propertyPath: m_Name
-      value: PurpleTank
+      value: PurpleTank Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2733746781605368050, guid: 37de419c489294b4ba4ede1a4125df92, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -79,5 +79,9 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: c4c5f95d06932564c8672b4bafeb1b28, type: 2}
+    - target: {fileID: 9138153907686772586, guid: 37de419c489294b4ba4ede1a4125df92, type: 3}
+      propertyPath: _bulletPrefab
+      value: 
+      objectReference: {fileID: 3735674216818407251, guid: 17e93456b2fd27a4a84d4b8cdaa181d1, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37de419c489294b4ba4ede1a4125df92, type: 3}

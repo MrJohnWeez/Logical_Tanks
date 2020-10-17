@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 215757964086821255, guid: 597c23db713be204aa2fc134b801f047, type: 3}
       propertyPath: m_Name
-      value: RedTank
+      value: RedTank Variant
       objectReference: {fileID: 0}
     - target: {fileID: 215757964086926439, guid: 597c23db713be204aa2fc134b801f047, type: 3}
       propertyPath: m_LocalPosition.x
@@ -75,5 +75,9 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bf3fb50dac9206642a4f10f702223c77, type: 2}
+    - target: {fileID: 6476035660804899175, guid: 597c23db713be204aa2fc134b801f047, type: 3}
+      propertyPath: _bulletPrefab
+      value: 
+      objectReference: {fileID: 5861712217635767774, guid: d86d8ed0d989e3043a38bd2395857062, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 597c23db713be204aa2fc134b801f047, type: 3}
