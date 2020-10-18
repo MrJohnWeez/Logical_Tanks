@@ -324,6 +324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coloredModel: {fileID: 215757964086821263}
+  _turret: {fileID: 215757964086821263}
 --- !u!114 &6476035660804899175
 MonoBehaviour:
   m_ObjectHideFlags: 0

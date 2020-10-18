@@ -7,10 +7,12 @@ public class TankController : ColoredObject
 {
     [SerializeField] private GameObject _turret = null;
     private const float RELOAD_DELAY = 0.3f;
+    private const float MAX_MOVE_SPEED = 2.0f; // m/s
+    private const float MAX_TURN_SPEED = 1.0f; // deg/s
+    private const float MAX_TURN_TURRET_SPEED = 1.0f; // deg/s
     private bool _isMoving = false;
     private bool _isTurning = false;
-    private float _maxMoveSpeed = 2.0f; // m/s
-    private float _maxTurnSpeed = 1.0f; // deg/s
+    
     private TankShooter _tankShooter = null;
 
     public override void Awake()
@@ -25,54 +27,58 @@ public class TankController : ColoredObject
         if(!_isTurning) { rigidBody.angularVelocity = Vector3.zero; }
     }
 
-    public IEnumerator Move(bool moveForward, int power, float durration)
+    public IEnumerator MoveTank(float meters)
     {
         Debug.Log("Tank Controller Move()");
-        float durrationLeft = durration;
-        power *= moveForward ? 1 : -1;
+        float durrationLeft = meters;
         _isMoving = true;
-        float speed = power / 100.0f * _maxMoveSpeed;
         while(durrationLeft > 0)
         {
             durrationLeft -= Time.deltaTime;
-            rigidBody.velocity = transform.forward * speed;
+            rigidBody.velocity = transform.forward * MAX_MOVE_SPEED ;
             yield return new WaitForFixedUpdate();
         }
         _isMoving = false;
     }
 
-    public IEnumerator Turn(bool turnRight, int degrees, float durration)
+    public IEnumerator RotateTank(float degrees)
     {
-        // Debug.Log("Tank Controller Move()");
-        // float durrationLeft = durration;
-        // degrees *= turnRight ? 1 : -1;
-        // _isTurning = true;
-        // float speed = power / 100.0f * _maxMoveSpeed;
-        // while(durrationLeft > 0)
-        // {
-        //     durrationLeft -= Time.deltaTime;
-        //     rigidBody.velocity = transform.forward * speed;
-        //     yield return new WaitForFixedUpdate();
-        // }
-        // _isTurning = false;
-        yield return new WaitForFixedUpdate();
+        Debug.Log("Tank Controller Rotate()");
+        float scalar = degrees / 90 / MAX_TURN_SPEED;
+        float currentDurration = 0;
+        Quaternion oldRotation = rigidBody.rotation;
+        Quaternion targetRotation = rigidBody.rotation * Quaternion.AngleAxis(degrees, Vector3.up);
+        _isTurning = true;
+        while(currentDurration < 1)
+        {
+            currentDurration += Time.deltaTime / scalar;
+            if(currentDurration > 1)
+                currentDurration = 1;
+
+            rigidBody.MoveRotation(Quaternion.Lerp(oldRotation, targetRotation, currentDurration));
+            yield return new WaitForFixedUpdate();
+        }
+        _isTurning = false;
     }
 
-    public IEnumerator TurnTurret(bool turnRight, int degrees, float durration)
+    public IEnumerator RotateTurret(float degrees)
     {
-        Debug.Log("Tank Controller TurnTurret()");
-        float currentDurration = durration;
-        degrees *= turnRight ? 1 : -1;
-        while(currentDurration > 0)
+        float scalar = degrees / 90 / MAX_TURN_TURRET_SPEED;
+        float currentDurration = 0;
+        Quaternion oldRotation = _turret.transform.rotation;
+        Quaternion targetRotation = _turret.transform.rotation * Quaternion.AngleAxis(degrees, Vector3.up);
+        while(currentDurration < 1)
         {
-            float turnAmount = Mathf.Lerp(0, (float)degrees, currentDurration);
-            _turret.transform.Rotate(transform.up, turnAmount, Space.Self);
-            currentDurration += Time.deltaTime;
+            currentDurration += Time.deltaTime / scalar;
+            if(currentDurration > 1)
+                currentDurration = 1;
+
+            _turret.transform.rotation = Quaternion.Lerp(oldRotation, targetRotation, currentDurration);
             yield return new WaitForEndOfFrame();
         }
     }
 
-    public IEnumerator Shoot()
+    public IEnumerator ShootTurret()
     {
         _tankShooter.Shoot(boxCollider);
         yield return new WaitForSeconds(RELOAD_DELAY);

@@ -78,4 +78,5 @@ public class DraggableUI : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public virtual void OnDragged(Vector2 delta, PointerEventData eventData) { }
     public virtual void OnSelection(bool isNowSelected) { }
+    protected virtual void SetHighlightColor(Color newColor) { _nicerOutline.effectColor = newColor; }
 }

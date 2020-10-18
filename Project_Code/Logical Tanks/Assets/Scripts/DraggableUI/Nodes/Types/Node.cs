@@ -2,14 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using System;
-using UnityEngine.UI.Extensions;
 
 // TODO:
-// Organize Node classes
-// Make tank shoot
-// Make tank rotate
+// Shooting a wall of same color will make the wall break
+// The goal of the game is open the gate and get the correct number of tanks through
+// Once the gate opens it stays open
+// Wires (cubes) connect logic gates together
+// Each pressure plate determines what cables activate
+// Some pressure plates can be activated by all other only the same color
+// Can still shoot tanks and walls
+
+
+
+// Make logic gates
+// Animate color of lines and nodes to signify movement
+// Runtime tank ray from turret
+// Create variable node
+//
 // Make tutorial level
 // Make win condition (All enemy tanks are eliminated)
 // Set up game scripts
