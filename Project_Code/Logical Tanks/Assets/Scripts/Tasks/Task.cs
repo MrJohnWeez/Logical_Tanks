@@ -1,22 +1,7 @@
-﻿/// TaskManager.cs
-/// Copyright (c) 2011, Ken Rockot  <k-e-n-@-REMOVE-CAPS-AND-HYPHENS-oz.gs>.  All rights reserved.
+﻿/// Copyright (c) 2011, Ken Rockot  <k-e-n-@-REMOVE-CAPS-AND-HYPHENS-oz.gs>.  All rights reserved.
 /// Everyone is granted non-exclusive license to do anything at all with this code.
 ///
 /// This is a new coroutine interface for Unity.
-///
-/// The motivation for this is twofold:
-///
-/// 1. The existing coroutine API provides no means of stopping specific
-///    coroutines; StopCoroutine only takes a string argument, and it stops
-///    all coroutines started with that same string; there is no way to stop
-///    coroutines which were started directly from an enumerator.  This is
-///    not robust enough and is also probably pretty inefficient.
-///
-/// 2. StartCoroutine and friends are MonoBehaviour methods.  This means
-///    that in order to start a coroutine, a user typically must have some
-///    component reference handy.  There are legitimate cases where such a
-///    constraint is inconvenient.  This implementation hides that
-///    constraint from the user.
 ///
 /// Example usage:
 ///
@@ -57,9 +42,11 @@ using UnityEngine;
 using System.Collections;
 using System;
 
+/// <summary>
 /// A Task object represents a coroutine.  Tasks can be started, paused, and stopped.
 /// It is an error to attempt to start a task that has been stopped or which has
 /// naturally terminated.
+/// </summary>
 public class Task
 {
     public Action<Task, bool> OnFinished; // Action for termination subscribers. True if call to Stop() was made.
@@ -81,31 +68,12 @@ public class Task
             Start();
     }
 
-    /// <summary>
-    /// Begins execution of the coroutine
-    /// </summary>
-    public void Start()
-    {
-        task.Start();
-    }
-
-    /// <summary>
-    /// Discontinues execution of the coroutine at its next yield.
-    /// </summary>
-    public void Stop()
-    {
-        task.Stop();
-    }
-
-    public void Pause()
-    {
-        task.Pause();
-    }
-
-    public void Unpause()
-    {
-        task.Unpause();
-    }
+    /// <summary> Begins execution of the coroutine </summary>
+    public void Start() { task.Start(); }
+    /// <summary> Discontinues execution of the coroutine at its next yield. </summary>
+    public void Stop() { task.Stop(); }
+    public void Pause() { task.Pause(); }
+    public void Unpause() { task.Unpause(); }
 
     void TaskFinished(bool manual)
     {

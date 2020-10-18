@@ -4,43 +4,17 @@ using System;
 
 public class TaskState
     {
-        public bool Running
-        {
-            get
-            {
-                return running;
-            }
-        }
-
-        public bool Paused
-        {
-            get
-            {
-                return paused;
-            }
-        }
-
+        public bool Running { get { return running; } }
+        public bool Paused { get { return paused; } }
         public Action<bool> OnFinished;
+        private IEnumerator coroutine;
+        private bool running;
+        private bool paused;
+        private bool stopped;
 
-        IEnumerator coroutine;
-        bool running;
-        bool paused;
-        bool stopped;
-
-        public TaskState(IEnumerator c)
-        {
-            coroutine = c;
-        }
-
-        public void Pause()
-        {
-            paused = true;
-        }
-
-        public void Unpause()
-        {
-            paused = false;
-        }
+        public TaskState(IEnumerator c) { coroutine = c; }
+        public void Pause() { paused = true; }
+        public void Unpause() { paused = false; }
 
         public void Start()
         {
@@ -54,7 +28,7 @@ public class TaskState
             running = false;
         }
 
-        IEnumerator CallWrapper()
+        private IEnumerator CallWrapper()
         {
             yield return null;
             IEnumerator e = coroutine;
