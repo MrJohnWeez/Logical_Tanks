@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveTankNode : TankNode
 {
     [Header("MoveTankNode")]
-    [Range(0.1f,5.0f)]
+    [Range(-5.0f,5.0f)]
     public float distance = 1;
     
     public override IEnumerator Execute()

@@ -5,11 +5,8 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Make Count loop node
-// Make foreach node
-// Make Function node
-// Make dummy node
-// Lock node interaction when running
+// Combine node manager and compiler using classes
+// Fix Scroll on node menu?
 // Make nodes pretty
 // Make better menu on how to add nodes
 // Animate color of node lines and nodes to signify movement
@@ -32,14 +29,13 @@ using System;
 
 
 // List of features:
-// - Move Tank Node
-// - Rotate Tank Node
-// - Rotate Turret Node
-// - Shoot Tank Node
-// - Count loop Node
-// - Function Node
-// - ForEach Tank color Node
-// - Dummy Node
+// - **** Move Tank Node
+// - **** Rotate Tank Node
+// - **** Rotate Turret Node
+// - **** Shoot Tank Node
+// - **** Repeat loop Node
+// - **** Function Node
+// - **** Dummy Node
 // - Pressure Plate that triggers for all
 // - Pressure plate that triggers for tank color
 // - Black Door raises and lowers dependent on power received
@@ -69,7 +65,7 @@ public class Node : DraggableUI
         EnableNodeLinkInteractions(inNodeLink);
         EnableNodeLinkInteractions(outNodeLink);
     }
-    
+
     public virtual void OnDestroy()
     {
         DisableNodeLinkInteractions(inNodeLink);
@@ -82,7 +78,7 @@ public class Node : DraggableUI
     public override void OnDragged(Vector2 delta, PointerEventData eventData) { OnNodeDragged?.Invoke(this, delta, eventData.position); }
     public override void OnSelection(bool isNowSelected) { NodeSelectionChanged?.Invoke(this); }
 
-    public List<NodeBridge> GetAllBridges()
+    public virtual List<NodeBridge> GetAllBridges()
     {
         List<NodeBridge> nodeBridges = new List<NodeBridge>();
         if (outNodeLink)

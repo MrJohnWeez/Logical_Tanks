@@ -42,7 +42,7 @@ public class TankController : ColoredObject
 
     public IEnumerator RotateTank(float degrees)
     {
-        float scalar = degrees / 90 / MAX_TURN_SPEED;
+        float scalar = Mathf.Abs(degrees) / 90 / MAX_TURN_SPEED;
         float currentDurration = 0;
         Quaternion oldRotation = rigidBody.rotation;
         Quaternion targetRotation = rigidBody.rotation * Quaternion.AngleAxis(degrees, Vector3.up);

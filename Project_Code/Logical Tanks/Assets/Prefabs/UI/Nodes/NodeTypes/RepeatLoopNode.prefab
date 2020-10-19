@@ -199,7 +199,8 @@ MonoBehaviour:
   isDeletable: 1
   inNodeLink: {fileID: 7144769517910403055}
   outNodeLink: {fileID: 7841608180685631937}
-  loopNodeLink: {fileID: 3213528447661800130}
+  functionNodeLink: {fileID: 3213528447661800130}
+  loopTimes: 2
 --- !u!114 &3303887836500175384
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class RotateTankTurretNode : TankNode
 {
     [Header("RotateTankTurretNode")]
-    [Range(1.0f,90.0f)]
+    [Range(-90.0f,90.0f)]
     [SerializeField] private float _degrees = 90;
     
     public override IEnumerator Execute()
