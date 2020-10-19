@@ -5,25 +5,46 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Shooting a wall of same color will make the wall break
-// The goal of the game is open the gate and get the correct number of tanks through
-// Once the gate opens it stays open
-// Wires (cubes) connect logic gates together
-// Each pressure plate determines what cables activate
-// Some pressure plates can be activated by all other only the same color
-// Can still shoot tanks and walls
+// Make Count loop node
+// Make foreach node
+// Make Function node
+// Make dummy node
+// Make nodes pretty
+// Make better menu on how to add nodes
+// Animate color of node lines and nodes to signify movement
 
+// Add Pressure plates
+// Add Wall black gates
+// Functional on logic gates
+// Add Capacitor
 
-
-// Make logic gates
-// Animate color of lines and nodes to signify movement
+// Remove colored bullets
 // Runtime tank ray from turret
-// Create variable node
-//
-// Make tutorial level
-// Make win condition (All enemy tanks are eliminated)
+// Make turrets
+
+// Set goal to get all tanks within win area
 // Set up game scripts
-// Add colored pressure plate that can activate colored land mines
+// Make POC tutorial level with all functionalities
+
+
+
+
+
+// List of features:
+// - Move Tank Node
+// - Rotate Tank Node
+// - Rotate Turret Node
+// - Shoot Tank Node
+// - Count loop Node
+// - Function Node
+// - ForEach Tank color Node
+// - Dummy Node
+// - Pressure Plate that triggers for all
+// - Pressure plate that triggers for tank color
+// - Black Door raises and lowers dependent on power received
+// - Logic gates (And,Or,Not)
+// - Capacitor (Charges for time it is powered then discharges)
+// - Turret will shoot when tank detected but does not rotate (variable cooldown)
 
 public class Node : DraggableUI
 {
