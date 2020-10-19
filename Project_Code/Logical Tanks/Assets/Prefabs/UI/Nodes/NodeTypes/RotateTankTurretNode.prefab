@@ -197,8 +197,7 @@ MonoBehaviour:
   isSelectable: 1
   isDeletable: 1
   inNodeLink: {fileID: 7956918135743781291}
-  outNodeLinks:
-  - {fileID: 7032663225608556421}
+  outNodeLink: {fileID: 7032663225608556421}
   tankColor: 3
   _degrees: 90
 --- !u!114 &2346991807194862684

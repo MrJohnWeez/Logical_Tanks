@@ -196,8 +196,7 @@ MonoBehaviour:
   isSelectable: 1
   isDeletable: 0
   inNodeLink: {fileID: 0}
-  outNodeLinks:
-  - {fileID: 1041097527691348315}
+  outNodeLink: {fileID: 1041097527691348315}
 --- !u!114 &5726751075954283138
 MonoBehaviour:
   m_ObjectHideFlags: 0

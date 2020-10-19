@@ -29,7 +29,6 @@ public class TankController : ColoredObject
 
     public IEnumerator MoveTank(float meters)
     {
-        Debug.Log("Tank Controller Move()");
         float durrationLeft = meters;
         _isMoving = true;
         while(durrationLeft > 0)
@@ -43,7 +42,6 @@ public class TankController : ColoredObject
 
     public IEnumerator RotateTank(float degrees)
     {
-        Debug.Log("Tank Controller Rotate()");
         float scalar = degrees / 90 / MAX_TURN_SPEED;
         float currentDurration = 0;
         Quaternion oldRotation = rigidBody.rotation;

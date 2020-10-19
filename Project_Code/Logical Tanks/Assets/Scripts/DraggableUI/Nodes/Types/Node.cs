@@ -9,6 +9,7 @@ using System;
 // Make foreach node
 // Make Function node
 // Make dummy node
+// Lock node interaction when running
 // Make nodes pretty
 // Make better menu on how to add nodes
 // Animate color of node lines and nodes to signify movement
@@ -53,7 +54,7 @@ public class Node : DraggableUI
 
     [Header("NodeBase")]
     [SerializeField] protected NodeLink inNodeLink = null;
-    [SerializeField] protected NodeLink[] outNodeLinks = null;
+    [SerializeField] protected NodeLink outNodeLink = null;
     protected NodeManager nodeManager;
     protected List<Task> tasks = new List<Task>();
 
@@ -65,36 +66,16 @@ public class Node : DraggableUI
         contentWindow = GameObject.FindGameObjectWithTag("ContentWindow").GetComponent<RectTransform>();
         NodeSelectionChanged += nodeManager.NodeSelectionChanged;
         OnNodeDragged += nodeManager.NodeOnDrag;
-        foreach (NodeLink ncp in outNodeLinks)
-        {
-            ncp.OnBeginDragEvent += nodeManager.NodeLinkDragStarted;
-            ncp.OnDropEvent += nodeManager.NodeLinkDropped;
-            ncp.OnEndDragEvent += nodeManager.NodeLinkDragEnded;
-        }
-        if (inNodeLink)
-        {
-            inNodeLink.OnBeginDragEvent += nodeManager.NodeLinkDragStarted;
-            inNodeLink.OnDropEvent += nodeManager.NodeLinkDropped;
-            inNodeLink.OnEndDragEvent += nodeManager.NodeLinkDragEnded;
-        }
+        EnableNodeLinkInteractions(inNodeLink);
+        EnableNodeLinkInteractions(outNodeLink);
     }
-
+    
     public virtual void OnDestroy()
     {
+        DisableNodeLinkInteractions(inNodeLink);
+        DisableNodeLinkInteractions(outNodeLink);
         NodeSelectionChanged -= nodeManager.NodeSelectionChanged;
         OnNodeDragged -= nodeManager.NodeOnDrag;
-        foreach (NodeLink ncp in outNodeLinks)
-        {
-            ncp.OnBeginDragEvent -= nodeManager.NodeLinkDragStarted;
-            ncp.OnDropEvent -= nodeManager.NodeLinkDropped;
-            ncp.OnEndDragEvent -= nodeManager.NodeLinkDragEnded;
-        }
-        if (inNodeLink)
-        {
-            inNodeLink.OnBeginDragEvent -= nodeManager.NodeLinkDragStarted;
-            inNodeLink.OnDropEvent -= nodeManager.NodeLinkDropped;
-            inNodeLink.OnEndDragEvent -= nodeManager.NodeLinkDragEnded;
-        }
         DeleteBridges();
     }
 
@@ -104,25 +85,20 @@ public class Node : DraggableUI
     public List<NodeBridge> GetAllBridges()
     {
         List<NodeBridge> nodeBridges = new List<NodeBridge>();
-
-        foreach (NodeLink nl in outNodeLinks)
+        if (outNodeLink)
         {
-            foreach (NodeBridge nb in nl.Bridges)
+            foreach (NodeBridge nb in outNodeLink.Bridges)
             {
-                if (!nodeBridges.Contains(nb))
-                    nodeBridges.Add(nb);
+                if (!nodeBridges.Contains(nb)) { nodeBridges.Add(nb); }
             }
         }
-
         if (inNodeLink)
         {
             foreach (NodeBridge nb in inNodeLink.Bridges)
             {
-                if (!nodeBridges.Contains(nb))
-                    nodeBridges.Add(nb);
+                if (!nodeBridges.Contains(nb)) { nodeBridges.Add(nb); }
             }
         }
-
         return nodeBridges;
     }
 
@@ -141,23 +117,32 @@ public class Node : DraggableUI
             Destroy(gameObject);
     }
 
-    public virtual IEnumerator Execute()
-    {
-        yield return null;
-    }
-
-    public virtual Node NextNode()
-    {
-        if (outNodeLinks != null && outNodeLinks.Length == 1)
-        {
-            return outNodeLinks[0].GetNextNode();
-        }
-        return null;
-    }
+    public virtual IEnumerator Execute() { yield return null; }
+    public virtual Node NextNode() { return outNodeLink ? outNodeLink.GetNextNode() : null; }
 
     protected virtual void FinishedTask(Task task, bool wasForceStopped)
     {
         task.OnFinished -= FinishedTask;
         tasks.Remove(task);
+    }
+
+    protected void EnableNodeLinkInteractions(NodeLink nodeLink)
+    {
+        if (nodeLink)
+        {
+            nodeLink.OnBeginDragEvent += nodeManager.NodeLinkDragStarted;
+            nodeLink.OnDropEvent += nodeManager.NodeLinkDropped;
+            nodeLink.OnEndDragEvent += nodeManager.NodeLinkDragEnded;
+        }
+    }
+
+    protected void DisableNodeLinkInteractions(NodeLink nodeLink)
+    {
+        if (nodeLink)
+        {
+            nodeLink.OnBeginDragEvent -= nodeManager.NodeLinkDragStarted;
+            nodeLink.OnDropEvent -= nodeManager.NodeLinkDropped;
+            nodeLink.OnEndDragEvent -= nodeManager.NodeLinkDragEnded;
+        }
     }
 }

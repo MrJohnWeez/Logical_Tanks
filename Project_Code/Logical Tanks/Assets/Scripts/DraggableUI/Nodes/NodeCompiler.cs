@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class NodeCompiler : MonoBehaviour
 {
-    List<Node> _connectedNodes = new List<Node>();
     [SerializeField] private Node _startNode = null;
     private Task _currentTask = null;
     private Node _currentNode = null;
@@ -28,10 +27,7 @@ public class NodeCompiler : MonoBehaviour
                 _currentTask = new Task(_currentNode.Execute());
                 _currentTask.OnFinished += NextNode;
             }
-            else
-            {
-                Debug.Log("Finished!");
-            }
+            else { Debug.Log("Finished!"); }
         }
     }
 
