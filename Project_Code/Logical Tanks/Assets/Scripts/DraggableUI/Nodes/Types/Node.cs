@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Combine node manager and compiler using classes
-// Fix Scroll on node menu?
 // Make nodes pretty
 // Make better menu on how to add nodes
 // Animate color of node lines and nodes to signify movement

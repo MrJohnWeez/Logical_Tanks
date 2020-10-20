@@ -11,23 +11,25 @@ public class NodeManager : MonoBehaviour
         NodeSelected
     }
 
+    [Header("NodeManager")]
     [SerializeField] private GameObject _nodeBridgePrefab = null;
-    [SerializeField] private GameObject _nodeBridgesParent = null;
     [SerializeField] private GameObject _nodePrefab = null;
-    [SerializeField] private GameObject _nodesParent = null;
     [SerializeField] private RectTransform _nodeSpawnPoint = null;
-
     private State _state = State.Idle;
     private List<NodeBridge> _currentNodeBridges = new List<NodeBridge>();
+    private GameObject _nodeBridgesParent = null;
     private List<Node> _selectedNodes = new List<Node>();
     private RectTransform _scrollView;
     private RectTransform _contentWindow;
-    private NodeCompiler _nodeCompiler = null;
 
     private void Awake()
     {
         _scrollView = GameObject.FindGameObjectWithTag("NodeScrollView").GetComponent<RectTransform>();
         _contentWindow = GameObject.FindGameObjectWithTag("ContentWindow").GetComponent<RectTransform>();
+        _nodeBridgesParent = new GameObject("NodeBridgesParent");
+        _nodeBridgesParent.transform.SetParent(transform.parent);
+        _nodeBridgesParent.transform.position = transform.position;
+        transform.SetAsLastSibling();   // Must keep bridges behind nodes
     }
 
     public void NodeLinkDragStarted(NodeLink nodeLink)
@@ -146,7 +148,7 @@ public class NodeManager : MonoBehaviour
 
     public void AddNode()
     {
-        GameObject newNode = Instantiate(_nodePrefab, _nodesParent.transform);
+        GameObject newNode = Instantiate(_nodePrefab, transform);
         RectTransform rt = newNode.GetComponent<RectTransform>();
         rt.localScale = _contentWindow.localScale;
         rt.position = _nodeSpawnPoint.position;

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NodeCompiler : MonoBehaviour
+public class NodeCompiler : NodeManager
 {
+    [Header("NodeCompiler")]
     [SerializeField] private Node _startNode = null;
     [SerializeField] private GameObject _uiBlocker = null;
     private Task _currentTask = null;
