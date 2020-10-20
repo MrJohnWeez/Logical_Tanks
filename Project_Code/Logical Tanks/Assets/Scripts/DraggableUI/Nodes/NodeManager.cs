@@ -21,9 +21,11 @@ public class NodeManager : MonoBehaviour
     private List<Node> _selectedNodes = new List<Node>();
     private RectTransform _scrollView;
     private RectTransform _contentWindow;
+    private Camera _mainCamera = null;
 
     private void Awake()
     {
+        _mainCamera = Camera.main;
         _scrollView = GameObject.FindGameObjectWithTag("NodeScrollView").GetComponent<RectTransform>();
         _contentWindow = GameObject.FindGameObjectWithTag("ContentWindow").GetComponent<RectTransform>();
         _nodeBridgesParent = new GameObject("NodeBridgesParent");
@@ -111,7 +113,7 @@ public class NodeManager : MonoBehaviour
             for (int i = 0; i < _selectedNodes.Count; i++)
             {
                 _selectedNodes[i].GetRect.anchoredPosition += delta;
-                if (!_scrollView.GetWorldSapceRect().Contains(pointerPos) || !_contentWindow.Contains(_selectedNodes[i].GetRect))
+                if (!RectTransformUtility.RectangleContainsScreenPoint(_scrollView, pointerPos) || !_contentWindow.Contains(_selectedNodes[i].GetRect))
                 {
                     otherMovesWereValid = false;
                     // Undo all changed deltas
@@ -128,7 +130,7 @@ public class NodeManager : MonoBehaviour
         if (otherMovesWereValid && (_selectedNodes.Count == 0 || !_selectedNodes.Contains(node)))
         {
             node.GetRect.anchoredPosition += delta;
-            if (!_scrollView.GetWorldSapceRect().Contains(pointerPos) || !_contentWindow.Contains(node.GetRect))
+            if (!RectTransformUtility.RectangleContainsScreenPoint(_scrollView, pointerPos) || !_contentWindow.Contains(node.GetRect))
             {
                 node.GetRect.anchoredPosition -= delta;
             }
