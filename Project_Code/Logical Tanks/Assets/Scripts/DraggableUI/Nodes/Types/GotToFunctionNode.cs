@@ -38,7 +38,8 @@ public class GotToFunctionNode : Node
 
     public override IEnumerator Execute()
     {
-        _currentNode = functionNodeLink.GetNextNode();
+        SetThenResetColor(iterationColor, 1.0f);
+        _currentNode = functionNodeLink.GetNextNode(true);
         while(_currentNode)
         {
             _currentTask = new Task(_currentNode.Execute());

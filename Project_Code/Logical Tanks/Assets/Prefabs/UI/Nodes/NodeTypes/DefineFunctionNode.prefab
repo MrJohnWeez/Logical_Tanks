@@ -191,7 +191,6 @@ GameObject:
   - component: {fileID: 8864506520295704138}
   - component: {fileID: 8864506520295704183}
   - component: {fileID: 6084887204050308966}
-  - component: {fileID: 4683777726310434850}
   m_Layer: 5
   m_Name: DefineFunctionNode
   m_TagString: Untagged
@@ -288,18 +287,3 @@ MonoBehaviour:
   inNodeLink: {fileID: 1152509706009036245}
   outNodeLink: {fileID: 3138464847303675}
   _functionName: Function1
---- !u!114 &4683777726310434850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8864506520295704136}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db125c7de00668f4e98849d0aaf366d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 1, b: 0.9560251, a: 1}
-  m_EffectDistance: {x: 5, y: 5}
-  m_UseGraphicAlpha: 1

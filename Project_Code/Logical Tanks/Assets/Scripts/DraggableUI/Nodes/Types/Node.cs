@@ -111,8 +111,13 @@ public class Node : DraggableUI
             Destroy(gameObject);
     }
 
-    public virtual IEnumerator Execute() { yield return null; }
-    public virtual Node NextNode() { return outNodeLink ? outNodeLink.GetNextNode() : null; }
+    public virtual IEnumerator Execute()
+    {
+        SetThenResetColor(iterationColor, iterationFadeTime);
+        yield return null;
+    }
+
+    public virtual Node NextNode() { return outNodeLink ? outNodeLink.GetNextNode(true) : null; }
 
     protected virtual void FinishedTask(Task task, bool wasForceStopped)
     {

@@ -102,7 +102,6 @@ GameObject:
   - component: {fileID: 1916037744922516020}
   - component: {fileID: 1916037744922515977}
   - component: {fileID: 1916037744922516023}
-  - component: {fileID: 2346991807194862684}
   m_Layer: 5
   m_Name: RotateTankTurretNode
   m_TagString: Untagged
@@ -200,21 +199,6 @@ MonoBehaviour:
   outNodeLink: {fileID: 7032663225608556421}
   tankColor: 3
   _degrees: 90
---- !u!114 &2346991807194862684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1916037744922516022}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db125c7de00668f4e98849d0aaf366d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 1, b: 0.9560251, a: 1}
-  m_EffectDistance: {x: 5, y: 5}
-  m_UseGraphicAlpha: 1
 --- !u!1 &7970032396106441832
 GameObject:
   m_ObjectHideFlags: 0

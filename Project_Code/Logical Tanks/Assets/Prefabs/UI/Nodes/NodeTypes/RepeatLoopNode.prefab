@@ -102,7 +102,6 @@ GameObject:
   - component: {fileID: 1719485329352778864}
   - component: {fileID: 1719485329352778829}
   - component: {fileID: 5171125621103890599}
-  - component: {fileID: 3303887836500175384}
   m_Layer: 5
   m_Name: RepeatLoopNode
   m_TagString: Untagged
@@ -201,21 +200,6 @@ MonoBehaviour:
   outNodeLink: {fileID: 7841608180685631937}
   functionNodeLink: {fileID: 3213528447661800130}
   loopTimes: 2
---- !u!114 &3303887836500175384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1719485329352778866}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db125c7de00668f4e98849d0aaf366d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 1, b: 0.9560251, a: 1}
-  m_EffectDistance: {x: 5, y: 5}
-  m_UseGraphicAlpha: 1
 --- !u!1 &4758080192446814745
 GameObject:
   m_ObjectHideFlags: 0

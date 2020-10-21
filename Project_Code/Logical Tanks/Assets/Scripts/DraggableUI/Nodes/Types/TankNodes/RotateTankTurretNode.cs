@@ -10,6 +10,7 @@ public class RotateTankTurretNode : TankNode
     
     public override IEnumerator Execute()
     {
+        RunNodeColor(true);
         RefreshTankList();
         foreach(TankController tc in tankControllers)
         {
@@ -18,5 +19,6 @@ public class RotateTankTurretNode : TankNode
             tasks.Add(newTask);
         }
         yield return new WaitUntil (() => tasks.Count == 0);
+        RunNodeColor(false);
     }
 }

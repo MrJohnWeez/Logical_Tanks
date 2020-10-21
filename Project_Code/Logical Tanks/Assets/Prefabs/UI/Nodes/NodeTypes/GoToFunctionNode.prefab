@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3674771589141812378}
   - component: {fileID: 3674771589141812391}
   - component: {fileID: 6790722880872017390}
-  - component: {fileID: 646965810517777138}
   m_Layer: 5
   m_Name: GoToFunctionNode
   m_TagString: Untagged
@@ -28,7 +27,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3674771589141812376}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -111,21 +110,6 @@ MonoBehaviour:
   inNodeLink: {fileID: 5045418633769588485}
   outNodeLink: {fileID: 5328113047787520299}
   functionNodeLink: {fileID: 7040610220868166307}
---- !u!114 &646965810517777138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3674771589141812376}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db125c7de00668f4e98849d0aaf366d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 1, b: 0.9568627, a: 1}
-  m_EffectDistance: {x: 8, y: 8}
-  m_UseGraphicAlpha: 0
 --- !u!1001 &4955645811162351388
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,7 +12,6 @@ public class NodeCompiler : NodeManager
 
     public void Play()
     {
-        Debug.Log("Playing!");
         _uiBlocker.SetActive(true);
         _currentNode = _startNode;
         _currentTask = new Task(_currentNode.Execute());
@@ -26,14 +25,12 @@ public class NodeCompiler : NodeManager
             _currentNode = _currentNode.NextNode();
             if(_currentNode != null)
             {
-                Debug.Log("Running node: " + _currentNode.name);
                 _currentTask = new Task(_currentNode.Execute());
                 _currentTask.OnFinished += NextNode;
             }
             else
             {
                 _uiBlocker.SetActive(false);
-                Debug.Log("Finished!");
             }
         }
     }

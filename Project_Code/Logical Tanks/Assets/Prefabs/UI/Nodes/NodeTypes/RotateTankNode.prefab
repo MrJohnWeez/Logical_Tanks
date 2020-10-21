@@ -102,7 +102,6 @@ GameObject:
   - component: {fileID: 4746193209990737018}
   - component: {fileID: 4746193209990736967}
   - component: {fileID: 3062641817402737753}
-  - component: {fileID: 8924110413149020690}
   m_Layer: 5
   m_Name: RotateTankNode
   m_TagString: Untagged
@@ -200,21 +199,6 @@ MonoBehaviour:
   outNodeLink: {fileID: 4239002497707899339}
   tankColor: 3
   _degrees: 90
---- !u!114 &8924110413149020690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4746193209990737016}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db125c7de00668f4e98849d0aaf366d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 1, b: 0.9560251, a: 1}
-  m_EffectDistance: {x: 5, y: 5}
-  m_UseGraphicAlpha: 1
 --- !u!1 &6091219115494979275
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,10 +28,11 @@ public class NodeManager : MonoBehaviour
         _mainCamera = Camera.main;
         _scrollView = GameObject.FindGameObjectWithTag("NodeScrollView").GetComponent<RectTransform>();
         _contentWindow = GameObject.FindGameObjectWithTag("ContentWindow").GetComponent<RectTransform>();
+        int index = transform.GetSiblingIndex();
         _nodeBridgesParent = new GameObject("NodeBridgesParent");
         _nodeBridgesParent.transform.SetParent(transform.parent);
         _nodeBridgesParent.transform.position = transform.position;
-        transform.SetAsLastSibling();   // Must keep bridges behind nodes
+        _nodeBridgesParent.transform.SetSiblingIndex(index);
     }
 
     public void NodeLinkDragStarted(NodeLink nodeLink)

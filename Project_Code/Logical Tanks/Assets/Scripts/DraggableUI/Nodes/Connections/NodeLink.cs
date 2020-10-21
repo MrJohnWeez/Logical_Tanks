@@ -60,10 +60,14 @@ public class NodeLink : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         _nodeBridges.Clear();
     }
 
-    public Node GetNextNode()
+    public Node GetNextNode(bool displayCall = false)
     {
         if(_isOutNode && _nodeBridges.Count > 0)
         {
+            if(displayCall)
+            {
+                _nodeBridges[0].SetThenResetColor(_nodeBridges[0].iterationColor, _nodeBridges[0].iterationFadeTime);
+            }
             return _nodeBridges[0].EndNodeLink.OwnerNode;
         }
         return null;

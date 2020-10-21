@@ -102,7 +102,6 @@ GameObject:
   - component: {fileID: 7942888351193749498}
   - component: {fileID: 7942888351193749447}
   - component: {fileID: 3105015173246951255}
-  - component: {fileID: 6070813192886360466}
   m_Layer: 5
   m_Name: DummyNode
   m_TagString: Untagged
@@ -198,21 +197,6 @@ MonoBehaviour:
   isDeletable: 1
   inNodeLink: {fileID: 1927903553020105829}
   outNodeLink: {fileID: 1528097975815684683}
---- !u!114 &6070813192886360466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7942888351193749496}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db125c7de00668f4e98849d0aaf366d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 1, b: 0.9560251, a: 1}
-  m_EffectDistance: {x: 5, y: 5}
-  m_UseGraphicAlpha: 1
 --- !u!1 &8894407847128206667
 GameObject:
   m_ObjectHideFlags: 0

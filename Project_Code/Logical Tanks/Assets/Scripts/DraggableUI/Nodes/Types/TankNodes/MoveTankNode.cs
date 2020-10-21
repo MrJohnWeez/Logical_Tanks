@@ -10,8 +10,7 @@ public class MoveTankNode : TankNode
     
     public override IEnumerator Execute()
     {
-        SetHighlightColor(Color.yellow);
-        _nicerOutline.enabled = true;
+        RunNodeColor(true);
         RefreshTankList();
         foreach(TankController tc in tankControllers)
         {
@@ -20,6 +19,6 @@ public class MoveTankNode : TankNode
             tasks.Add(newTask);
         }
         yield return new WaitUntil (() => tasks.Count == 0);
-        _nicerOutline.enabled = false;
+        RunNodeColor(false);
     }
 }

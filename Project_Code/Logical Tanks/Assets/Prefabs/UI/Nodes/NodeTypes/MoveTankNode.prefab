@@ -102,7 +102,6 @@ GameObject:
   - component: {fileID: 4176276503590989988}
   - component: {fileID: 4176276503590989977}
   - component: {fileID: 4176276503590989985}
-  - component: {fileID: 283744274701041356}
   m_Layer: 5
   m_Name: MoveTankNode
   m_TagString: Untagged
@@ -200,21 +199,6 @@ MonoBehaviour:
   outNodeLink: {fileID: 4826511376578569493}
   tankColor: 3
   distance: 1
---- !u!114 &283744274701041356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4176276503590989990}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db125c7de00668f4e98849d0aaf366d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 1, b: 0.9560251, a: 1}
-  m_EffectDistance: {x: 5, y: 5}
-  m_UseGraphicAlpha: 1
 --- !u!1 &5618523434847211256
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI.Extensions;
 
 [RequireComponent(typeof(UILineRenderer))]
-public class NodeBridge : MonoBehaviour
+public class NodeBridge : ColorChanger
 {
     public NodeLink StartNodeLink => _startNodeLink;
     public NodeLink EndNodeLink => _endNodeLink;
@@ -21,11 +21,44 @@ public class NodeBridge : MonoBehaviour
     private Vector3 _currStartPos;
     private Vector3 _currEndPos;
 
-    
-
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         _uILineRenderer = GetComponent<UILineRenderer>();
+    }
+
+    public override void Start()
+    {
+        _startColor = _uILineRenderer.color;
+    }
+
+    protected override IEnumerator ChangeColor(Color newColor, float fadeTime = 0)
+    {
+        if(waitingTask != null)
+        {
+            currentTask?.Stop();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            currentTask = waitingTask;
+            waitingTask = null;
+        }
+
+        float currentTime = 0;
+        Color startColor = _uILineRenderer.color;
+        while(currentTime < fadeTime && fadeTime > 0)
+        {
+            currentTime += Time.deltaTime;
+            _uILineRenderer.color = Color.Lerp(startColor, newColor, currentTime / fadeTime);
+            yield return new WaitForFixedUpdate();
+        }
+        _uILineRenderer.color = newColor;
+        yield return null;
+    }
+
+    public override void SetThenResetColor(Color newColor, float fadeTime = 0)
+    {
+        _uILineRenderer.color = newColor;
+        ResetColor(fadeTime);
     }
 
     private void Update()

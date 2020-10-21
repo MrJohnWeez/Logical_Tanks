@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1091306284644944937}
   - component: {fileID: 1091306284644944916}
   - component: {fileID: 8815882422214678405}
-  - component: {fileID: 3828072846696579649}
   m_Layer: 5
   m_Name: ShootTankTurretNode
   m_TagString: Untagged
@@ -110,21 +109,6 @@ MonoBehaviour:
   inNodeLink: {fileID: 8925744713784233910}
   outNodeLink: {fileID: 8370839946527299992}
   tankColor: 3
---- !u!114 &3828072846696579649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1091306284644944939}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db125c7de00668f4e98849d0aaf366d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 1, b: 0.9560251, a: 1}
-  m_EffectDistance: {x: 5, y: 5}
-  m_UseGraphicAlpha: 1
 --- !u!1 &1905197843179771544
 GameObject:
   m_ObjectHideFlags: 0
