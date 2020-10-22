@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 
-[RequireComponent(typeof(UILineRenderer))]
-public class NodeBridge : ColorChanger
+public class NodeBridge : ColoredLine
 {
     public NodeLink StartNodeLink => _startNodeLink;
     public NodeLink EndNodeLink => _endNodeLink;
 
     private const float PERCENTAGE_OF_DISTANCE = 0.4f;
     private const float MAX_DISTANCE = 640f;
-    private UILineRenderer _uILineRenderer;
     private RectTransform _startRect = null;
     private RectTransform _endRect = null;
     private NodeLink _startNodeLink = null;
@@ -20,17 +18,6 @@ public class NodeBridge : ColorChanger
     private Vector3 _prevEndPos;
     private Vector3 _currStartPos;
     private Vector3 _currEndPos;
-
-    public override void Awake()
-    {
-        base.Awake();
-        _uILineRenderer = GetComponent<UILineRenderer>();
-    }
-
-    public override void Start()
-    {
-        _startColor = _uILineRenderer.color;
-    }
 
     protected override IEnumerator ChangeColor(Color newColor, float fadeTime = 0)
     {
@@ -42,17 +29,19 @@ public class NodeBridge : ColorChanger
             currentTask = waitingTask;
             waitingTask = null;
         }
-
-        float currentTime = 0;
-        Color startColor = _uILineRenderer.color;
-        while(currentTime < fadeTime && fadeTime > 0)
+        if(_uILineRenderer != null)
         {
-            currentTime += Time.deltaTime;
-            _uILineRenderer.color = Color.Lerp(startColor, newColor, currentTime / fadeTime);
-            yield return new WaitForFixedUpdate();
+            float currentTime = 0;
+            Color startColor = _uILineRenderer.color;
+            while(currentTime < fadeTime && fadeTime > 0)
+            {
+                currentTime += Time.deltaTime;
+                _uILineRenderer.color = Color.Lerp(startColor, newColor, currentTime / fadeTime);
+                yield return new WaitForFixedUpdate();
+            }
+            _uILineRenderer.color = newColor;
         }
-        _uILineRenderer.color = newColor;
-        yield return null;
+        currentTask = null;
     }
 
     public override void SetThenResetColor(Color newColor, float fadeTime = 0)
@@ -92,8 +81,9 @@ public class NodeBridge : ColorChanger
         }
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
+        base.OnDestroy();
         RemoveAllLinks();
     }
 

@@ -6,7 +6,7 @@ using UnityEngine.UI.Extensions;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(CanvasGroup))]
-public class DraggableUI : ColorChanger, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class DraggableUI : ColoredImage, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField] protected bool isLocked = false;
     [SerializeField] protected bool isSelectable = true;
@@ -31,12 +31,8 @@ public class DraggableUI : ColorChanger, IPointerDownHandler, IPointerUpHandler,
     public virtual void OnPointerDown(PointerEventData eventData) { _didDrag = false; }
     public virtual void OnBeginDrag(PointerEventData eventdata)
     {
-        if (!isLocked)
-        {
-            canvasGroup.blocksRaycasts = false;
-            canvasGroup.alpha = 0.6f;
-            _didDrag = true;
-        }
+        canvasGroup.blocksRaycasts = isLocked;
+        _didDrag = !isLocked;
     }
 
     public virtual void OnDrag(PointerEventData eventData)
@@ -52,11 +48,7 @@ public class DraggableUI : ColorChanger, IPointerDownHandler, IPointerUpHandler,
 
     public virtual void OnEndDrag(PointerEventData eventData)
     {
-        if (!isLocked)
-        {
-            canvasGroup.blocksRaycasts = true;
-            canvasGroup.alpha = 1f;
-        }
+        canvasGroup.blocksRaycasts = !isLocked;
     }
 
     public virtual void OnPointerUp(PointerEventData eventData)
@@ -70,7 +62,7 @@ public class DraggableUI : ColorChanger, IPointerDownHandler, IPointerUpHandler,
     public virtual void SetIsSelected(bool newSelectedState)
     {
         _isSelected = newSelectedState;
-        if(newSelectedState)
+        if (newSelectedState)
             SetColor(highlightColor);
         else
             ResetColor();
@@ -81,7 +73,7 @@ public class DraggableUI : ColorChanger, IPointerDownHandler, IPointerUpHandler,
     public virtual void OnSelection(bool isNowSelected) { }
     protected virtual void RunNodeColor(bool start)
     {
-        if(start)
+        if (start)
             SetColor(iterationColor);
         else
             ResetColor(iterationFadeTime);

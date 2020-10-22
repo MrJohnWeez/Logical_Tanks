@@ -11,6 +11,9 @@ public class RepeatLoopNode : GotToFunctionNode
         int currentIteration = 0;
         while(currentIteration < loopTimes)
         {
+            if(currentIteration != 0)
+                yield return new WaitForSeconds(0.5f);
+
             SetThenResetColor(iterationColor, iterationFadeTime);
             _currentNode = functionNodeLink.GetNextNode(true);
             while(_currentNode)

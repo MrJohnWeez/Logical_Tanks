@@ -64,8 +64,9 @@ public class Node : DraggableUI
         EnableNodeLinkInteractions(outNodeLink);
     }
 
-    public virtual void OnDestroy()
+    public override void OnDestroy()
     {
+        base.OnDestroy();
         DisableNodeLinkInteractions(inNodeLink);
         DisableNodeLinkInteractions(outNodeLink);
         NodeSelectionChanged -= nodeManager.NodeSelectionChanged;

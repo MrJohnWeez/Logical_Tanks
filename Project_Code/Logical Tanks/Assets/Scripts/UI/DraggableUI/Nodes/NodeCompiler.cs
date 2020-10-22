@@ -13,6 +13,7 @@ public class NodeCompiler : NodeManager
     public void Play()
     {
         _uiBlocker.SetActive(true);
+        ClearSelected();
         _currentNode = _startNode;
         _currentTask = new Task(_currentNode.Execute());
         _currentTask.OnFinished += NextNode;

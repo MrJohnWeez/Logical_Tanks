@@ -4,22 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-[RequireComponent(typeof(Image))]
 public class ColorChanger : MonoBehaviour
 {
+    [Header("ColorChanger")]
     [HideInInspector] [NonSerialized] public float iterationFadeTime = 1.0f;
     [HideInInspector] [NonSerialized] public Color highlightColor = Color.blue;
     [HideInInspector] [NonSerialized] public Color iterationColor = Color.yellow;
     protected Color _startColor;
-    protected Image _image = null;
     protected Task currentTask = null;
     protected Task waitingTask = null;
 
-    public virtual void Awake() { _image = GetComponent<Image>(); }
-    public virtual void Start()
+    public virtual void OnDestroy()
     {
-        if (_image)
-            _startColor = _image.color;
+        currentTask?.Stop();
+        waitingTask = null;
+        currentTask = null;
     }
 
     protected virtual IEnumerator ChangeColor(Color newColor, float fadeTime = 0)
@@ -32,16 +31,6 @@ public class ColorChanger : MonoBehaviour
             currentTask = waitingTask;
             waitingTask = null;
         }
-
-        float currentTime = 0;
-        Color startColor = _image.color;
-        while (currentTime < fadeTime && fadeTime > 0)
-        {
-            currentTime += Time.deltaTime;
-            _image.color = Color.Lerp(startColor, newColor, currentTime / fadeTime);
-            yield return new WaitForFixedUpdate();
-        }
-        _image.color = newColor;
         currentTask = null;
     }
 
@@ -57,7 +46,6 @@ public class ColorChanger : MonoBehaviour
 
     public virtual void SetThenResetColor(Color newColor, float fadeTime = 0)
     {
-        _image.color = newColor;
         ResetColor(fadeTime);
     }
 }
