@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Make nodes pretty
 // Make better menu on how to add nodes
 // Animate color of node lines and nodes to signify movement
 
