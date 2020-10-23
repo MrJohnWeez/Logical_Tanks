@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3674771589141812391}
   - component: {fileID: 6790722880872017390}
   m_Layer: 5
-  m_Name: GoToFunctionNode
+  m_Name: JumpToNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,7 +225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5298961698340431113, guid: ca031e51db338954faaa6eca8669fc74, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 62.328674
+      value: 41.764633
       objectReference: {fileID: 0}
     - target: {fileID: 5298961698340431113, guid: ca031e51db338954faaa6eca8669fc74, type: 3}
       propertyPath: m_SizeDelta.y
@@ -257,7 +257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8314840858952204753, guid: ca031e51db338954faaa6eca8669fc74, type: 3}
       propertyPath: m_text
-      value: TO FUNCTION
+      value: RUN FIRST
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca031e51db338954faaa6eca8669fc74, type: 3}
@@ -607,7 +607,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1493872631686603456, guid: 58c0709848362f441af254742b27cefb, type: 3}
       propertyPath: m_text
-      value: Go To Function
+      value: Jump To
       objectReference: {fileID: 0}
     - target: {fileID: 5094585571408332602, guid: 58c0709848362f441af254742b27cefb, type: 3}
       propertyPath: m_Name

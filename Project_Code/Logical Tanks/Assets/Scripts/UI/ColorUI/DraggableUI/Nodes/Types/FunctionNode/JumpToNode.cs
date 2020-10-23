@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GotToFunctionNode : FunctionNode
+public class JumpToNode : FunctionNode
 {
     public override IEnumerator Execute()
     {
