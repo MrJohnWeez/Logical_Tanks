@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RepeatLoopNode : GotToFunctionNode
+public class RepeatLoopNode : FunctionNode
 {
-    [SerializeField] protected int loopTimes = 2;
+    [SerializeField] protected FloatSelection floatSelection = null;
 
     public override IEnumerator Execute()
     {
         int currentIteration = 0;
+        int loopTimes = (int)floatSelection.GetValue();
         while(currentIteration < loopTimes)
         {
             if(currentIteration != 0)

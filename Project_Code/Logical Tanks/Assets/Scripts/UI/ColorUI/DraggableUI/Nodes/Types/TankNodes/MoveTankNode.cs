@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveTankNode : TankNode
-{
-    [Header("MoveTankNode")]
-    [Range(-5.0f,5.0f)]
-    public float distance = 1;
-    
+{    
     public override IEnumerator Execute()
     {
         RunNodeColor(true);
         RefreshTankList();
+        float distance = floatSelection.GetValue();
         foreach(TankController tc in tankControllers)
         {
             Task newTask = new Task(tc.MoveTank(distance));

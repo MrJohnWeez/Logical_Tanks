@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateTankNode : TankNode
-{
-    [Header("RotateTankNode")]
-    [Range(-90.0f,90.0f)]
-    [SerializeField] private float _degrees = 90;
-    
+public class RotateTankTurretNode : TankNode
+{    
     public override IEnumerator Execute()
     {
         RunNodeColor(true);
         RefreshTankList();
+        float degrees = floatSelection.GetValue();
         foreach(TankController tc in tankControllers)
         {
-            Task newTask = new Task(tc.RotateTank(_degrees));
+            Task newTask = new Task(tc.RotateTurret(degrees));
             newTask.OnFinished += FinishedTask;
             tasks.Add(newTask);
         }

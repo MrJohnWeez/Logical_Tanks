@@ -14,4 +14,9 @@ public class FloatSelection : ValueSelection
         base.ValueChanged(increase);
         _label.text = currentValue.ToString() + postFix;
     }
+
+    public float GetValue()
+    {
+        return currentValue;
+    }
 }

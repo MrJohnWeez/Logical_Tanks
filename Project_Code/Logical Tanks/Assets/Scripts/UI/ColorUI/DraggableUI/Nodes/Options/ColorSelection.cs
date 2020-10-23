@@ -16,4 +16,9 @@ public class ColorSelection : ValueSelection
         _colorID = (ColorID)(int)currentValue;
         _image.color = _colorList[(int)currentValue].color;
     }
+
+    public ColorID GetColorID()
+    {
+        return _colorID;
+    }
 }
