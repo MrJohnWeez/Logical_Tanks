@@ -14,8 +14,9 @@ public class ColorChanger : MonoBehaviour
     protected Task currentTask = null;
     protected Task waitingTask = null;
 
-    public virtual void OnDestroy()
+    protected virtual void OnDestroy()
     {
+        StopAllCoroutines();
         currentTask?.Stop();
         waitingTask = null;
         currentTask = null;

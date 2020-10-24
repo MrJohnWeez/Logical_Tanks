@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Make better menu on how to add nodes
-// Animate color of node lines and nodes to signify movement
+// Fix tank movement type use movepostion instead of velocity
+// Animate color of node lines and nodes to signify movement (Slowly per line?)
 
 // Add Pressure plates
 // Add Wall black gates
@@ -51,7 +51,7 @@ public class Node : DraggableUI
     protected NodeManager nodeManager;
     protected List<Task> tasks = new List<Task>();
 
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         nodeManager = GameObject.FindObjectOfType<NodeManager>();
@@ -63,7 +63,7 @@ public class Node : DraggableUI
         EnableNodeLinkInteractions(outNodeLink);
     }
 
-    public override void OnDestroy()
+    protected override void OnDestroy()
     {
         base.OnDestroy();
         DisableNodeLinkInteractions(inNodeLink);

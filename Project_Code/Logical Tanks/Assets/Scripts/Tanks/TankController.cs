@@ -29,12 +29,13 @@ public class TankController : ColoredObject
 
     public IEnumerator MoveTank(float meters)
     {
-        float durrationLeft = meters;
+        float durrationLeft = Mathf.Abs(meters);
         _isMoving = true;
         while(durrationLeft > 0)
         {
             durrationLeft -= Time.deltaTime;
-            rigidBody.velocity = transform.forward * MAX_MOVE_SPEED ;
+            Vector3 direction = meters > 0 ? transform.forward : transform.forward * -1;
+            rigidBody.velocity = direction * MAX_MOVE_SPEED ;
             yield return new WaitForFixedUpdate();
         }
         _isMoving = false;
@@ -61,7 +62,7 @@ public class TankController : ColoredObject
 
     public IEnumerator RotateTurret(float degrees)
     {
-        float scalar = degrees / 90 / MAX_TURN_TURRET_SPEED;
+        float scalar = Mathf.Abs(degrees) / 90 / MAX_TURN_TURRET_SPEED;
         float currentDurration = 0;
         Quaternion oldRotation = _turret.transform.rotation;
         Quaternion targetRotation = _turret.transform.rotation * Quaternion.AngleAxis(degrees, Vector3.up);

@@ -8,13 +8,13 @@ public class FunctionNode : Node
     protected Task _currentTask = null;
     protected Node _currentNode = null;
 
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         EnableNodeLinkInteractions(functionNodeLink);
     }
 
-    public override void OnDestroy()
+    protected override void OnDestroy()
     {
         DisableNodeLinkInteractions(functionNodeLink);
         base.OnDestroy();

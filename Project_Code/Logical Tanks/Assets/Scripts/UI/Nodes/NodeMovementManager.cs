@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NodeManager : MonoBehaviour
+public class NodeMovementManager : MonoBehaviour
 {
     public enum State
     {
@@ -11,27 +11,26 @@ public class NodeManager : MonoBehaviour
         NodeSelected
     }
 
-    [Header("NodeManager")]
+    [Header("NodeMovementManager")]
+    [SerializeField] protected Transform _nodesParent = null;
     [SerializeField] private GameObject _nodeBridgePrefab = null;
-    [SerializeField] private GameObject _nodePrefab = null;
-    [SerializeField] private RectTransform _nodeSpawnPoint = null;
+    protected List<NodeBridge> _currentNodeBridges = new List<NodeBridge>();
+    protected GameObject _nodeBridgesParent = null;
+    protected List<Node> _selectedNodes = new List<Node>();
+    protected RectTransform _scrollView;
+    protected RectTransform _contentWindow;
     private State _state = State.Idle;
-    private List<NodeBridge> _currentNodeBridges = new List<NodeBridge>();
-    private GameObject _nodeBridgesParent = null;
-    private List<Node> _selectedNodes = new List<Node>();
-    private RectTransform _scrollView;
-    private RectTransform _contentWindow;
-    private Camera _mainCamera = null;
 
-    private void Awake()
+    public int SelectedNodeCount => _selectedNodes.Count;
+
+    protected virtual void Awake()
     {
-        _mainCamera = Camera.main;
         _scrollView = GameObject.FindGameObjectWithTag("NodeScrollView").GetComponent<RectTransform>();
         _contentWindow = GameObject.FindGameObjectWithTag("ContentWindow").GetComponent<RectTransform>();
-        int index = transform.GetSiblingIndex();
+        int index = _nodesParent.GetSiblingIndex();
         _nodeBridgesParent = new GameObject("NodeBridgesParent");
-        _nodeBridgesParent.transform.SetParent(transform.parent);
-        _nodeBridgesParent.transform.position = transform.position;
+        _nodeBridgesParent.transform.SetParent(_nodesParent.parent);
+        _nodeBridgesParent.transform.position = _nodesParent.position;
         _nodeBridgesParent.transform.SetSiblingIndex(index);
     }
 
@@ -97,7 +96,7 @@ public class NodeManager : MonoBehaviour
         _state = State.Idle;
     }
 
-    public void NodeSelectionChanged(Node node)
+    public virtual void NodeSelectionChanged(Node node)
     {
         if (node.IsSelected)
             _selectedNodes.Add(node);
@@ -136,32 +135,6 @@ public class NodeManager : MonoBehaviour
                 node.GetRect.anchoredPosition -= delta;
             }
         }
-    }
-
-    public void DeleteSelectedNodes()
-    {
-        // Delete bridges, links, nodes that are selected
-        for (int i = _selectedNodes.Count - 1; i >= 0; i--)
-        {
-            Node nodeToDelete = _selectedNodes[i];
-            nodeToDelete.Delete();
-            nodeToDelete?.SetIsSelected(false);
-        }
-    }
-
-    public void AddNode()
-    {
-        GameObject newNode = Instantiate(_nodePrefab, transform);
-        RectTransform rt = newNode.GetComponent<RectTransform>();
-        rt.localScale = _contentWindow.localScale;
-        rt.position = _nodeSpawnPoint.position;
-        newNode.transform.SetParent(_contentWindow, true);
-    }
-
-    public void ClearSelected()
-    {
-        for (int i = _selectedNodes.Count - 1; i >= 0; i--)
-            _selectedNodes[i].SetIsSelected(false);
     }
 
     private NodeBridge CreateNewBridgeObject()

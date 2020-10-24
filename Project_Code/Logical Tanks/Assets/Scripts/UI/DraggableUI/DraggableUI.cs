@@ -21,7 +21,7 @@ public class DraggableUI : ColoredImage, IPointerDownHandler, IPointerUpHandler,
     public RectTransform GetRect => _rectTransform;
     public bool IsSelected => _isSelected;
 
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         canvasGroup = GetComponent<CanvasGroup>();

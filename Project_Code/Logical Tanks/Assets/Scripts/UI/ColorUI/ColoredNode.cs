@@ -8,7 +8,7 @@ public class ColoredImage : ColorChanger
     [Header("ColoredImage")]
     [SerializeField] protected Image image = null;
 
-    public virtual void Awake()
+    protected virtual void Awake()
     {
         _startColor = image.color;
     }
@@ -24,14 +24,17 @@ public class ColoredImage : ColorChanger
             waitingTask = null;
         }
         float currentTime = 0;
-        Color startColor = image.color;
-        while (currentTime < fadeTime && fadeTime > 0)
+        if(image)
         {
-            currentTime += Time.deltaTime;
-            image.color = Color.Lerp(startColor, newColor, currentTime / fadeTime);
-            yield return new WaitForFixedUpdate();
+            Color startColor = image.color;
+            while (currentTime < fadeTime && fadeTime > 0)
+            {
+                currentTime += Time.deltaTime;
+                image.color = Color.Lerp(startColor, newColor, currentTime / fadeTime);
+                yield return new WaitForFixedUpdate();
+            }
+            image.color = newColor;
         }
-        image.color = newColor;
         currentTask = null;
     }
 

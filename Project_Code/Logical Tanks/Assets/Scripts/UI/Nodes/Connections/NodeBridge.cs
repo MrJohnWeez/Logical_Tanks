@@ -81,7 +81,7 @@ public class NodeBridge : ColoredLine
         }
     }
 
-    public override void OnDestroy()
+    protected override void OnDestroy()
     {
         base.OnDestroy();
         RemoveAllLinks();
