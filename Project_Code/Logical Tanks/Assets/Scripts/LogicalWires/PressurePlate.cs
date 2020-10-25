@@ -5,11 +5,9 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
 public class PressurePlate : MonoBehaviour
-{
-    public Action OnActivate;
-    public Action OnDeactivate;
-    
+{    
     [SerializeField] private GameObject _coloredObject = null;
+    [SerializeField] private Cable[] _cables = null;
     private ColorID _colorID = ColorID.Green;
     private BoxCollider _trigger = null;
 
@@ -29,8 +27,7 @@ public class PressurePlate : MonoBehaviour
         TankController tankController = other.gameObject.GetComponent<TankController>();
         if(tankController && tankController.GetColorID == _colorID)
         {
-            Debug.Log("Activated pressure plate with color: " + _colorID);
-            OnActivate?.Invoke();
+            foreach(Cable cable in _cables) { cable?.SetEnergy(true); }
         }
     }
 
@@ -39,8 +36,7 @@ public class PressurePlate : MonoBehaviour
         TankController tankController = other.gameObject.GetComponent<TankController>();
         if(tankController && tankController.GetColorID == _colorID)
         {
-            Debug.Log("Deactivated pressure plate with color: " + _colorID);
-            OnDeactivate?.Invoke();
+            foreach(Cable cable in _cables) { cable?.SetEnergy(false); }
         }
     }
 }

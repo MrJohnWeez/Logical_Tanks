@@ -14,7 +14,7 @@ public class ValueSelection : MonoBehaviour
     [SerializeField] protected float currentValue = 1;
     [SerializeField] protected bool shouldLoop = false;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _leftButton.onClick.AddListener(() => ValueChanged(false));
         _rightButton.onClick.AddListener(() => ValueChanged(true));

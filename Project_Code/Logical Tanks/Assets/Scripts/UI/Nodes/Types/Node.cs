@@ -5,19 +5,16 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Add Pressure plates
-// Add Wall black gates
-// Functional on logic gates
-// Add Capacitor
-
 // Runtime tank ray from turret
 // Make turrets
+// Fix tank moving through walls
 // Animate color of node lines and nodes to signify movement (Slowly per line?)
-// Save game data?
-
 // Set goal to get all tanks within win area
+
 // Set up game scripts
 // Make POC tutorial level with all functionalities
+// Add wait node?
+// Save game data?
 
 
 
@@ -31,11 +28,11 @@ using System;
 // - **** Repeat loop Node
 // - **** Function Node
 // - **** Dummy Node
-// - Pressure Plate that triggers for all
-// - Pressure plate that triggers for tank color
-// - Black Door raises and lowers dependent on power received
-// - Logic gates (And,Or,Not)
-// - Capacitor (Charges for time it is powered then discharges)
+// - **** Pressure Plate that triggers for all
+// - **** Pressure plate that triggers for tank color
+// - **** Black Door raises and lowers dependent on power received
+// - **** Logic gates (And,Or,Not)
+// - **** Capacitor (Charges for time it is powered then discharges)
 // - Turret will shoot when tank detected but does not rotate (variable cooldown)
 
 public class Node : DraggableUI

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveTankNode : TankNode
-{    
+{
     public override IEnumerator Execute()
     {
         RunNodeColor(true);

@@ -9,6 +9,12 @@ public class FloatSelection : ValueSelection
     [SerializeField] private TMP_Text _label = null;
     [SerializeField] private string postFix = " m";
 
+    protected override void Awake()
+    {
+        base.Awake();
+        _label.text = currentValue.ToString() + postFix;
+    }
+
     protected override void ValueChanged(bool increase)
     {
         base.ValueChanged(increase);
