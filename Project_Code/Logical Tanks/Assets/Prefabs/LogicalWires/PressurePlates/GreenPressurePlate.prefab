@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7516129543445154321}
   - component: {fileID: 3921620976137059411}
   - component: {fileID: 7362613473917811126}
-  - component: {fileID: 4569690675112061693}
   m_Layer: 0
   m_Name: MinePad
   m_TagString: Untagged
@@ -28,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3351084088270053259}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.025, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.05, z: 0.7}
+  m_LocalScale: {x: 1, y: 0.05, z: 1}
   m_Children: []
   m_Father: {fileID: 4044630865682426696}
   m_RootOrder: 1
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4569690675112061693
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3351084088270053259}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4044630864403487823
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,11 +90,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4044630864403487816}
-  - component: {fileID: 1296608092778767038}
   - component: {fileID: 8570986688858284679}
-  - component: {fileID: 2401965339034627591}
+  - component: {fileID: 3896460601419820447}
   m_Layer: 0
-  m_Name: LandMine
+  m_Name: GreenPressurePlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,28 +107,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4044630864403487823}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3.23}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4044630865682426696}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1296608092778767038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4044630864403487823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 966015b966126384d9f931a26f005d83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _landMineID: 4
-  _mineCenter: {fileID: 4044630865175074000}
-  _model: {fileID: 4044630865682426703}
 --- !u!65 &8570986688858284679
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -155,21 +125,21 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.2, z: 0.8}
-  m_Center: {x: 0, y: 0.1, z: 0}
---- !u!135 &2401965339034627591
-SphereCollider:
+  m_Size: {x: 1, y: 0.3, z: 1}
+  m_Center: {x: 0, y: 0.15, z: 0}
+--- !u!114 &3896460601419820447
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4044630864403487823}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d2bb5bce2ecfa478f76112b166b9d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coloredObject: {fileID: 4044630865175074000}
 --- !u!1 &4044630865175074000
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +151,6 @@ GameObject:
   - component: {fileID: 4044630865175074001}
   - component: {fileID: 4044630865175074092}
   - component: {fileID: 4044630865175074003}
-  - component: {fileID: 4044630865175074002}
   m_Layer: 0
   m_Name: MineCenter
   m_TagString: Untagged
@@ -197,8 +166,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4044630865175074000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.075, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.05, z: 0.3}
+  m_LocalPosition: {x: 0, y: 0.06, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.025, z: 0.7}
   m_Children: []
   m_Father: {fileID: 4044630865682426696}
   m_RootOrder: 0
@@ -230,7 +199,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c1631c62c03632445bfdb478781b7043, type: 2}
+  - {fileID: 2100000, guid: 3ec049980e7fc9747aca94dd3ddbfb58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -252,19 +221,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4044630865175074002
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4044630865175074000}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4044630865682426703
 GameObject:
   m_ObjectHideFlags: 0

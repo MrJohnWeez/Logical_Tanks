@@ -29,13 +29,19 @@ public class TankController : ColoredObject
 
     public IEnumerator MoveTank(float meters)
     {
-        float durrationLeft = Mathf.Abs(meters);
+        meters *= MAX_MOVE_SPEED;
+        float scalar = Mathf.Abs(meters) / MAX_MOVE_SPEED;
+        float currentDurration = 0;
+        Vector3 oldPos = rigidBody.position;
+        Vector3 targetPos = rigidBody.position + transform.forward * meters;
         _isMoving = true;
-        while(durrationLeft > 0)
+        while(currentDurration < 1)
         {
-            durrationLeft -= Time.deltaTime;
-            Vector3 direction = meters > 0 ? transform.forward : transform.forward * -1;
-            rigidBody.velocity = direction * MAX_MOVE_SPEED ;
+            currentDurration += Time.deltaTime / scalar;
+            if(currentDurration > 1)
+                currentDurration = 1;
+
+            rigidBody.MovePosition(Vector3.Lerp(oldPos, targetPos, currentDurration));
             yield return new WaitForFixedUpdate();
         }
         _isMoving = false;

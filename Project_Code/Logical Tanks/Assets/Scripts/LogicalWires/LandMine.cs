@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-[RequireComponent(typeof(SphereCollider))]
 public class LandMine : MonoBehaviour
 {
     public ColorID GetColorID => _colorID;

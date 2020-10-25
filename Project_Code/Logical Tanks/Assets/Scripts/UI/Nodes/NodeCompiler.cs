@@ -40,13 +40,15 @@ public class NodeCompiler : NodeArrangementManager
 
     protected override void Start()
     {
-        base.Start();
-        ChangeUIToPlaying(false);
+        if(!_isPlaying)
+        {
+            base.Start();
+            ChangeUIToPlaying(false);
+        }
     }
 
     public void Play()
     {
-        Debug.Log("Playing");
         ChangeUIToPlaying(true);
         _currentNode = _startNode;
         _currentTask = new Task(_currentNode.Execute());
@@ -59,7 +61,6 @@ public class NodeCompiler : NodeArrangementManager
         {
             Play();
         }
-        Debug.Log("Step");
         _isStepping = true;
         EnableContinueButton(true);
     }
@@ -70,16 +71,13 @@ public class NodeCompiler : NodeArrangementManager
         {
             _isStepping = false;
             EnableContinueButton(false);
-            Debug.Log("Continue");
         }
     }
 
     public void Stop()
     {
-        Debug.Log("Stopped");
         _currentTask?.Stop();
         ChangeUIToPlaying(false);
-        
     }
 
     private void NextNode(Task task, bool forceStopped)

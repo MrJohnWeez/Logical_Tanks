@@ -5,17 +5,15 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Fix tank movement type use movepostion instead of velocity
-// Animate color of node lines and nodes to signify movement (Slowly per line?)
-
 // Add Pressure plates
 // Add Wall black gates
 // Functional on logic gates
 // Add Capacitor
 
-// Remove colored bullets
 // Runtime tank ray from turret
 // Make turrets
+// Animate color of node lines and nodes to signify movement (Slowly per line?)
+// Save game data?
 
 // Set goal to get all tanks within win area
 // Set up game scripts
