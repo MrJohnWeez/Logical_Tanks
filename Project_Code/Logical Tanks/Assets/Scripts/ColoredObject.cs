@@ -6,13 +6,15 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class ColoredObject : MonoBehaviour
 {
-    public ColorID GetColorID => _colorID;
+    [Header("ColoredObject")]
     protected Rigidbody rigidBody = null;
     protected BoxCollider boxCollider = null;
     [SerializeField] private GameObject _coloredModel = null;
     private ColorID _colorID = ColorID.Green;
 
-    public virtual void Awake()
+    public ColorID GetColorID => _colorID;
+
+    protected virtual void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();

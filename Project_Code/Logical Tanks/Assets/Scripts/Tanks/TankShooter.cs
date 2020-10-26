@@ -7,15 +7,28 @@ public class TankShooter : MonoBehaviour
     [SerializeField] private GameObject _bulletStart = null;
     [SerializeField] private GameObject _bulletPrefab = null;
     [SerializeField] private LayerMask _hitMask;
+    [SerializeField] private GameObject _runtimeRayPrefab = null;
+    private LineRenderer _lineRenderRay = null;
     private List<Bullet> _bullets = new List<Bullet>();
+    private RaycastHit hit;
+    private Vector3 forwardDirection;
+
+    private void Start()
+    {
+        GameObject lineRenderGO = Instantiate(_runtimeRayPrefab, _bulletStart.transform);
+        lineRenderGO.transform.position = _bulletStart.transform.position;
+        lineRenderGO.transform.rotation = _bulletStart.transform.rotation;
+        _lineRenderRay = lineRenderGO.GetComponent<LineRenderer>();
+    }
 
     private void Update()
     {
-        RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(_bulletStart.transform.position, _bulletStart.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, _hitMask))
+        forwardDirection = _bulletStart.transform.TransformDirection(Vector3.forward);
+        if (Physics.Raycast(_bulletStart.transform.position, forwardDirection, out hit, Mathf.Infinity, _hitMask))
         {
-            Debug.DrawRay(_bulletStart.transform.position, _bulletStart.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+            _lineRenderRay.SetPosition(0, hit.point);
+            _lineRenderRay.SetPosition(1, hit.point - forwardDirection * hit.distance);
         }
     }
 

@@ -12,10 +12,9 @@ public class TankController : ColoredObject
     private const float MAX_TURN_TURRET_SPEED = 1.0f; // deg/s
     private bool _isMoving = false;
     private bool _isTurning = false;
-    
     private TankShooter _tankShooter = null;
 
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         _tankShooter = GetComponent<TankShooter>();
@@ -37,12 +36,16 @@ public class TankController : ColoredObject
         _isMoving = true;
         while(currentDurration < 1)
         {
-            currentDurration += Time.deltaTime / scalar;
-            if(currentDurration > 1)
-                currentDurration = 1;
+            if(rigidBody)
+            {
+                currentDurration += Time.deltaTime / scalar;
+                if(currentDurration > 1)
+                    currentDurration = 1;
 
-            rigidBody.MovePosition(Vector3.Lerp(oldPos, targetPos, currentDurration));
-            yield return new WaitForFixedUpdate();
+                rigidBody.MovePosition(Vector3.Lerp(oldPos, targetPos, currentDurration));
+                yield return new WaitForFixedUpdate();
+            }
+            else { break; }
         }
         _isMoving = false;
     }
@@ -56,12 +59,16 @@ public class TankController : ColoredObject
         _isTurning = true;
         while(currentDurration < 1)
         {
-            currentDurration += Time.deltaTime / scalar;
-            if(currentDurration > 1)
-                currentDurration = 1;
+            if(rigidBody)
+            {
+                currentDurration += Time.deltaTime / scalar;
+                if(currentDurration > 1)
+                    currentDurration = 1;
 
-            rigidBody.MoveRotation(Quaternion.Lerp(oldRotation, targetRotation, currentDurration));
-            yield return new WaitForFixedUpdate();
+                rigidBody.MoveRotation(Quaternion.Lerp(oldRotation, targetRotation, currentDurration));
+                yield return new WaitForFixedUpdate();
+            }
+            else { break; }
         }
         _isTurning = false;
     }
@@ -74,19 +81,26 @@ public class TankController : ColoredObject
         Quaternion targetRotation = _turret.transform.rotation * Quaternion.AngleAxis(degrees, Vector3.up);
         while(currentDurration < 1)
         {
-            currentDurration += Time.deltaTime / scalar;
-            if(currentDurration > 1)
-                currentDurration = 1;
+            if(_turret)
+            {
+                currentDurration += Time.deltaTime / scalar;
+                if(currentDurration > 1)
+                    currentDurration = 1;
 
-            _turret.transform.rotation = Quaternion.Lerp(oldRotation, targetRotation, currentDurration);
-            yield return new WaitForEndOfFrame();
+                _turret.transform.rotation = Quaternion.Lerp(oldRotation, targetRotation, currentDurration);
+                yield return new WaitForEndOfFrame();
+            }
+            else { break; }
         }
     }
 
     public IEnumerator ShootTurret()
     {
-        _tankShooter.Shoot(boxCollider);
-        yield return new WaitForSeconds(RELOAD_DELAY);
+        if(_tankShooter)
+        {
+            _tankShooter.Shoot(boxCollider);
+            yield return new WaitForSeconds(RELOAD_DELAY);
+        }
     }
 
     public void Explode()

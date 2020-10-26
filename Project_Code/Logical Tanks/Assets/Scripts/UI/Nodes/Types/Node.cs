@@ -5,20 +5,14 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Runtime tank ray from turret
-// Make turrets
-// Fix tank moving through walls
-// Animate color of node lines and nodes to signify movement (Slowly per line?)
+// Fix tank moving through walls (Probally use boxcast and just cancel if detected obstacle to close)
 // Set goal to get all tanks within win area
 
+// Animate color of node lines and nodes to signify movement (Slowly per line?)
+// Add wait node?
 // Set up game scripts
 // Make POC tutorial level with all functionalities
-// Add wait node?
 // Save game data?
-
-
-
-
 
 // List of features:
 // - **** Move Tank Node
@@ -33,7 +27,7 @@ using System;
 // - **** Black Door raises and lowers dependent on power received
 // - **** Logic gates (And,Or,Not)
 // - **** Capacitor (Charges for time it is powered then discharges)
-// - Turret will shoot when tank detected but does not rotate (variable cooldown)
+// - **** Turret will shoot when tank detected but does not rotate (variable cooldown)
 
 public class Node : DraggableUI
 {

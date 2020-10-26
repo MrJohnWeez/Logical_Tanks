@@ -19,7 +19,6 @@ public class Bullet : ColoredObject
     
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Hit object: " + other.gameObject.name);
         ColoredObject coloredObject = other.gameObject.GetComponent<ColoredObject>();
         if(coloredObject && coloredObject.GetColorID != GetColorID)
         {
