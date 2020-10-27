@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Fix tank moving through walls (Probally use boxcast and just cancel if detected obstacle to close)
 // Set goal to get all tanks within win area
 
 // Animate color of node lines and nodes to signify movement (Slowly per line?)
