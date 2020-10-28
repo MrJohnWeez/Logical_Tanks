@@ -42,4 +42,10 @@ public class ColoredLine : ColorChanger
         _uILineRenderer.color = newColor;
         base.SetThenResetColor(newColor, fadeTime);
     }
+
+    public override void ForceStop()
+    {
+        _startColor = _uILineRenderer.color;
+        base.ForceStop();
+    }
 }

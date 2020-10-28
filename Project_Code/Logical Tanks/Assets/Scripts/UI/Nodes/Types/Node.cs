@@ -5,10 +5,9 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Set goal to get all tanks within win area
-
+// Possibly convert over to a update system instead of a enumeration system so we can stop/play/pause/step instantly without waiting for yield
 // Animate color of node lines and nodes to signify movement (Slowly per line?)
-// Add wait node?
+// Resettable objects
 // Set up game scripts
 // Make POC tutorial level with all functionalities
 // Save game data?
@@ -131,5 +130,23 @@ public class Node : DraggableUI
             nodeLink.OnDropEvent -= nodeManager.NodeLinkDropped;
             nodeLink.OnEndDragEvent -= nodeManager.NodeLinkDragEnded;
         }
+    }
+
+    public override void ForceStop()
+    {
+        foreach(Task t in tasks) { t?.Stop(); }
+        base.ForceStop();
+    }
+
+    public override void Continue()
+    {
+        foreach(Task t in tasks) { t?.Unpause(); }
+        base.Continue();
+    }
+
+    public override void Pause()
+    {
+        foreach(Task t in tasks) { t?.Pause(); }
+        base.Pause();
     }
 }

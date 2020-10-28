@@ -43,4 +43,10 @@ public class ColoredImage : ColorChanger
         image.color = newColor;
         base.SetThenResetColor(newColor, fadeTime);
     }
+
+    public override void ForceStop()
+    {
+        _startColor = image.color;
+        base.ForceStop();
+    }
 }

@@ -61,6 +61,7 @@ public class NodeCompiler : NodeArrangementManager
         {
             Play();
         }
+        _currentNode?.Pause();
         _isStepping = true;
         EnableContinueButton(true);
     }
@@ -70,12 +71,14 @@ public class NodeCompiler : NodeArrangementManager
         if(_isStepping)
         {
             _isStepping = false;
+            _currentNode?.Continue();
             EnableContinueButton(false);
         }
     }
 
     public void Stop()
     {
+        _currentNode?.ForceStop();
         _currentTask?.Stop();
         ChangeUIToPlaying(false);
     }

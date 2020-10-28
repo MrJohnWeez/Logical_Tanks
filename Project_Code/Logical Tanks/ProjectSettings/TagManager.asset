@@ -11,6 +11,7 @@ TagManager:
   - InGameUI
   - FxTemporaire
   - CameraWall
+  - GoalArea
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - TriggerOnly
   - 
   - 
   - 

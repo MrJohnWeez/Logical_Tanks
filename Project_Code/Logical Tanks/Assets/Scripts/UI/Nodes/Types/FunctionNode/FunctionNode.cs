@@ -35,4 +35,22 @@ public class FunctionNode : Node
         }
         return nodeBridges;
     }
+
+    public override void ForceStop()
+    {
+        _currentTask?.Stop();
+        base.ForceStop();
+    }
+
+    public override void Continue()
+    {
+        _currentTask?.Unpause();
+        base.Continue();
+    }
+
+    public override void Pause()
+    {
+        _currentTask?.Pause();
+        base.Pause();
+    }
 }

@@ -49,4 +49,20 @@ public class ColorChanger : MonoBehaviour
     {
         ResetColor(fadeTime);
     }
+
+    public virtual void ForceStop()
+    {
+        currentTask?.Stop();
+        waitingTask = null;
+    }
+
+    public virtual void Continue()
+    {
+        currentTask?.Unpause();
+    }
+
+    public virtual void Pause()
+    {
+        currentTask?.Pause();
+    }
 }
