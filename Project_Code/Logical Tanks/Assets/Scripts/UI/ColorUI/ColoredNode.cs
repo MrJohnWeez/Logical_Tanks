@@ -3,50 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ColoredImage : ColorChanger
+public class ColoredImage : ColorManager
 {
     [Header("ColoredImage")]
     [SerializeField] protected Image image = null;
 
-    protected virtual void Awake()
+    protected virtual void Awake() { _startColor = image.color; }
+
+    public override void Stop()
     {
-        _startColor = image.color;
+        image.color = _startColor;
+        base.Stop();
     }
 
-    protected override IEnumerator ChangeColor(Color newColor, float fadeTime = 0)
+    protected override void UpdateColor() { image.color = newColor; }
+
+    public override void ResetColor(float fadeTime = 0)
     {
-        if (waitingTask != null)
-        {
-            currentTask?.Stop();
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
-            currentTask = waitingTask;
-            waitingTask = null;
-        }
-        float currentTime = 0;
-        if(image)
-        {
-            Color startColor = image.color;
-            while (currentTime < fadeTime && fadeTime > 0)
-            {
-                currentTime += Time.deltaTime;
-                image.color = Color.Lerp(startColor, newColor, currentTime / fadeTime);
-                yield return new WaitForFixedUpdate();
-            }
-            image.color = newColor;
-        }
-        currentTask = null;
+        oldColor = image.color;
+        base.ResetColor(fadeTime);
     }
 
     public override void SetThenResetColor(Color newColor, float fadeTime = 0)
     {
         image.color = newColor;
         base.SetThenResetColor(newColor, fadeTime);
-    }
-
-    public override void ForceStop()
-    {
-        _startColor = image.color;
-        base.ForceStop();
     }
 }

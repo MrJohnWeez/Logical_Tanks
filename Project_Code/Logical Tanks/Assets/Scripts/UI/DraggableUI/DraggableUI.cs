@@ -46,24 +46,18 @@ public class DraggableUI : ColoredImage, IPointerDownHandler, IPointerUpHandler,
         }
     }
 
-    public virtual void OnEndDrag(PointerEventData eventData)
-    {
-        canvasGroup.blocksRaycasts = !isLocked;
-    }
+    public virtual void OnEndDrag(PointerEventData eventData) { canvasGroup.blocksRaycasts = !isLocked; }
 
     public virtual void OnPointerUp(PointerEventData eventData)
     {
-        if (!_didDrag && isSelectable)
-        {
-            SetIsSelected(!_isSelected);
-        }
+        if (!_didDrag && isSelectable) { SetIsSelected(!_isSelected); }
     }
 
     public virtual void SetIsSelected(bool newSelectedState)
     {
         _isSelected = newSelectedState;
         if (newSelectedState)
-            SetColor(highlightColor);
+            ChangeColor(highlightColor);
         else
             ResetColor();
         OnSelection(_isSelected);
@@ -74,7 +68,7 @@ public class DraggableUI : ColoredImage, IPointerDownHandler, IPointerUpHandler,
     protected virtual void RunNodeColor(bool start)
     {
         if (start)
-            SetColor(iterationColor);
+            ChangeColor(iterationColor);
         else
             ResetColor(iterationFadeTime);
     }

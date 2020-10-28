@@ -29,8 +29,9 @@ using System;
 
 public class Node : DraggableUI
 {
-    public event Action<Node> NodeSelectionChanged;
-    public event Action<Node, Vector2, Vector2> OnNodeDragged;
+    public Action<Node> NodeSelectionChanged;
+    public Action<Node, Vector2, Vector2> OnNodeDragged;
+    public Action<Node> OnFinishedExecution;
 
     [Header("NodeBase")]
     [SerializeField] protected NodeLink inNodeLink = null;
@@ -50,9 +51,8 @@ public class Node : DraggableUI
         EnableNodeLinkInteractions(outNodeLink);
     }
 
-    protected override void OnDestroy()
+    protected virtual void OnDestroy()
     {
-        base.OnDestroy();
         DisableNodeLinkInteractions(inNodeLink);
         DisableNodeLinkInteractions(outNodeLink);
         NodeSelectionChanged -= nodeManager.NodeSelectionChanged;
@@ -98,19 +98,13 @@ public class Node : DraggableUI
             Destroy(gameObject);
     }
 
-    public virtual IEnumerator Execute()
+    public virtual void Execute()
     {
         SetThenResetColor(iterationColor, iterationFadeTime);
-        yield return null;
+        OnFinishedExecution?.Invoke(this);
     }
 
     public virtual Node NextNode() { return outNodeLink ? outNodeLink.GetNextNode(true) : null; }
-
-    protected virtual void FinishedTask(Task task, bool wasForceStopped)
-    {
-        task.OnFinished -= FinishedTask;
-        tasks.Remove(task);
-    }
 
     protected void EnableNodeLinkInteractions(NodeLink nodeLink)
     {
@@ -130,23 +124,5 @@ public class Node : DraggableUI
             nodeLink.OnDropEvent -= nodeManager.NodeLinkDropped;
             nodeLink.OnEndDragEvent -= nodeManager.NodeLinkDragEnded;
         }
-    }
-
-    public override void ForceStop()
-    {
-        foreach(Task t in tasks) { t?.Stop(); }
-        base.ForceStop();
-    }
-
-    public override void Continue()
-    {
-        foreach(Task t in tasks) { t?.Unpause(); }
-        base.Continue();
-    }
-
-    public override void Pause()
-    {
-        foreach(Task t in tasks) { t?.Pause(); }
-        base.Pause();
     }
 }

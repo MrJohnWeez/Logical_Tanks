@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI.Extensions;
 
 [RequireComponent(typeof(UILineRenderer))]
-public class ColoredLine : ColorChanger
+public class ColoredLine : ColorManager
 {
     [Header("ColoredLine")]
     protected UILineRenderer _uILineRenderer = null;
@@ -15,37 +15,23 @@ public class ColoredLine : ColorChanger
         _startColor = _uILineRenderer.color;
     }
 
-    protected override IEnumerator ChangeColor(Color newColor, float fadeTime = 0)
+    public override void Stop()
     {
-        if (waitingTask != null)
-        {
-            currentTask?.Stop();
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
-            currentTask = waitingTask;
-            waitingTask = null;
-        }
-        float currentTime = 0;
-        Color startColor = _uILineRenderer.color;
-        while (currentTime < fadeTime && fadeTime > 0)
-        {
-            currentTime += Time.deltaTime;
-            _uILineRenderer.color = Color.Lerp(startColor, newColor, currentTime / fadeTime);
-            yield return new WaitForFixedUpdate();
-        }
-        _uILineRenderer.color = newColor;
-        currentTask = null;
+        _uILineRenderer.color = _startColor;
+        base.Stop();
+    }
+
+    protected override void UpdateColor() { _uILineRenderer.color = newColor; }
+
+    public override void ResetColor(float fadeTime = 0)
+    {
+        oldColor = _uILineRenderer.color;
+        base.ResetColor(fadeTime);
     }
 
     public override void SetThenResetColor(Color newColor, float fadeTime = 0)
     {
         _uILineRenderer.color = newColor;
         base.SetThenResetColor(newColor, fadeTime);
-    }
-
-    public override void ForceStop()
-    {
-        _startColor = _uILineRenderer.color;
-        base.ForceStop();
     }
 }

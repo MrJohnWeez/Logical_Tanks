@@ -4,65 +4,39 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class ColorChanger : MonoBehaviour
+public class ColorManager : VariableCycledObject
 {
     [Header("ColorChanger")]
     [HideInInspector] [NonSerialized] public float iterationFadeTime = 1.0f;
     [HideInInspector] [NonSerialized] public Color highlightColor = Color.blue;
     [HideInInspector] [NonSerialized] public Color iterationColor = Color.yellow;
     protected Color _startColor;
-    protected Task currentTask = null;
-    protected Task waitingTask = null;
+    protected float currentFadeTime = 0;
+    protected float fadeTime = 0;
+    protected Color oldColor;
+    protected Color newColor;
+    protected Color targetColor;
 
-    protected virtual void OnDestroy()
+    protected override void Cycle()
     {
-        StopAllCoroutines();
-        currentTask?.Stop();
-        waitingTask = null;
-        currentTask = null;
-    }
-
-    protected virtual IEnumerator ChangeColor(Color newColor, float fadeTime = 0)
-    {
-        if (waitingTask != null)
+        if(currentFadeTime < fadeTime)
         {
-            currentTask?.Stop();
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
-            currentTask = waitingTask;
-            waitingTask = null;
+            currentFadeTime += Time.deltaTime;
+            if(currentFadeTime > fadeTime) { currentFadeTime = fadeTime; }
+            newColor = Color.Lerp(oldColor, targetColor, currentFadeTime / fadeTime);
+            UpdateColor();
         }
-        currentTask = null;
     }
 
-    public virtual void SetColor(Color newColor, float fadeTime = 0)
+    protected virtual void UpdateColor() {  }
+
+    protected virtual void ChangeColor(Color newColor, float newFadeTime = 0)
     {
-        waitingTask = new Task(ChangeColor(newColor, fadeTime));
+        targetColor = newColor;
+        currentFadeTime = 0;
+        fadeTime = newFadeTime;
     }
 
-    public virtual void ResetColor(float fadeTime = 0)
-    {
-        waitingTask = new Task(ChangeColor(_startColor, fadeTime));
-    }
-
-    public virtual void SetThenResetColor(Color newColor, float fadeTime = 0)
-    {
-        ResetColor(fadeTime);
-    }
-
-    public virtual void ForceStop()
-    {
-        currentTask?.Stop();
-        waitingTask = null;
-    }
-
-    public virtual void Continue()
-    {
-        currentTask?.Unpause();
-    }
-
-    public virtual void Pause()
-    {
-        currentTask?.Pause();
-    }
+    public virtual void ResetColor(float fadeTime = 0) { ChangeColor(_startColor, fadeTime); }
+    public virtual void SetThenResetColor(Color newColor, float fadeTime = 0) { ResetColor(fadeTime); }
 }
