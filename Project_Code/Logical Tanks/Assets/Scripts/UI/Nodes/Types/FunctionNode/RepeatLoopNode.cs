@@ -5,26 +5,60 @@ using UnityEngine;
 public class RepeatLoopNode : FunctionNode
 {
     [SerializeField] protected FloatSelection floatSelection = null;
+    private int _currentIteration = 0;
+    private int _loopTimes = 0;
 
-    public override IEnumerator Execute()
+    public override void Execute()
     {
-        int currentIteration = 0;
-        int loopTimes = (int)floatSelection.GetValue();
-        while(currentIteration < loopTimes)
-        {
-            if(currentIteration != 0)
-                yield return new WaitForSeconds(0.5f);
+        _currentIteration = 0;
+        _loopTimes = (int)floatSelection.GetValue();
+        ExecuteFunctionNode();
+    }
 
-            SetThenResetColor(iterationColor, iterationFadeTime);
-            _currentNode = functionNodeLink.GetNextNode(true);
-            while(_currentNode)
-            {
-                _currentTask = new Task(_currentNode.Execute());
-                yield return new WaitUntil(() => !_currentTask.Running);
-                _currentNode = _currentNode.NextNode();
-            }
-            currentIteration++;
+    protected override void OnNodeFinished(Node nodeThatFinished)
+    {
+        if(nodeThatFinished)
+        {
+            nodeThatFinished.OnFinishedExecution -= OnNodeFinished;
+            _currentNode = nodeThatFinished.NextNode();
         }
-        yield return null;
+        else {  _currentNode = null; }
+        ExecuteCurrentNode();
+    }
+
+    protected override void ExecuteCurrentNode()
+    {
+        if(_currentNode)
+        {
+            _currentNode.OnFinishedExecution += OnNodeFinished;
+            _currentNode.Execute();
+        }
+        else
+        {
+            _currentIteration++;
+            if(_currentIteration < _loopTimes)
+            {
+               ExecuteFunctionNode();
+            }
+            else
+            {
+                OnExecuteFinished();
+            }
+        }
+    }
+
+    protected virtual void ExecuteFunctionNode()
+    {
+        RunNodeColor(true);
+        _currentNode = functionNodeLink.GetNextNode(true);
+        if(_currentNode)
+        {
+            _currentNode.OnFinishedExecution += OnNodeFinished;
+            _currentNode.Execute();
+        }
+        else
+        {
+            OnNodeFinished(null);
+        }
     }
 }

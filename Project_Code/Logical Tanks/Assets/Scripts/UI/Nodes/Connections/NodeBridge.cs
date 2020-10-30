@@ -19,38 +19,7 @@ public class NodeBridge : ColoredLine
     private Vector3 _currStartPos;
     private Vector3 _currEndPos;
 
-    protected override IEnumerator ChangeColor(Color newColor, float fadeTime = 0)
-    {
-        if(waitingTask != null)
-        {
-            currentTask?.Stop();
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
-            currentTask = waitingTask;
-            waitingTask = null;
-        }
-        if(_uILineRenderer != null)
-        {
-            float currentTime = 0;
-            Color startColor = _uILineRenderer.color;
-            while(currentTime < fadeTime && fadeTime > 0)
-            {
-                currentTime += Time.deltaTime;
-                _uILineRenderer.color = Color.Lerp(startColor, newColor, currentTime / fadeTime);
-                yield return new WaitForFixedUpdate();
-            }
-            _uILineRenderer.color = newColor;
-        }
-        currentTask = null;
-    }
-
-    public override void SetThenResetColor(Color newColor, float fadeTime = 0)
-    {
-        _uILineRenderer.color = newColor;
-        ResetColor(fadeTime);
-    }
-
-    private void Update()
+    protected override void Update()
     {
         // Use mouse pos if rect is missing
         _currStartPos = _startRect ? _startRect.position : Input.mousePosition;
@@ -79,11 +48,11 @@ public class NodeBridge : ColoredLine
             _prevStartPos = _currStartPos;
             _prevEndPos = _currEndPos;
         }
+        base.Update();
     }
 
-    protected override void OnDestroy()
+    protected virtual void OnDestroy()
     {
-        base.OnDestroy();
         RemoveAllLinks();
     }
 

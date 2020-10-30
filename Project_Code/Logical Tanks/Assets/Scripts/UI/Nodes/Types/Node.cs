@@ -100,8 +100,22 @@ public class Node : DraggableUI
 
     public virtual void Execute()
     {
-        SetThenResetColor(iterationColor, iterationFadeTime);
+        RunNodeColor(true);
+        OnExecuteFinished();
+    }
+
+    public virtual void OnExecuteFinished()
+    {
         OnFinishedExecution?.Invoke(this);
+        RunNodeColor(false);
+    }
+
+    protected virtual void RunNodeColor(bool start)
+    {
+        if (start)
+            ChangeColor(iterationColor);
+        else
+            ResetColor(iterationFadeTime);
     }
 
     public virtual Node NextNode() { return outNodeLink ? outNodeLink.GetNextNode(true) : null; }

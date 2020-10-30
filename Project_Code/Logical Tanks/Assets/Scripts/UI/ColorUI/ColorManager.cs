@@ -35,6 +35,11 @@ public class ColorManager : VariableCycledObject
         targetColor = newColor;
         currentFadeTime = 0;
         fadeTime = newFadeTime;
+        if(fadeTime == 0)
+        {
+            this.newColor = newColor;
+            UpdateColor();
+        }
     }
 
     public virtual void ResetColor(float fadeTime = 0) { ChangeColor(_startColor, fadeTime); }

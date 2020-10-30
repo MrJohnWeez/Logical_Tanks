@@ -65,11 +65,5 @@ public class DraggableUI : ColoredImage, IPointerDownHandler, IPointerUpHandler,
 
     public virtual void OnDragged(Vector2 delta, PointerEventData eventData) { }
     public virtual void OnSelection(bool isNowSelected) { }
-    protected virtual void RunNodeColor(bool start)
-    {
-        if (start)
-            ChangeColor(iterationColor);
-        else
-            ResetColor(iterationFadeTime);
-    }
+    
 }

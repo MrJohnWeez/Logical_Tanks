@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class MoveTankNode : TankNode
 {
-    public override IEnumerator Execute()
+    public override void Execute()
     {
-        RunNodeColor(true);
-        RefreshTankList();
+        base.Execute();
         float distance = floatSelection.GetValue();
-        foreach(TankController tc in tankControllers)
-        {
-            Task newTask = new Task(tc.MoveTank(distance));
-            newTask.OnFinished += FinishedTask;
-            tasks.Add(newTask);
-        }
-        yield return new WaitUntil (() => tasks.Count == 0);
-        RunNodeColor(false);
+        _tankController?.MoveTank(distance);
     }
 }

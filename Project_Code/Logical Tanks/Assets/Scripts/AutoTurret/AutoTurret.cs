@@ -19,7 +19,7 @@ public class AutoTurret : ColoredObject
         _boxCollider = GetComponent<BoxCollider>();
     }
 
-    private void Update()
+    protected override void Cycle()
     {
         if(_currentCooldown >= 0)
         {

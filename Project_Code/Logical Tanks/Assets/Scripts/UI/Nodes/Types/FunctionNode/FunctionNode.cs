@@ -36,21 +36,27 @@ public class FunctionNode : Node
         return nodeBridges;
     }
 
-    public override void ForceStop()
+    public override void Execute()
     {
-        _currentTask?.Stop();
-        base.ForceStop();
+        RunNodeColor(true);
+        _currentNode = functionNodeLink.GetNextNode(true);
+        ExecuteCurrentNode();
     }
 
-    public override void Continue()
+    protected virtual void ExecuteCurrentNode()
     {
-        _currentTask?.Unpause();
-        base.Continue();
+        if(_currentNode)
+        {
+            _currentNode.OnFinishedExecution += OnNodeFinished;
+            _currentNode.Execute();
+        }
+        else { OnExecuteFinished(); }
     }
 
-    public override void Pause()
+    protected virtual void OnNodeFinished(Node nodeThatFinished)
     {
-        _currentTask?.Pause();
-        base.Pause();
+        nodeThatFinished.OnFinishedExecution -= OnNodeFinished;
+        _currentNode = nodeThatFinished.NextNode();
+        ExecuteCurrentNode();
     }
 }

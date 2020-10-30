@@ -11,7 +11,7 @@ public class Bullet : ColoredObject
         Physics.IgnoreCollision(ignoreThis, boxCollider);
     }
     
-    private void Update()
+    protected override void FixedCycle()
     {
         rigidBody.velocity = transform.forward * _speed;
         rigidBody.angularVelocity = Vector3.zero;

@@ -13,7 +13,6 @@ public class NodeCompiler : NodeArrangementManager
     [SerializeField] private Node _startNode = null;
     [SerializeField] private GameObject _nodeUIBlocker = null;
     [SerializeField] private GameObject _playingOverlay = null;
-    private Task _currentTask = null;
     private Node _currentNode = null;
     private Button _runButton = null;
     private Button _stepButton = null;
@@ -51,8 +50,31 @@ public class NodeCompiler : NodeArrangementManager
     {
         ChangeUIToPlaying(true);
         _currentNode = _startNode;
-        _currentTask = new Task(_currentNode.Execute());
-        _currentTask.OnFinished += NextNode;
+        _currentNode.OnFinishedExecution += CurrentNodeFinished;
+        _currentNode.Execute();
+    }
+
+    private void CurrentNodeFinished(Node nodeThatFinished)
+    {
+        if(nodeThatFinished)
+        {
+            nodeThatFinished.OnFinishedExecution -= CurrentNodeFinished;
+            _currentNode = nodeThatFinished.NextNode();
+            if(_currentNode)
+            {
+                _currentNode.OnFinishedExecution += CurrentNodeFinished;
+                _currentNode.Execute();
+            }
+            else
+            {
+                Stop();
+            }
+            
+        }
+        else
+        {
+            Stop();
+        }
     }
 
     public void Step()
@@ -61,7 +83,7 @@ public class NodeCompiler : NodeArrangementManager
         {
             Play();
         }
-        _currentNode?.Pause();
+        //_currentNode?.Pause();
         _isStepping = true;
         EnableContinueButton(true);
     }
@@ -71,33 +93,15 @@ public class NodeCompiler : NodeArrangementManager
         if(_isStepping)
         {
             _isStepping = false;
-            _currentNode?.Continue();
+            //_currentNode?.Continue();
             EnableContinueButton(false);
         }
     }
 
     public void Stop()
     {
-        _currentNode?.ForceStop();
-        _currentTask?.Stop();
+        _currentNode?.Stop();
         ChangeUIToPlaying(false);
-    }
-
-    private void NextNode(Task task, bool forceStopped)
-    {
-        if(!forceStopped)
-        {
-            _currentNode = _currentNode.NextNode();
-            if(_currentNode != null)
-            {
-                _currentTask = new Task(_currentNode.Execute());
-                _currentTask.OnFinished += NextNode;
-            }
-            else
-            {
-                Stop();
-            }
-        }
     }
 
     private void ChangeUIToPlaying(bool isNowPlaying)
