@@ -16,10 +16,10 @@ public class ColoredLine : ColorManager
         _startColor = _uILineRenderer.color;
     }
 
-    public override void Stop()
+    public override void ResetObject()
     {
         _uILineRenderer.color = _startColor;
-        base.Stop();
+        base.ResetObject();
     }
 
     protected override void UpdateColor() { _uILineRenderer.color = newColor; }

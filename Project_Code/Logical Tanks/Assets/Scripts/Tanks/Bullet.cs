@@ -31,4 +31,10 @@ public class Bullet : ColoredObject
         }
         Destroy(gameObject);
     }
+
+    public override void ResetObject()
+    {
+        base.ResetObject();
+        Destroy(gameObject);
+    }
 }

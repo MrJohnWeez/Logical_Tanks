@@ -102,7 +102,7 @@ public class NodeCompiler : NodeArrangementManager
 
     public void Stop()
     {
-        _currentNode?.Stop();
+        _currentNode?.ResetObject();
         ChangeUIToPlaying(false);
     }
 

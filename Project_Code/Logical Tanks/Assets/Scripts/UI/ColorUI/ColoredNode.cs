@@ -14,10 +14,10 @@ public class ColoredImage : ColorManager
         _startColor = image.color;
     }
 
-    public override void Stop()
+    public override void ResetObject()
     {
         image.color = _startColor;
-        base.Stop();
+        base.ResetObject();
     }
 
     protected override void UpdateColor() { image.color = newColor; }

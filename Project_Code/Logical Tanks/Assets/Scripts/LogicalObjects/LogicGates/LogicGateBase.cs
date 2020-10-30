@@ -21,4 +21,6 @@ public class LogicGateBase : VariableCycledObject
     {
         foreach(Cable cable in outCabels) { cable.SetEnergy(energize); }
     }
+
+    
 }

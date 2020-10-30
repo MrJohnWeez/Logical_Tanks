@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class NotGate : LogicGateBase
 {
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
         StateSwitched(false);
     }
 

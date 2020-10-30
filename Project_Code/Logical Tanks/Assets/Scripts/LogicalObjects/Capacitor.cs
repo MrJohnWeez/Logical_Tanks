@@ -11,8 +11,14 @@ public class Capacitor : LogicGateBase
     [SerializeField] private TMP_Text _chargeTitle = null;
     private bool _isCharging = false;
     private float _prevCurrentCharge = MIN_CHARGE;
+    private float _startCharge = 0.0f;
     
     protected override void StateSwitched(bool isOn) { _isCharging = inCable1 && inCable1.IsEnergized; }
+
+    protected override void Start()
+    {
+        _startCharge = _currentCharge; 
+    }
 
     void Update()
     {
@@ -32,5 +38,11 @@ public class Capacitor : LogicGateBase
         if(_currentCharge > MIN_CHARGE && _prevCurrentCharge == MIN_CHARGE) { EnergizeOutCabels(true); }
         else if(_currentCharge == MIN_CHARGE && _prevCurrentCharge > MIN_CHARGE) { EnergizeOutCabels(false); }
         _prevCurrentCharge = _currentCharge;
+    }
+
+    public override void ResetObject()
+    {
+        base.ResetObject();
+        _currentCharge = _startCharge; 
     }
 }

@@ -63,8 +63,7 @@ public class TankController : ColoredObject
             }
             else
             {
-                _tankState = TankState.Idle;
-                OnTankStateChangedToIdle?.Invoke();
+                ResetStateMachine();
             }
         }
     }
@@ -102,6 +101,24 @@ public class TankController : ColoredObject
         _tankShooter.Shoot(boxCollider);
         _maxTimer = RELOAD_DELAY;
         _tankState = TankState.Shooting;
+    }
+
+    public void ResetStateMachine()
+    {
+        _currentTimer = 0;
+        _maxTimer = 0;
+        _oldPosition = Vector3.zero;
+        _targetPosition = Vector3.zero;
+        _oldRotation = Quaternion.identity;
+        _targetRotation = Quaternion.identity;
+        _tankState = TankState.Idle;
+        OnTankStateChangedToIdle?.Invoke();
+    }
+
+    public override void ResetObject()
+    {
+        base.ResetObject();
+        ResetStateMachine();
     }
 
     public void Explode()
