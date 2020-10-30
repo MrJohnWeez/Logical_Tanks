@@ -5,7 +5,6 @@ using UnityEngine;
 public class FunctionNode : Node
 {
     [SerializeField] protected NodeLink functionNodeLink = null;
-    protected Task _currentTask = null;
     protected Node _currentNode = null;
 
     protected override void Awake()

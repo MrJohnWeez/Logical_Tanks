@@ -5,21 +5,22 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Possibly convert over to a update system instead of a enumeration system so we can stop/play/pause/step instantly without waiting for yield
-// Animate color of node lines and nodes to signify movement (Slowly per line?)
 // Resettable objects
 // Set up game scripts
+// Fix stack overflow if inf node is made
+// Make it so a node can be duplicated (using a button on the selection bar)
 // Make POC tutorial level with all functionalities
-// Save game data?
+
+// Start making actual levels
 
 // List of features:
 // - **** Move Tank Node
 // - **** Rotate Tank Node
 // - **** Rotate Turret Node
 // - **** Shoot Tank Node
-// - **** Repeat loop Node
-// - **** Function Node
-// - **** Dummy Node
+// - **** Loop Node
+// - **** JumpTo Node
+// - **** ReRout Node
 // - **** Pressure Plate that triggers for all
 // - **** Pressure plate that triggers for tank color
 // - **** Black Door raises and lowers dependent on power received
@@ -37,7 +38,6 @@ public class Node : DraggableUI
     [SerializeField] protected NodeLink inNodeLink = null;
     [SerializeField] protected NodeLink outNodeLink = null;
     protected NodeManager nodeManager;
-    protected List<Task> tasks = new List<Task>();
 
     protected override void Awake()
     {

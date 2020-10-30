@@ -17,11 +17,11 @@ public class ColorManager : VariableCycledObject
     protected Color newColor;
     protected Color targetColor;
 
-    protected override void Cycle()
+    protected virtual void Update()
     {
         if(currentFadeTime < fadeTime)
         {
-            currentFadeTime += Time.deltaTime;
+            currentFadeTime += Time.deltaTime * gameManager.GameSpeed;
             if(currentFadeTime > fadeTime) { currentFadeTime = fadeTime; }
             newColor = Color.Lerp(oldColor, targetColor, currentFadeTime / fadeTime);
             UpdateColor();

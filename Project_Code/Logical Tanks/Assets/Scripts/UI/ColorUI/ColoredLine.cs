@@ -9,8 +9,9 @@ public class ColoredLine : ColorManager
     [Header("ColoredLine")]
     protected UILineRenderer _uILineRenderer = null;
 
-    public virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _uILineRenderer = GetComponent<UILineRenderer>();
         _startColor = _uILineRenderer.color;
     }

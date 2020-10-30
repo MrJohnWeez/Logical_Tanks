@@ -21,10 +21,12 @@ public class NodeCompiler : NodeArrangementManager
     private Button _stopButton = null;
     private bool _isStepping = false;
     private bool _isPlaying = false;
+    private GameManager _gameManager = null;
 
     protected override void Awake()
     {
         base.Awake();
+        _gameManager = GameObject.FindObjectOfType<GameManager>();
         // Set up buttons
         _runButton = _runButtonGO.GetComponent<Button>();
         _stepButton = _stepButtonGO.GetComponent<Button>();

@@ -50,9 +50,8 @@ public class NodeArrangementManager : NodeMovementManager
     
     public void AddNode(NodeType nodeType)
     {
-        GameObject newNode = Instantiate(_nodePrefabs[(int)nodeType], _nodesParent);
+        GameObject newNode = Instantiate(_nodePrefabs[(int)nodeType], _nodesParent, false);
         RectTransform rt = newNode.GetComponent<RectTransform>();
-        rt.localScale = _contentWindow.localScale;
         rt.position = _nodeSpawnPoint.position;
     }
 

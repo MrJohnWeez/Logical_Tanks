@@ -18,13 +18,13 @@ public class Capacitor : LogicGateBase
     {
         if(_isCharging && _currentCharge < MAX_CHARGE)
         {
-            _currentCharge += Time.deltaTime;
+            _currentCharge += Time.deltaTime * gameManager.GameSpeed;
             _currentCharge = Mathf.Clamp(_currentCharge, MIN_CHARGE, MAX_CHARGE);
             _chargeTitle.text = _currentCharge.ToString("F1");
         }
         else if(!_isCharging && _currentCharge > MIN_CHARGE)
         {
-            _currentCharge -= Time.deltaTime;
+            _currentCharge -= Time.deltaTime * gameManager.GameSpeed;
             _currentCharge = Mathf.Clamp(_currentCharge, MIN_CHARGE, MAX_CHARGE);
             _chargeTitle.text = _currentCharge.ToString("F1");
         }

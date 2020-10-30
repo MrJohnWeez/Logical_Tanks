@@ -14,11 +14,11 @@ public class ColoredObject : VariableCycledObject
 
     public ColorID GetColorID => _colorID;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         rigidBody = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-
         if (_coloredModel)
         {
             Material[] materials = _coloredModel.GetComponent<Renderer>().materials;

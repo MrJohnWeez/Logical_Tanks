@@ -37,13 +37,13 @@ public class TankController : ColoredObject
         _tankShooter = GetComponent<TankShooter>();
     }
 
-    protected override void FixedCycle()
+    protected virtual void FixedUpdate()
     {
         if(_tankState != TankState.Idle)
         {
             if(_currentTimer < _maxTimer && rigidBody && _turret)
             {
-                _currentTimer += Time.deltaTime;
+                _currentTimer += Time.deltaTime * gameManager.GameSpeed;
                 _currentTimer = Mathf.Clamp(_currentTimer, 0, _maxTimer);
                 if(_tankState == TankState.TankMoving)
                 {

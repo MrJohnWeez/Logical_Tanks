@@ -4,22 +4,13 @@ using UnityEngine;
 
 public class VariableCycledObject : MonoBehaviour
 {
-    protected bool updateCycle = true;
-    protected bool updateFixedCycle = true;
-    protected float speedMultiplier = 1;
+    protected GameManager gameManager = null;
 
-    protected virtual void Update()
-    { 
-        if(updateCycle) { Cycle(); }
-    }
-
-    protected virtual void FixedUpdate()
+    protected virtual void Awake()
     {
-        if(updateFixedCycle) { FixedCycle(); }
+        gameManager = GameObject.FindObjectOfType<GameManager>();
     }
 
-    protected virtual void Cycle() {  }
-    protected virtual void FixedCycle() {  }
     public virtual void Stop()
     { 
         //updateCycle = false; 

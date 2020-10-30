@@ -8,7 +8,11 @@ public class ColoredImage : ColorManager
     [Header("ColoredImage")]
     [SerializeField] protected Image image = null;
 
-    protected virtual void Awake() { _startColor = image.color; }
+    protected override void Awake()
+    {
+        base.Awake();
+        _startColor = image.color;
+    }
 
     public override void Stop()
     {
