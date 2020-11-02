@@ -6,6 +6,7 @@ using System;
 
 // TODO:
 // Resettable objects
+// Time warp node (Lets user set simulation speed)
 // Set up game scripts
 // Fix stack overflow if inf node is made
 // Make it so a node can be duplicated (using a button on the selection bar)

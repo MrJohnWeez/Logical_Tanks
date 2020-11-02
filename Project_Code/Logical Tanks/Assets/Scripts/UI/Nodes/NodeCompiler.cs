@@ -5,9 +5,16 @@ using UnityEngine.UI;
 
 public class NodeCompiler : NodeArrangementManager
 {
+    public enum NodeCompilerState
+    {
+        Idle,
+        Running,
+        Paused
+    }
+
     [Header("NodeCompiler")]
     [SerializeField] private GameObject _runButtonGO = null;
-    [SerializeField] private GameObject _stepButtonGO = null;
+    [SerializeField] private GameObject _pauseButtonGO = null;
     [SerializeField] private GameObject _continueButtonGO = null;
     [SerializeField] private GameObject _stopButtonGO = null;
     [SerializeField] private Node _startNode = null;
@@ -15,13 +22,12 @@ public class NodeCompiler : NodeArrangementManager
     [SerializeField] private GameObject _playingOverlay = null;
     private Node _currentNode = null;
     private Button _runButton = null;
-    private Button _stepButton = null;
+    private Button _pauseButton = null;
     private Button _continueButton = null;
-    private CanvasGroup _continueButtonCanvasGroup = null;
     private Button _stopButton = null;
-    private bool _isStepping = false;
-    private bool _isPlaying = false;
+    private CanvasGroup _stopButtonCanvasGroup = null;
     private GameManager _gameManager = null;
+    private NodeCompilerState _nodeCompilerState = NodeCompilerState.Idle;
 
     protected override void Awake()
     {
@@ -29,31 +35,67 @@ public class NodeCompiler : NodeArrangementManager
         _gameManager = GameObject.FindObjectOfType<GameManager>();
         // Set up buttons
         _runButton = _runButtonGO.GetComponent<Button>();
-        _stepButton = _stepButtonGO.GetComponent<Button>();
+        _pauseButton = _pauseButtonGO.GetComponent<Button>();
         _continueButton = _continueButtonGO.GetComponent<Button>();
-        _continueButtonCanvasGroup = _continueButtonGO.GetComponent<CanvasGroup>();
+        _stopButtonCanvasGroup = _stopButtonGO.GetComponent<CanvasGroup>();
         _stopButton = _stopButtonGO.GetComponent<Button>();
-        _runButton.onClick.AddListener(Play);
-        _stepButton.onClick.AddListener(Step);
+        _runButton.onClick.AddListener(Run);
+        _pauseButton.onClick.AddListener(Pause);
         _continueButton.onClick.AddListener(Continue);
         _stopButton.onClick.AddListener(Stop);
     }
 
     protected override void Start()
     {
-        if(!_isPlaying)
-        {
-            base.Start();
-            ChangeUIToPlaying(false);
-        }
+        base.Start();
+        SetCompilerState(NodeCompilerState.Idle);
     }
 
-    public void Play()
+    public virtual void Run()
     {
-        ChangeUIToPlaying(true);
+        SetCompilerState(NodeCompilerState.Running);
+        _gameManager.ResetGameSpeed();
         _currentNode = _startNode;
         _currentNode.OnFinishedExecution += CurrentNodeFinished;
         _currentNode.Execute();
+    }
+
+    public virtual void Pause()
+    {
+        SetCompilerState(NodeCompilerState.Paused);
+        _gameManager.Pause();
+    }
+
+    public virtual void Continue()
+    {
+        SetCompilerState(NodeCompilerState.Running);
+        _gameManager.Continue();
+    }
+
+    public virtual void Stop()
+    {
+        SetCompilerState(NodeCompilerState.Idle);
+        _gameManager.Stop();
+    }
+
+    private void SetCompilerState(NodeCompilerState newState)
+    {
+        _nodeCompilerState = newState;
+        UpdateUIElements();
+    }
+
+    private void UpdateUIElements()
+    {
+        // Update menu elements to match current compiler state
+        Deselect();
+        _nodeUIBlocker.SetActive(_nodeCompilerState != NodeCompilerState.Idle);
+        _playingOverlay.SetActive(_nodeCompilerState != NodeCompilerState.Idle);
+        SetNodeBarActive(_nodeCompilerState == NodeCompilerState.Idle);
+        _runButtonGO.SetActive(_nodeCompilerState == NodeCompilerState.Idle);
+        _pauseButtonGO.SetActive(_nodeCompilerState == NodeCompilerState.Running);
+        _continueButtonGO.SetActive(_nodeCompilerState == NodeCompilerState.Paused);
+        _stopButtonCanvasGroup.interactable = _nodeCompilerState != NodeCompilerState.Idle;
+        _stopButtonCanvasGroup.alpha = _nodeCompilerState != NodeCompilerState.Idle ? 1 : 0.2f;
     }
 
     private void CurrentNodeFinished(Node nodeThatFinished)
@@ -77,59 +119,5 @@ public class NodeCompiler : NodeArrangementManager
         {
             Stop();
         }
-    }
-
-    public void Step()
-    {
-        if(!_isPlaying)
-        {
-            Play();
-        }
-        //_currentNode?.Pause();
-        _isStepping = true;
-        EnableContinueButton(true);
-    }
-
-    public void Continue()
-    {
-        if(_isStepping)
-        {
-            _isStepping = false;
-            //_currentNode?.Continue();
-            EnableContinueButton(false);
-        }
-    }
-
-    public void Stop()
-    {
-        _currentNode?.ResetObject();
-        ChangeUIToPlaying(false);
-    }
-
-    private void ChangeUIToPlaying(bool isNowPlaying)
-    {
-        Deselect();
-        ShowRunButton(!isNowPlaying);
-        _isPlaying = isNowPlaying;
-        _nodeUIBlocker.SetActive(isNowPlaying);
-        _playingOverlay.SetActive(isNowPlaying);
-        SetNodeBarActive(!isNowPlaying);
-        if(_isStepping && !isNowPlaying)
-        {
-            EnableContinueButton(false);
-        }
-    }
-
-    private void ShowRunButton(bool showRunButton)
-    {
-        _runButtonGO.SetActive(showRunButton);
-        _stopButtonGO.SetActive(!showRunButton);
-    }
-
-    private void EnableContinueButton(bool isEnabled)
-    {
-        _continueButtonCanvasGroup.alpha = isEnabled ? 1 : 0.2f;
-        _continueButtonCanvasGroup.interactable = isEnabled;
-        _continueButtonCanvasGroup.blocksRaycasts = isEnabled;
     }
 }

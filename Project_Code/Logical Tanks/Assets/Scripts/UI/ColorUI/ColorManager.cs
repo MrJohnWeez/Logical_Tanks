@@ -28,8 +28,6 @@ public class ColorManager : VariableCycledObject
         }
     }
 
-    protected virtual void UpdateColor() {  }
-
     protected virtual void ChangeColor(Color newColor, float newFadeTime = 0)
     {
         targetColor = newColor;
@@ -42,6 +40,8 @@ public class ColorManager : VariableCycledObject
         }
     }
 
+    protected virtual void UpdateColor() {  }
+    public override void ResetObject() { }
     public virtual void ResetColor(float fadeTime = 0) { ChangeColor(_startColor, fadeTime); }
     public virtual void SetThenResetColor(Color newColor, float fadeTime = 0) { ResetColor(fadeTime); }
 }

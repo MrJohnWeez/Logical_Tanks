@@ -41,4 +41,11 @@ public class AutoTurret : ColoredObject
         bullet.SetSpeed(_bulletSpeed);
         _bullets.Add(bullet);
     }
+
+    public override void ResetObject()
+    {
+        _currentCooldown = 0;
+        _bullets.Clear();
+        base.ResetObject();
+    }
 }

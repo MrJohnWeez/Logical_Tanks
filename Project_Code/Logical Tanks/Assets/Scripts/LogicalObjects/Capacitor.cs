@@ -17,6 +17,7 @@ public class Capacitor : LogicGateBase
 
     protected override void Start()
     {
+        base.Start();
         _startCharge = _currentCharge; 
     }
 
@@ -26,13 +27,13 @@ public class Capacitor : LogicGateBase
         {
             _currentCharge += Time.deltaTime * gameManager.GameSpeed;
             _currentCharge = Mathf.Clamp(_currentCharge, MIN_CHARGE, MAX_CHARGE);
-            _chargeTitle.text = _currentCharge.ToString("F1");
+            UpdateText();
         }
         else if(!_isCharging && _currentCharge > MIN_CHARGE)
         {
             _currentCharge -= Time.deltaTime * gameManager.GameSpeed;
             _currentCharge = Mathf.Clamp(_currentCharge, MIN_CHARGE, MAX_CHARGE);
-            _chargeTitle.text = _currentCharge.ToString("F1");
+            UpdateText();
         }
         
         if(_currentCharge > MIN_CHARGE && _prevCurrentCharge == MIN_CHARGE) { EnergizeOutCabels(true); }
@@ -42,7 +43,13 @@ public class Capacitor : LogicGateBase
 
     public override void ResetObject()
     {
+        _currentCharge = _startCharge;
+        UpdateText();
         base.ResetObject();
-        _currentCharge = _startCharge; 
+    }
+
+    private void UpdateText()
+    {
+        _chargeTitle.text = _currentCharge.ToString("F1");
     }
 }
