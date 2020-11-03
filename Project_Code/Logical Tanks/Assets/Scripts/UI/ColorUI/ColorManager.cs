@@ -19,10 +19,10 @@ public class ColorManager : VariableCycledObject
 
     protected virtual void Update()
     {
-        if(currentFadeTime < fadeTime)
+        if (currentFadeTime < fadeTime)
         {
             currentFadeTime += Time.deltaTime * gameManager.GameSpeed;
-            if(currentFadeTime > fadeTime) { currentFadeTime = fadeTime; }
+            if (currentFadeTime > fadeTime) { currentFadeTime = fadeTime; }
             newColor = Color.Lerp(oldColor, targetColor, currentFadeTime / fadeTime);
             UpdateColor();
         }
@@ -33,15 +33,24 @@ public class ColorManager : VariableCycledObject
         targetColor = newColor;
         currentFadeTime = 0;
         fadeTime = newFadeTime;
-        if(fadeTime == 0)
+        if (fadeTime == 0)
         {
             this.newColor = newColor;
             UpdateColor();
         }
     }
 
-    protected virtual void UpdateColor() {  }
-    public override void ResetObject() { }
+    protected virtual void UpdateColor() { }
+    public override void ResetObject()
+    {
+        currentFadeTime = 0;
+        fadeTime = 0;
+        newColor = _startColor;
+        UpdateColor();
+    }
+
     public virtual void ResetColor(float fadeTime = 0) { ChangeColor(_startColor, fadeTime); }
     public virtual void SetThenResetColor(Color newColor, float fadeTime = 0) { ResetColor(fadeTime); }
+    public virtual Color GetStartColor() { return _startColor; }
+    public virtual void SetStartColor(Color newColor) { _startColor = newColor; }
 }

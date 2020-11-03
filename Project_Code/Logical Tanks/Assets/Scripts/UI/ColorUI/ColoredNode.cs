@@ -14,12 +14,6 @@ public class ColoredImage : ColorManager
         _startColor = image.color;
     }
 
-    public override void ResetObject()
-    {
-        image.color = _startColor;
-        base.ResetObject();
-    }
-
     protected override void UpdateColor() { image.color = newColor; }
 
     public override void ResetColor(float fadeTime = 0)

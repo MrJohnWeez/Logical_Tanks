@@ -34,7 +34,7 @@ public class ColoredObject : VariableCycledObject
     public override void ResetObject()
     {
         base.ResetObject();
-        if(rigidBody)
+        if (rigidBody)
         {
             rigidBody.velocity = Vector3.zero;
             rigidBody.angularVelocity = Vector3.zero;

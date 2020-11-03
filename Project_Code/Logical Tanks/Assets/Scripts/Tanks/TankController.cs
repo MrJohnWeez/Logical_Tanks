@@ -117,8 +117,8 @@ public class TankController : ColoredObject
 
     public override void ResetObject()
     {
-        base.ResetObject();
         ResetStateMachine();
+        base.ResetObject();
     }
 
     public void Explode()

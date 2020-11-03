@@ -13,7 +13,7 @@ public class GoalArea : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         TankController tank = other.GetComponent<TankController>();
-        if(tank)
+        if (tank)
         {
             _numberOfTanks++;
             CheckTankNumber();
@@ -23,7 +23,7 @@ public class GoalArea : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         TankController tank = other.GetComponent<TankController>();
-        if(tank)
+        if (tank)
         {
             _numberOfTanks--;
             CheckTankNumber();
@@ -33,7 +33,7 @@ public class GoalArea : MonoBehaviour
     private void CheckTankNumber()
     {
         OnTankNumberChanged?.Invoke(_numberOfTanks);
-        if(_numberOfTanks == _numberOfTanksToWin)
+        if (_numberOfTanks == _numberOfTanksToWin)
         {
             OnTankNumberCompleted?.Invoke();
             Debug.Log("You Won!");

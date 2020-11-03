@@ -18,6 +18,7 @@ public class Gate : LogicGateBase
     protected override void StateSwitched(bool isOn)
     {
         bool isCableEnergized = inCable1 && inCable1.IsEnergized;
+        _animator.ResetTrigger("Reset");
         _animator.SetBool("OpenLeft", isCableEnergized && !_openRight);
         _animator.SetBool("OpenRight", isCableEnergized && _openRight);
     }

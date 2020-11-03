@@ -28,6 +28,7 @@ public class NodeCompiler : NodeArrangementManager
     private CanvasGroup _stopButtonCanvasGroup = null;
     private GameManager _gameManager = null;
     private NodeCompilerState _nodeCompilerState = NodeCompilerState.Idle;
+    private int _stackHeight = 0;
 
     protected override void Awake()
     {
@@ -57,6 +58,7 @@ public class NodeCompiler : NodeArrangementManager
         _gameManager.ResetGameSpeed();
         _currentNode = _startNode;
         _currentNode.OnFinishedExecution += CurrentNodeFinished;
+        _stackHeight++;
         _currentNode.Execute();
     }
 
@@ -76,6 +78,12 @@ public class NodeCompiler : NodeArrangementManager
     {
         SetCompilerState(NodeCompilerState.Idle);
         _gameManager.Stop();
+    }
+
+    public void ThrowError(string generalDesc, string advancedDesc)
+    {
+        // TODO: Make error menu
+        Debug.Log("ThrowError: " + generalDesc + " : " + advancedDesc);
     }
 
     private void SetCompilerState(NodeCompilerState newState)
@@ -100,20 +108,28 @@ public class NodeCompiler : NodeArrangementManager
 
     private void CurrentNodeFinished(Node nodeThatFinished)
     {
-        if(nodeThatFinished)
+        if(_stackHeight > 10)
         {
+            Debug.Log("State: " + _stackHeight);
+            Debug.Break();
+        }
+        
+        if (nodeThatFinished)
+        {
+            _stackHeight--;
             nodeThatFinished.OnFinishedExecution -= CurrentNodeFinished;
             _currentNode = nodeThatFinished.NextNode();
-            if(_currentNode)
+            if (_currentNode)
             {
                 _currentNode.OnFinishedExecution += CurrentNodeFinished;
+                _stackHeight++;
                 _currentNode.Execute();
             }
             else
             {
                 Stop();
             }
-            
+
         }
         else
         {

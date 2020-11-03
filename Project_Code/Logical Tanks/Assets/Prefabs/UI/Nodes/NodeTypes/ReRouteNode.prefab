@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 7942888351193749496}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2969607944281033241}
   - {fileID: 7408995788680265642}
@@ -201,15 +201,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3879810897731915126, guid: 0c88c35b8e7075345a3b77447a903098, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3879810897731915126, guid: 0c88c35b8e7075345a3b77447a903098, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3879810897731915126, guid: 0c88c35b8e7075345a3b77447a903098, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3879810897731915126, guid: 0c88c35b8e7075345a3b77447a903098, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
@@ -217,7 +217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3879810897731915126, guid: 0c88c35b8e7075345a3b77447a903098, type: 3}
       propertyPath: m_Color.a
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5239842454292046689, guid: 0c88c35b8e7075345a3b77447a903098, type: 3}
       propertyPath: m_LocalPosition.x

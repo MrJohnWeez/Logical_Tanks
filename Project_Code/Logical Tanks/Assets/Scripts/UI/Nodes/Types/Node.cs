@@ -5,12 +5,11 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Resettable objects
-// Time warp node (Lets user set simulation speed)
-// Set up game scripts
 // Fix stack overflow if inf node is made
-// Make it so a node can be duplicated (using a button on the selection bar)
+// Zoom buttons
+// Set up game scripts
 // Make POC tutorial level with all functionalities
+// Test on WebGL
 
 // Start making actual levels
 
@@ -27,7 +26,7 @@ using System;
 // - **** Black Door raises and lowers dependent on power received
 // - **** Logic gates (And,Or,Not)
 // - **** Capacitor (Charges for time it is powered then discharges)
-// - **** Turret will shoot when tank detected but does not rotate (variable cooldown)
+// - **** Turret will shoot but does not rotate (variable cooldown)
 
 public class Node : DraggableUI
 {
@@ -107,8 +106,8 @@ public class Node : DraggableUI
 
     public virtual void OnExecuteFinished()
     {
-        OnFinishedExecution?.Invoke(this);
         RunNodeColor(false);
+        OnFinishedExecution?.Invoke(this);
     }
 
     protected virtual void RunNodeColor(bool start)

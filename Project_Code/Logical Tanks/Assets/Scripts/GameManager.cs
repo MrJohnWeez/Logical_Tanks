@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     public void Stop()
     {
         ResettableObject[] resetObjects = GameObject.FindObjectsOfType<ResettableObject>(true);
-        for(int i = resetObjects.Length - 1; i >= 0; i--) { resetObjects[i].ResetObject(); }
+        for (int i = resetObjects.Length - 1; i >= 0; i--) { resetObjects[i].ResetObject(); }
         SetGameSpeed(0);
     }
 
