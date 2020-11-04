@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Fix stack overflow if inf node is made
 // Zoom buttons
 // Set up game scripts
 // Make POC tutorial level with all functionalities
@@ -119,6 +118,10 @@ public class Node : DraggableUI
     }
 
     public virtual Node NextNode() { return outNodeLink ? outNodeLink.GetNextNode(true) : null; }
+    public virtual Node[] ValidateOutNodes()
+    {
+        return outNodeLink ? new Node[1]{outNodeLink.GetNextNode(false)} : null;
+    }
 
     protected void EnableNodeLinkInteractions(NodeLink nodeLink)
     {

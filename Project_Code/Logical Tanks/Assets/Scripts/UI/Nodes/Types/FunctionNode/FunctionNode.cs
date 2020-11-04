@@ -58,4 +58,12 @@ public class FunctionNode : Node
         _currentNode = nodeThatFinished.NextNode();
         ExecuteCurrentNode();
     }
+
+    public override Node[] ValidateOutNodes()
+    {
+        return new Node[2]{
+            outNodeLink ? outNodeLink.GetNextNode(false) : null,
+            functionNodeLink ? functionNodeLink.GetNextNode(false) : null
+        };
+    }
 }

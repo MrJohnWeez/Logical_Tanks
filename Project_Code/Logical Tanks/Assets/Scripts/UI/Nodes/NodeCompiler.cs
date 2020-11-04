@@ -54,12 +54,19 @@ public class NodeCompiler : NodeArrangementManager
 
     public virtual void Run()
     {
-        SetCompilerState(NodeCompilerState.Running);
-        _gameManager.ResetGameSpeed();
-        _currentNode = _startNode;
-        _currentNode.OnFinishedExecution += CurrentNodeFinished;
-        _stackHeight++;
-        _currentNode.Execute();
+        if(IsNodeStructureValid(_startNode))
+        {
+            SetCompilerState(NodeCompilerState.Running);
+            _gameManager.ResetGameSpeed();
+            _currentNode = _startNode;
+            _currentNode.OnFinishedExecution += CurrentNodeFinished;
+            _stackHeight++;
+            _currentNode.Execute();
+        }
+        else
+        {
+            // TODO: Add error screen over map area and highlight loop node in red
+        }
     }
 
     public virtual void Pause()
@@ -78,12 +85,6 @@ public class NodeCompiler : NodeArrangementManager
     {
         SetCompilerState(NodeCompilerState.Idle);
         _gameManager.Stop();
-    }
-
-    public void ThrowError(string generalDesc, string advancedDesc)
-    {
-        // TODO: Make error menu
-        Debug.Log("ThrowError: " + generalDesc + " : " + advancedDesc);
     }
 
     private void SetCompilerState(NodeCompilerState newState)
@@ -135,5 +136,31 @@ public class NodeCompiler : NodeArrangementManager
         {
             Stop();
         }
+    }
+
+    private bool IsNodeStructureValid(Node startNode, Node blackListedNode = null)
+    {
+        Node checkThisNode = startNode;
+        List<Node> visitedNodes = new List<Node>();
+        if(blackListedNode != null) { visitedNodes.Add(blackListedNode); }
+        while(checkThisNode != null)
+        {
+            if(visitedNodes.Contains(checkThisNode))
+            {
+                checkThisNode.SetIsSelected(true);
+                return false;
+            }
+            visitedNodes.Add(checkThisNode);
+            Node[] outNodes = checkThisNode.ValidateOutNodes();
+            if(outNodes.Length > 1)
+            {
+                for(int i = 1; i < outNodes.Length; i++)
+                {
+                    if(!IsNodeStructureValid(outNodes[i], checkThisNode)) { return false; }
+                }
+            }
+            checkThisNode = outNodes[0];
+        }
+        return true;
     }
 }
