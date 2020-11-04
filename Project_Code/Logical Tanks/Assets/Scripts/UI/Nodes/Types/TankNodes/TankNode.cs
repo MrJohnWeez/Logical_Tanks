@@ -6,17 +6,33 @@ public class TankNode : Node
 {
     [SerializeField] protected ColorSelection colorSelection = null;
     [SerializeField] protected FloatSelection floatSelection = null;
-    protected List<TankController> tankControllers = new List<TankController>();
-    
-    protected virtual void RefreshTankList()
+    protected TankController _tankController = null;
+
+    public override void Execute()
     {
-        tankControllers.Clear();
-        TankController[] controllers = GameObject.FindObjectsOfType<TankController>();
+        RunNodeColor(true);
+        UpdateTankController();
+        if(_tankController)
+            _tankController.OnTankStateChangedToIdle += OnExecuteFinished;
+    }
+
+    public override void OnExecuteFinished()
+    {
+        if(_tankController) { _tankController.OnTankStateChangedToIdle -= OnExecuteFinished; }
+        base.OnExecuteFinished();
+    }
+
+    protected virtual void UpdateTankController()
+    {
+        TankController[] controllers = FindObjectsOfType<TankController>();
         ColorID tankColor = colorSelection.GetColorID();
         foreach(TankController tc in controllers)
         {
             if(tc.GetColorID == tankColor)
-                tankControllers.Add(tc);
+            {
+                _tankController = tc;
+                break;
+            }
         }
     }
 }

@@ -5,38 +5,38 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Possibly convert over to a update system instead of a enumeration system so we can stop/play/pause/step instantly without waiting for yield
-// Animate color of node lines and nodes to signify movement (Slowly per line?)
-// Resettable objects
+// Zoom buttons
 // Set up game scripts
 // Make POC tutorial level with all functionalities
-// Save game data?
+// Test on WebGL
+
+// Start making actual levels
 
 // List of features:
 // - **** Move Tank Node
 // - **** Rotate Tank Node
 // - **** Rotate Turret Node
 // - **** Shoot Tank Node
-// - **** Repeat loop Node
-// - **** Function Node
-// - **** Dummy Node
+// - **** Loop Node
+// - **** JumpTo Node
+// - **** ReRout Node
 // - **** Pressure Plate that triggers for all
 // - **** Pressure plate that triggers for tank color
 // - **** Black Door raises and lowers dependent on power received
 // - **** Logic gates (And,Or,Not)
 // - **** Capacitor (Charges for time it is powered then discharges)
-// - **** Turret will shoot when tank detected but does not rotate (variable cooldown)
+// - **** Turret will shoot but does not rotate (variable cooldown)
 
 public class Node : DraggableUI
 {
-    public event Action<Node> NodeSelectionChanged;
-    public event Action<Node, Vector2, Vector2> OnNodeDragged;
+    public Action<Node> NodeSelectionChanged;
+    public Action<Node, Vector2, Vector2> OnNodeDragged;
+    public Action<Node> OnFinishedExecution;
 
     [Header("NodeBase")]
     [SerializeField] protected NodeLink inNodeLink = null;
     [SerializeField] protected NodeLink outNodeLink = null;
     protected NodeManager nodeManager;
-    protected List<Task> tasks = new List<Task>();
 
     protected override void Awake()
     {
@@ -50,9 +50,8 @@ public class Node : DraggableUI
         EnableNodeLinkInteractions(outNodeLink);
     }
 
-    protected override void OnDestroy()
+    protected virtual void OnDestroy()
     {
-        base.OnDestroy();
         DisableNodeLinkInteractions(inNodeLink);
         DisableNodeLinkInteractions(outNodeLink);
         NodeSelectionChanged -= nodeManager.NodeSelectionChanged;
@@ -98,18 +97,30 @@ public class Node : DraggableUI
             Destroy(gameObject);
     }
 
-    public virtual IEnumerator Execute()
+    public virtual void Execute()
     {
-        SetThenResetColor(iterationColor, iterationFadeTime);
-        yield return null;
+        RunNodeColor(true);
+        OnExecuteFinished();
+    }
+
+    public virtual void OnExecuteFinished()
+    {
+        RunNodeColor(false);
+        OnFinishedExecution?.Invoke(this);
+    }
+
+    protected virtual void RunNodeColor(bool start)
+    {
+        if (start)
+            ChangeColor(iterationColor);
+        else
+            ResetColor(iterationFadeTime);
     }
 
     public virtual Node NextNode() { return outNodeLink ? outNodeLink.GetNextNode(true) : null; }
-
-    protected virtual void FinishedTask(Task task, bool wasForceStopped)
+    public virtual Node[] ValidateOutNodes()
     {
-        task.OnFinished -= FinishedTask;
-        tasks.Remove(task);
+        return outNodeLink ? new Node[1]{outNodeLink.GetNextNode(false)} : null;
     }
 
     protected void EnableNodeLinkInteractions(NodeLink nodeLink)
@@ -130,23 +141,5 @@ public class Node : DraggableUI
             nodeLink.OnDropEvent -= nodeManager.NodeLinkDropped;
             nodeLink.OnEndDragEvent -= nodeManager.NodeLinkDragEnded;
         }
-    }
-
-    public override void ForceStop()
-    {
-        foreach(Task t in tasks) { t?.Stop(); }
-        base.ForceStop();
-    }
-
-    public override void Continue()
-    {
-        foreach(Task t in tasks) { t?.Unpause(); }
-        base.Continue();
-    }
-
-    public override void Pause()
-    {
-        foreach(Task t in tasks) { t?.Pause(); }
-        base.Pause();
     }
 }

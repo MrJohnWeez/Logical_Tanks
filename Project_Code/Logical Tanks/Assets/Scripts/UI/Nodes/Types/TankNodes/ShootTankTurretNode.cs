@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class ShootTankTurretNode : TankNode
 {
-    public override IEnumerator Execute()
+    public override void Execute()
     {
-        RunNodeColor(true);
-        RefreshTankList();
-        foreach(TankController tc in tankControllers)
-        {
-            Task newTask = new Task(tc.ShootTurret());
-            newTask.OnFinished += FinishedTask;
-            tasks.Add(newTask);
-        }
-        yield return new WaitUntil (() => tasks.Count == 0);
-        RunNodeColor(false);
+        base.Execute();
+        _tankController?.ShootTurret();
     }
 }

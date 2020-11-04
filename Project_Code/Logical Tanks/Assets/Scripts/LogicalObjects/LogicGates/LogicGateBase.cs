@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogicGateBase : MonoBehaviour
+public class LogicGateBase : VariableCycledObject
 {
     [SerializeField] protected Cable inCable1 = null;
     [SerializeField] protected Cable inCable2 = null;
     [SerializeField] protected Cable[] outCabels = null;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         if(inCable1) { inCable1.OnStateChanged += StateSwitched; }
         if(inCable2) { inCable2.OnStateChanged += StateSwitched; }
     }

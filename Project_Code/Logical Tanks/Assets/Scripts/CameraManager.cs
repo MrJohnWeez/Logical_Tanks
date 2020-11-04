@@ -27,16 +27,16 @@ public class CameraManager : MonoBehaviour
 
         // Get camera bounds
         GameObject[] camWallGOs = GameObject.FindGameObjectsWithTag("CameraWall");
-        if(camWallGOs.Length == 4)
+        if (camWallGOs.Length == 4)
         {
-            for(int i = 0; i < camWallGOs.Length; i++) { _cameraWalls[i] = camWallGOs[i].transform; }
+            for (int i = 0; i < camWallGOs.Length; i++) { _cameraWalls[i] = camWallGOs[i].transform; }
             float tmpXPos = _cameraWalls[0].position.x;
             _camLimits.xMin = tmpXPos;
             _camLimits.xMax = tmpXPos;
             float tmpZPos = _cameraWalls[0].position.z;
             _camLimits.yMin = tmpZPos;
             _camLimits.yMax = tmpZPos;
-            for(int i = 0; i < camWallGOs.Length; i++)
+            for (int i = 0; i < camWallGOs.Length; i++)
             {
                 Vector3 currWall = _cameraWalls[i].position;
                 _camLimits.xMax = Mathf.Max(_camLimits.xMax, currWall.x);

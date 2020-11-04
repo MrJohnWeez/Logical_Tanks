@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(BoxCollider))]
-public class ColoredObject : MonoBehaviour
+public class ColoredObject : VariableCycledObject
 {
     [Header("ColoredObject")]
     protected Rigidbody rigidBody = null;
@@ -14,11 +14,11 @@ public class ColoredObject : MonoBehaviour
 
     public ColorID GetColorID => _colorID;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         rigidBody = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-
         if (_coloredModel)
         {
             Material[] materials = _coloredModel.GetComponent<Renderer>().materials;
@@ -28,6 +28,16 @@ public class ColoredObject : MonoBehaviour
                 if (_colorID != ColorID.None)
                     break;
             }
+        }
+    }
+
+    public override void ResetObject()
+    {
+        base.ResetObject();
+        if (rigidBody)
+        {
+            rigidBody.velocity = Vector3.zero;
+            rigidBody.angularVelocity = Vector3.zero;
         }
     }
 }
