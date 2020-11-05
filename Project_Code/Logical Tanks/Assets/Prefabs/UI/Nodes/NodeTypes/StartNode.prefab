@@ -289,6 +289,7 @@ MonoBehaviour:
   isLocked: 0
   isSelectable: 1
   isDeletable: 0
+  isDuplicateable: 0
   inNodeLink: {fileID: 0}
   outNodeLink: {fileID: 3143386491274599438}
 --- !u!1001 &877669935379416437

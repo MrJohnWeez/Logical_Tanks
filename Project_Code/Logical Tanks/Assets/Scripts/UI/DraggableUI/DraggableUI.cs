@@ -11,6 +11,7 @@ public class DraggableUI : ColoredImage, IPointerDownHandler, IPointerUpHandler,
     [SerializeField] protected bool isLocked = false;
     [SerializeField] protected bool isSelectable = true;
     [SerializeField] protected bool isDeletable = true;
+    [SerializeField] protected bool isDuplicateable = true;
     protected CanvasGroup canvasGroup = null;
     protected Canvas canvas = null;
     protected RectTransform contentWindow;
@@ -20,6 +21,7 @@ public class DraggableUI : ColoredImage, IPointerDownHandler, IPointerUpHandler,
 
     public RectTransform GetRect => _rectTransform;
     public bool IsSelected => _isSelected;
+    public bool IsDuplicateable => isDuplicateable;
 
     protected override void Awake()
     {

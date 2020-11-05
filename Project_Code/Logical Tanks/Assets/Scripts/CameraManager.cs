@@ -1,26 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CameraManager : MonoBehaviour
 {
+    public Action<float> OnZoomChanged;
+    public const float MIN_ZOOM = 5;
+    public const float MAX_ZOOM = 15;
     private const float WALL_OFFSET = 1.5f;
-    private const float MIN_ZOOM = 5;
-    private const float MAX_ZOOM = 15;
     [SerializeField] private InteractableRenderTexture _interactMapTexture = null;
     private float _zoomSensitivity = 1f;
     private Camera _mapCamera = null;
     private Transform _mapCameraTransform = null;
     private Transform[] _cameraWalls = new Transform[4];
-    private Vector2 _moveBuffer = new Vector2();
-    private float _zoomBuffer = 0;
     private Rect _camLimits = new Rect();
 
     private void Awake()
     {
         // Initialize camera
-        _interactMapTexture.OnDragEvent += MoveCamera;
+        _interactMapTexture.OnDragEvent += UpdateCameraPosition;
         _interactMapTexture.OnScrollEvent += ZoomCamera;
+        _interactMapTexture.OnZoomEvent += SetZoom;
         _mapCamera = GameObject.FindGameObjectWithTag("MapCamera")?.GetComponent<Camera>();
         _mapCamera.orthographicSize = MAX_ZOOM - MIN_ZOOM;
         _mapCameraTransform = _mapCamera.transform;
@@ -50,31 +51,32 @@ public class CameraManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        _interactMapTexture.OnDragEvent -= MoveCamera;
+        _interactMapTexture.OnDragEvent -= UpdateCameraPosition;
         _interactMapTexture.OnScrollEvent -= ZoomCamera;
+        _interactMapTexture.OnZoomEvent -= SetZoom;
     }
 
-    private void MoveCamera(Vector2 delta) { _moveBuffer = _interactMapTexture.ConvertToOrthoWorldSpace(delta, _mapCamera); }
-    private void ZoomCamera(float delta) { _zoomBuffer = delta; }
-
-    private void LateUpdate()
+    private void UpdateCameraPosition(Vector2 delta)
     {
-        // Set Camera Position
-        Vector3 camPos = _mapCameraTransform.position;
-        camPos.x -= _moveBuffer.x;
-        camPos.z -= _moveBuffer.y;
+        Vector2 moveDelta = _interactMapTexture.ConvertToOrthoWorldSpace(delta, _mapCamera);
+         Vector3 camPos = _mapCameraTransform.position;
+        camPos.x -= moveDelta.x;
+        camPos.z -= moveDelta.y;
         float offset = _mapCamera.orthographicSize + WALL_OFFSET;
         camPos.x = Mathf.Clamp(camPos.x, _camLimits.xMin + offset, _camLimits.xMax - offset);
         camPos.z = Mathf.Clamp(camPos.z, _camLimits.yMin + offset, _camLimits.yMax - offset);
         _mapCameraTransform.position = camPos;
+    }
 
-        // Set Camera Zoom
-        // TODO: Make zoom smoother
-        _mapCamera.orthographicSize -= _zoomBuffer * _zoomSensitivity;
-        _mapCamera.orthographicSize = Mathf.Clamp(_mapCamera.orthographicSize, MIN_ZOOM, MAX_ZOOM);
+    private void ZoomCamera(float delta)
+    {
+        _mapCamera.orthographicSize -= delta * _zoomSensitivity;
+        SetZoom(_mapCamera.orthographicSize);
+    }
 
-        // Reset deltas
-        _moveBuffer = Vector2.zero;
-        _zoomBuffer = 0;
+    private void SetZoom(float newZoom)
+    {
+        _mapCamera.orthographicSize = Mathf.Clamp(newZoom, MIN_ZOOM, MAX_ZOOM);
+        OnZoomChanged?.Invoke(_mapCamera.orthographicSize);
     }
 }

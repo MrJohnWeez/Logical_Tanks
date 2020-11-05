@@ -156,6 +156,7 @@ MonoBehaviour:
   isLocked: 0
   isSelectable: 1
   isDeletable: 1
+  isDuplicateable: 1
   inNodeLink: {fileID: 8976214632294907770}
   outNodeLink: {fileID: 6563315048636157047}
   timeWarpSelection: {fileID: 3359607350988385161}
@@ -370,6 +371,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2460405089611634780, guid: 810736db03ffa5c458da685925437f5d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3611052956234653265, guid: 810736db03ffa5c458da685925437f5d, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
@@ -428,7 +433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6164224392981925977, guid: 810736db03ffa5c458da685925437f5d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6164224392981925977, guid: 810736db03ffa5c458da685925437f5d, type: 3}
       propertyPath: m_AnchoredPosition.y

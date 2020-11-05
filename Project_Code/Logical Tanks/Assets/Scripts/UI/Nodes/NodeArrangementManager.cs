@@ -73,15 +73,18 @@ public class NodeArrangementManager : NodeMovementManager
         {
             GameObject copyThisObject = _selectedNodes[i].gameObject;
             Node copyNode = copyThisObject.GetComponent<Node>();
-            GameObject newNode = Instantiate(copyThisObject, _nodesParent, false);
-            RectTransform rt = newNode.GetComponent<RectTransform>();
-            Vector3 newPos = copyThisObject.transform.position;
-            newPos.x += _positionVariation;
-            newPos.y -= _positionVariation;
-            rt.position = newPos;
-            Node node = newNode.GetComponent<Node>();
-            node.SetStartColor(copyNode.GetStartColor());
-            duplicatedNodes.Add(node);
+            if(copyNode.IsDuplicateable)
+            {
+                GameObject newNode = Instantiate(copyThisObject, _nodesParent, false);
+                RectTransform rt = newNode.GetComponent<RectTransform>();
+                Vector3 newPos = copyThisObject.transform.position;
+                newPos.x += _positionVariation;
+                newPos.y -= _positionVariation;
+                rt.position = newPos;
+                Node node = newNode.GetComponent<Node>();
+                node.SetStartColor(copyNode.GetStartColor());
+                duplicatedNodes.Add(node);
+            }
         }
         Deselect();
         for (int i = 0; i < duplicatedNodes.Count; i++) { duplicatedNodes[i].SetIsSelected(true); }
