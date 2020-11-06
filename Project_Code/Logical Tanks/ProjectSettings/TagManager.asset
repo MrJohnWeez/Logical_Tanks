@@ -12,6 +12,8 @@ TagManager:
   - FxTemporaire
   - CameraWall
   - GoalArea
+  - LeftDescArrow
+  - RightDescArrow
   layers:
   - Default
   - TransparentFX

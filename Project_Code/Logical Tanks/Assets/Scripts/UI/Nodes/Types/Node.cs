@@ -5,9 +5,7 @@ using UnityEngine.EventSystems;
 using System;
 
 // TODO:
-// Zoom buttons
-// Set up game scripts
-// Make POC tutorial level with all functionalities
+// Make POC tutorial level with all functionalities and make sure everything works
 // Test on WebGL
 
 // Start making actual levels

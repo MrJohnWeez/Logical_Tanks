@@ -58,14 +58,25 @@ public class CameraManager : MonoBehaviour
 
     private void UpdateCameraPosition(Vector2 delta)
     {
-        Vector2 moveDelta = _interactMapTexture.ConvertToOrthoWorldSpace(delta, _mapCamera);
-         Vector3 camPos = _mapCameraTransform.position;
-        camPos.x -= moveDelta.x;
-        camPos.z -= moveDelta.y;
-        float offset = _mapCamera.orthographicSize + WALL_OFFSET;
-        camPos.x = Mathf.Clamp(camPos.x, _camLimits.xMin + offset, _camLimits.xMax - offset);
-        camPos.z = Mathf.Clamp(camPos.z, _camLimits.yMin + offset, _camLimits.yMax - offset);
-        _mapCameraTransform.position = camPos;
+        if(delta != Vector2.zero)
+        {
+            Vector2 moveDelta = _interactMapTexture.ConvertToOrthoWorldSpace(delta, _mapCamera);
+            Vector3 camPos = _mapCameraTransform.position;
+            camPos.x -= moveDelta.x;
+            camPos.z -= moveDelta.y;
+            float offset = _mapCamera.orthographicSize + WALL_OFFSET;
+            camPos.x = Mathf.Clamp(camPos.x, _camLimits.xMin + offset, _camLimits.xMax - offset);
+            camPos.z = Mathf.Clamp(camPos.z, _camLimits.yMin + offset, _camLimits.yMax - offset);
+            _mapCameraTransform.position = camPos;
+        }
+        else
+        {
+            Vector3 camPos = _mapCameraTransform.position;
+            float offset = _mapCamera.orthographicSize + WALL_OFFSET;
+            camPos.x = Mathf.Clamp(camPos.x, _camLimits.xMin + offset, _camLimits.xMax - offset);
+            camPos.z = Mathf.Clamp(camPos.z, _camLimits.yMin + offset, _camLimits.yMax - offset);
+            _mapCameraTransform.position = camPos;
+        }
     }
 
     private void ZoomCamera(float delta)
@@ -77,6 +88,7 @@ public class CameraManager : MonoBehaviour
     private void SetZoom(float newZoom)
     {
         _mapCamera.orthographicSize = Mathf.Clamp(newZoom, MIN_ZOOM, MAX_ZOOM);
+        UpdateCameraPosition(Vector2.zero);
         OnZoomChanged?.Invoke(_mapCamera.orthographicSize);
     }
 }

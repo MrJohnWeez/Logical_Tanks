@@ -54,37 +54,46 @@ public class NodeCompiler : NodeArrangementManager
 
     public virtual void Run()
     {
-        if(IsNodeStructureValid(_startNode))
+        if(_nodeCompilerState != NodeCompilerState.Running)
         {
-            SetCompilerState(NodeCompilerState.Running);
-            _gameManager.ResetGameSpeed();
-            _currentNode = _startNode;
-            _currentNode.OnFinishedExecution += CurrentNodeFinished;
-            _stackHeight++;
-            _currentNode.Execute();
-        }
-        else
-        {
-            // TODO: Add error screen over map area and highlight loop node in red
+            Stop();
+            if(IsNodeStructureValid(_startNode))
+            {
+                SetCompilerState(NodeCompilerState.Running);
+                _gameManager.ResetGameSpeed();
+                _currentNode = _startNode;
+                _currentNode.OnFinishedExecution += CurrentNodeFinished;
+                _stackHeight++;
+                _currentNode.Execute();
+            }
         }
     }
 
     public virtual void Pause()
     {
-        SetCompilerState(NodeCompilerState.Paused);
-        _gameManager.Pause();
+        if(_nodeCompilerState == NodeCompilerState.Running)
+        {
+            SetCompilerState(NodeCompilerState.Paused);
+            _gameManager.Pause();
+        }
     }
 
     public virtual void Continue()
     {
-        SetCompilerState(NodeCompilerState.Running);
-        _gameManager.Continue();
+        if(_nodeCompilerState == NodeCompilerState.Paused)
+        {
+            SetCompilerState(NodeCompilerState.Running);
+            _gameManager.Continue();
+        }
     }
 
     public virtual void Stop()
     {
-        SetCompilerState(NodeCompilerState.Idle);
-        _gameManager.Stop();
+        if(_nodeCompilerState != NodeCompilerState.Idle)
+        {
+            SetCompilerState(NodeCompilerState.Idle);
+            _gameManager.Stop();
+        }
     }
 
     private void SetCompilerState(NodeCompilerState newState)
