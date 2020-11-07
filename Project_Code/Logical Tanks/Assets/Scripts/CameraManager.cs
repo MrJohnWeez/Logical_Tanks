@@ -8,7 +8,7 @@ public class CameraManager : MonoBehaviour
     public Action<float> OnZoomChanged;
     public const float MIN_ZOOM = 5;
     public const float MAX_ZOOM = 15;
-    private const float WALL_OFFSET = 1.5f;
+    private const float WALL_OFFSET = 2.5f;
     [SerializeField] private InteractableRenderTexture _interactMapTexture = null;
     private float _zoomSensitivity = 1f;
     private Camera _mapCamera = null;
