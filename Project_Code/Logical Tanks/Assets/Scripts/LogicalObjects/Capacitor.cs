@@ -5,12 +5,12 @@ using TMPro;
 
 public class Capacitor : LogicGateBase
 {
-    private const float MAX_CHARGE = 99.9f;
     private const float MIN_CHARGE = 0f;
+    [SerializeField] private float _maxCharge = 99.9f;
     [SerializeField] private float _currentCharge = 0.0f;
     [SerializeField] private TMP_Text _chargeTitle = null;
     private bool _isCharging = false;
-    private float _prevCurrentCharge = MIN_CHARGE;
+    private float _prevCurrentCharge = -1;
     private float _startCharge = 0.0f;
     
     protected override void StateSwitched(bool isOn) { _isCharging = inCable1 && inCable1.IsEnergized; }
@@ -19,25 +19,24 @@ public class Capacitor : LogicGateBase
     {
         base.Start();
         _startCharge = _currentCharge; 
+        UpdateOutCable(true);
     }
 
     void Update()
     {
-        if(_isCharging && _currentCharge < MAX_CHARGE)
+        if(_isCharging && _currentCharge < _maxCharge)
         {
             _currentCharge += Time.deltaTime * gameManager.GameSpeed;
-            _currentCharge = Mathf.Clamp(_currentCharge, MIN_CHARGE, MAX_CHARGE);
+            _currentCharge = Mathf.Clamp(_currentCharge, MIN_CHARGE, _maxCharge);
             UpdateText();
         }
         else if(!_isCharging && _currentCharge > MIN_CHARGE)
         {
             _currentCharge -= Time.deltaTime * gameManager.GameSpeed;
-            _currentCharge = Mathf.Clamp(_currentCharge, MIN_CHARGE, MAX_CHARGE);
+            _currentCharge = Mathf.Clamp(_currentCharge, MIN_CHARGE, _maxCharge);
             UpdateText();
         }
-        
-        if(_currentCharge > MIN_CHARGE && _prevCurrentCharge == MIN_CHARGE) { EnergizeOutCabels(true); }
-        else if(_currentCharge == MIN_CHARGE && _prevCurrentCharge > MIN_CHARGE) { EnergizeOutCabels(false); }
+        if(_prevCurrentCharge != _currentCharge) { UpdateOutCable(); }
         _prevCurrentCharge = _currentCharge;
     }
 
@@ -51,5 +50,11 @@ public class Capacitor : LogicGateBase
     private void UpdateText()
     {
         _chargeTitle.text = _currentCharge.ToString("F1");
+    }
+
+    private void UpdateOutCable(bool forceUpdate = false)
+    {
+        if(_currentCharge > MIN_CHARGE && (_prevCurrentCharge == MIN_CHARGE || forceUpdate)) { EnergizeOutCable(true); }
+        else if(_currentCharge == MIN_CHARGE && (_prevCurrentCharge > MIN_CHARGE || forceUpdate)) { EnergizeOutCable(false); }
     }
 }

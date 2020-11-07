@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LogicGateBase : VariableCycledObject
 {
-    [SerializeField] protected Cable inCable1 = null;
-    [SerializeField] protected Cable inCable2 = null;
-    [SerializeField] protected Cable[] outCabels = null;
+    [SerializeField] protected LogicCable inCable1 = null;
+    [SerializeField] protected LogicCable inCable2 = null;
+    [SerializeField] protected LogicCable outCable = null;
 
     protected override void Awake()
     {
@@ -15,10 +15,7 @@ public class LogicGateBase : VariableCycledObject
         if(inCable2) { inCable2.OnStateChanged += StateSwitched; }
     }
 
+    public override void ResetObject() { }
     protected virtual void StateSwitched(bool isOn) { }
-
-    protected virtual void EnergizeOutCabels(bool energize)
-    {
-        foreach(Cable cable in outCabels) { cable.SetEnergy(energize); }
-    }
+    protected virtual void EnergizeOutCable(bool energize) { outCable?.SetEnergy(energize); }
 }

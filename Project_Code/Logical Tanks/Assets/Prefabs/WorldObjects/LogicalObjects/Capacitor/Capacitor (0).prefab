@@ -261,9 +261,9 @@ GameObject:
   - component: {fileID: 3789359349149081663}
   - component: {fileID: 8257443143398319914}
   m_Layer: 0
-  m_Name: Capacitor
+  m_Name: Capacitor (0)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
@@ -300,8 +300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inCable1: {fileID: 0}
   inCable2: {fileID: 0}
-  outCabels:
-  - {fileID: 0}
+  outCable: {fileID: 0}
+  _maxCharge: 99.9
   _currentCharge: 0
   _chargeTitle: {fileID: 585259408654542932}
 --- !u!1 &9066393911366995975
@@ -456,7 +456,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1725484438481117671, guid: a997909f65338c5438c5649921c12ed0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1725484438481117671, guid: a997909f65338c5438c5649921c12ed0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -464,7 +464,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1725484438481117671, guid: a997909f65338c5438c5649921c12ed0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.698
+      value: 0.625
       objectReference: {fileID: 0}
     - target: {fileID: 1725484438481117671, guid: a997909f65338c5438c5649921c12ed0, type: 3}
       propertyPath: m_LocalRotation.x

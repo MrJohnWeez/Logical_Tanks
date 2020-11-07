@@ -122,8 +122,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7421557487664613983}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: 1.25, z: 0}
-  m_LocalScale: {x: 0.6, y: 2.5, z: 0.6}
+  m_LocalPosition: {x: -2, y: 1.3, z: 0}
+  m_LocalScale: {x: 0.7, y: 2.6, z: 0.7}
   m_Children: []
   m_Father: {fileID: 7421557488567701248}
   m_RootOrder: 1
@@ -217,8 +217,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7421557488253272568}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 1.25, z: 0}
-  m_LocalScale: {x: 0.6, y: 2.5, z: 0.6}
+  m_LocalPosition: {x: 2, y: 1.3, z: 0}
+  m_LocalScale: {x: 0.7, y: 2.6, z: 0.7}
   m_Children: []
   m_Father: {fileID: 7421557488567701248}
   m_RootOrder: 2
@@ -297,9 +297,9 @@ GameObject:
   - component: {fileID: 7421557488567701249}
   - component: {fileID: 1776683474134941239}
   m_Layer: 0
-  m_Name: Gate
+  m_Name: Gate (0)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -353,5 +353,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inCable1: {fileID: 0}
   inCable2: {fileID: 0}
-  outCabels: []
+  outCable: {fileID: 0}
   _openRight: 1

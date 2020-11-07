@@ -5,34 +5,18 @@ using System;
 
 public class GoalArea : MonoBehaviour
 {
-    public static int CurrentTanks = 0;
-    public static Action<int> OnTankNumberChanged;
-    public static Action OnTankNumberCompleted;
-    public static int NumberOfTanksToWin = 1;
+    public static Action OnTankEnter;
+    public static Action OnTankExit;
 
     private void OnTriggerEnter(Collider other)
     {
         TankController tank = other.GetComponent<TankController>();
-        if (tank)
-        {
-            CurrentTanks++;
-            CheckTankNumber();
-        }
+        if (tank) { OnTankEnter?.Invoke(); }
     }
 
     private void OnTriggerExit(Collider other)
     {
         TankController tank = other.GetComponent<TankController>();
-        if (tank)
-        {
-            CurrentTanks--;
-            CheckTankNumber();
-        }
-    }
-
-    private void CheckTankNumber()
-    {
-        OnTankNumberChanged?.Invoke(CurrentTanks);
-        if (CurrentTanks == NumberOfTanksToWin) { OnTankNumberCompleted?.Invoke(); }
+        if (tank) { OnTankExit?.Invoke(); }
     }
 }

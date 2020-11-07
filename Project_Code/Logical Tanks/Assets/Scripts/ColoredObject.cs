@@ -40,4 +40,6 @@ public class ColoredObject : VariableCycledObject
             rigidBody.angularVelocity = Vector3.zero;
         }
     }
+
+    public virtual void HitWithBullet(Vector3 position) { }
 }

@@ -6,6 +6,6 @@ public class OrGate : LogicGateBase
 {
     protected override void StateSwitched(bool isOn)
     {
-        EnergizeOutCabels(inCable1 && inCable2 && inCable1.IsEnergized || inCable2.IsEnergized);
+        EnergizeOutCable(inCable1 && inCable2 && inCable1.IsEnergized || inCable2.IsEnergized);
     }
 }

@@ -11,14 +11,14 @@ public class TankCountDisplay : BaseInGameMenu
     {
         base.Awake();
         UpdateTankLabel(0);
-        GoalArea.OnTankNumberChanged += UpdateTankLabel;
+        gameManager.OnTankValueChanged += UpdateTankLabel;
     }
 
-    private void OnDestroy() { GoalArea.OnTankNumberChanged -= UpdateTankLabel; }
+    private void OnDestroy() { gameManager.OnTankValueChanged -= UpdateTankLabel; }
 
     private void UpdateTankLabel(int newTankNumber)
     {
-        string displayString = GoalArea.NumberOfTanksToWin > 1 ? "Goal: {0}\\{1} Tanks" : "Goal: {0}\\{1} Tank";
-        _displayLabel.text = string.Format(displayString, newTankNumber, GoalArea.NumberOfTanksToWin);
+        string displayString = gameManager.NumberOfTanksToWin > 1 ? "Goal: {0}\\{1} Tanks" : "Goal: {0}\\{1} Tank";
+        _displayLabel.text = string.Format(displayString, newTankNumber, gameManager.NumberOfTanksToWin);
     }
 }

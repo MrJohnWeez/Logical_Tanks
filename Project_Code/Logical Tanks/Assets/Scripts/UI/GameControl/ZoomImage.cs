@@ -7,7 +7,7 @@ public class ZoomImage : ZoomableControls, IScrollHandler
     [SerializeField] private float _initialScale = 1f;
     [SerializeField] private float _maximumScale = 3f;
     [SerializeField] private float _sensitivity = 0.1f;
-    [SerializeField] private RectTransform _overrideCenter;
+    [SerializeField] private RectTransform _overrideCenter = null;
     [HideInInspector] private Vector3 _scale;
     private float _scaleValue = 1;
     private RectTransform _thisTransform;

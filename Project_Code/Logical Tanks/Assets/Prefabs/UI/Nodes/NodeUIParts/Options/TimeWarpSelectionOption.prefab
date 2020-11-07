@@ -702,7 +702,7 @@ MonoBehaviour:
   _leftButton: {fileID: 8567841549245337437}
   _rightButton: {fileID: 4961427175655526834}
   minValue: 0
-  maxValue: 12
+  maxValue: 8
   step: 1
   currentValue: 5
   shouldLoop: 0
@@ -718,7 +718,3 @@ MonoBehaviour:
   - 2
   - 4
   - 10
-  - 20
-  - 40
-  - 60
-  - 100

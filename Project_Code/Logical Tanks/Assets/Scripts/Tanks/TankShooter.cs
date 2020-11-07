@@ -9,7 +9,6 @@ public class TankShooter : MonoBehaviour
     [SerializeField] private LayerMask _hitMask;
     [SerializeField] private GameObject _runtimeRayPrefab = null;
     private LineRenderer _lineRenderRay = null;
-    private List<Bullet> _bullets = new List<Bullet>();
     private RaycastHit hit;
     private Vector3 forwardDirection;
 
@@ -38,7 +37,5 @@ public class TankShooter : MonoBehaviour
         Bullet bullet = bulletGO.GetComponent<Bullet>();
         if(ignoreThis)
             bullet.IgnoreCollider(ignoreThis);
-
-        _bullets.Add(bullet);
     }
 }

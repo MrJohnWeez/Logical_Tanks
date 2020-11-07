@@ -28,7 +28,6 @@ public class NodeCompiler : NodeArrangementManager
     private CanvasGroup _stopButtonCanvasGroup = null;
     private GameManager _gameManager = null;
     private NodeCompilerState _nodeCompilerState = NodeCompilerState.Idle;
-    private int _stackHeight = 0;
 
     protected override void Awake()
     {
@@ -60,10 +59,10 @@ public class NodeCompiler : NodeArrangementManager
             if(IsNodeStructureValid(_startNode))
             {
                 SetCompilerState(NodeCompilerState.Running);
+                
                 _gameManager.ResetGameSpeed();
                 _currentNode = _startNode;
                 _currentNode.OnFinishedExecution += CurrentNodeFinished;
-                _stackHeight++;
                 _currentNode.Execute();
             }
         }
@@ -91,6 +90,8 @@ public class NodeCompiler : NodeArrangementManager
     {
         if(_nodeCompilerState != NodeCompilerState.Idle)
         {
+            Node[] allNodes = GetAllNodes();
+            foreach(Node n in allNodes) { n.OnFinishedExecution = null; }
             SetCompilerState(NodeCompilerState.Idle);
             _gameManager.Stop();
         }
@@ -118,32 +119,20 @@ public class NodeCompiler : NodeArrangementManager
 
     private void CurrentNodeFinished(Node nodeThatFinished)
     {
-        if(_stackHeight > 10)
+        if(_currentNode == nodeThatFinished)
         {
-            Debug.Log("State: " + _stackHeight);
-            Debug.Break();
-        }
-        
-        if (nodeThatFinished)
-        {
-            _stackHeight--;
-            nodeThatFinished.OnFinishedExecution -= CurrentNodeFinished;
-            _currentNode = nodeThatFinished.NextNode();
-            if (_currentNode)
+            if (nodeThatFinished)
             {
-                _currentNode.OnFinishedExecution += CurrentNodeFinished;
-                _stackHeight++;
-                _currentNode.Execute();
+                nodeThatFinished.OnFinishedExecution -= CurrentNodeFinished;
+                _currentNode = nodeThatFinished.NextNode();
+                if (_currentNode)
+                {
+                    _currentNode.OnFinishedExecution += CurrentNodeFinished;
+                    _currentNode.Execute();
+                }
+                else { Stop(); }
             }
-            else
-            {
-                Stop();
-            }
-
-        }
-        else
-        {
-            Stop();
+            else { Stop(); }
         }
     }
 

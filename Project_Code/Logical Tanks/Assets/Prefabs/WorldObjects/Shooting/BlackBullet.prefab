@@ -75,7 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8ca03205de82b429866822a38bdfb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coloredModel: {fileID: 8744627951124098861}
+  _rigidBody: {fileID: 668766633360165680}
+  _boxCollider: {fileID: 668766633360165695}
 --- !u!1 &8744627951124098861
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,6 @@ public class NotGate : LogicGateBase
 
     protected override void StateSwitched(bool isOn)
     {
-        EnergizeOutCabels(inCable1 && !inCable1.IsEnergized);
+        EnergizeOutCable(inCable1 && !inCable1.IsEnergized);
     }
 }

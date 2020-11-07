@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class PressurePlate : MonoBehaviour
+public class PressurePlate : LogicGateBase
 {    
     [SerializeField] private GameObject _coloredObject = null;
-    [SerializeField] private Cable[] _cables = null;
     private ColorID _colorID = ColorID.Green;
     private BoxCollider _trigger = null;
 
     public ColorID GetColorID => _colorID;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _trigger = GetComponent<BoxCollider>();
         _colorID = _coloredObject.GetComponent<Renderer>().material.GetMatchingColor();
     }
@@ -25,18 +25,12 @@ public class PressurePlate : MonoBehaviour
     private void Activate(Collider other)
     {
         TankController tankController = other.gameObject.GetComponent<TankController>();
-        if(tankController && tankController.GetColorID == _colorID)
-        {
-            foreach(Cable cable in _cables) { cable?.SetEnergy(true); }
-        }
+        if(tankController && tankController.GetColorID == _colorID) { EnergizeOutCable(true); }
     }
 
     private void Deactivate(Collider other)
     {
         TankController tankController = other.gameObject.GetComponent<TankController>();
-        if(tankController && tankController.GetColorID == _colorID)
-        {
-            foreach(Cable cable in _cables) { cable?.SetEnergy(false); }
-        }
+        if(tankController && tankController.GetColorID == _colorID) { EnergizeOutCable(false); }
     }
 }

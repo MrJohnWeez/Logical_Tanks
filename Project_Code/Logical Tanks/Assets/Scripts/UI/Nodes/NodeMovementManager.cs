@@ -34,6 +34,11 @@ public class NodeMovementManager : MonoBehaviour
         _nodeBridgesParent.transform.SetSiblingIndex(index);
     }
 
+    public Node[] GetAllNodes()
+    {
+        return gameObject.GetComponentsInChildren<Node>();
+    }
+
     public void NodeLinkDragStarted(NodeLink nodeLink)
     {
         if (_state == State.Idle)
