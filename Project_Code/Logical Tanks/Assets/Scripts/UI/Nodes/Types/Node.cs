@@ -4,28 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 
-// TODO:
-// Add rocks and decoration objects to make levels look good
-// Make POC tutorial level with all functionalities and make sure everything works
-// Test on WebGL
-
-// Start making actual levels
-
-// List of features:
-// - **** Move Tank Node
-// - **** Rotate Tank Node
-// - **** Rotate Turret Node
-// - **** Shoot Tank Node
-// - **** Loop Node
-// - **** JumpTo Node
-// - **** ReRout Node
-// - Pressure Plate that triggers for all
-// - **** Pressure plate that triggers for tank color
-// - **** Black Door raises and lowers dependent on power received
-// - **** Logic gates (And,Or,Not)
-// - **** Capacitor (Charges for time it is powered then discharges)
-// - **** Turret will shoot but does not rotate (variable cooldown)
-
 public class Node : DraggableUI
 {
     public Action<Node> NodeSelectionChanged;
