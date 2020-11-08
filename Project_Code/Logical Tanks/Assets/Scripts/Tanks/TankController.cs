@@ -25,6 +25,7 @@ public class TankController : ColoredObject
     private TankShooter _tankShooter = null;
     private TankState _tankState = TankState.Idle;
     private float _currentTimer = 0;
+    private float _prevCurrentTimer = 0;
     private float _maxTimer = 0;
     private Vector3 _oldPosition;
     private Vector3 _targetPosition;
@@ -43,23 +44,42 @@ public class TankController : ColoredObject
         {
             if(_currentTimer < _maxTimer && rigidBody && _turret)
             {
-                _currentTimer += Time.deltaTime * gameManager.GameSpeed;
-                _currentTimer = Mathf.Clamp(_currentTimer, 0, _maxTimer);
+                float timerAddition = Time.deltaTime * gameManager.GameSpeed;
+                _currentTimer = Mathf.Clamp(_currentTimer + timerAddition, 0, _maxTimer);
                 if(_tankState == TankState.TankMoving)
                 {
+                    Vector3 oldPos = Vector3.Lerp(_oldPosition, _targetPosition, _prevCurrentTimer / _maxTimer);
                     Vector3 newPos = Vector3.Lerp(_oldPosition, _targetPosition, _currentTimer / _maxTimer);
-                    if (!WillTankOverlapOtherColliders(newPos, rigidBody.rotation)) { rigidBody.MovePosition(newPos); }
+                    float maxDistance = Vector3.Distance(oldPos, newPos);
+                    if(Vector3.Distance(rigidBody.position, newPos) > maxDistance)
+                    {
+                        ResetStateMachine();
+                    }
+                    else
+                    {
+                        if (!WillTankOverlapOtherColliders(newPos, rigidBody.rotation)) { rigidBody.MovePosition(newPos); }
+                    }
                 }
                 else if(_tankState == TankState.TankRotating)
                 {
+                    Quaternion oldRot = Quaternion.Lerp(_oldRotation, _targetRotation, _prevCurrentTimer / _maxTimer);
                     Quaternion newRot = Quaternion.Lerp(_oldRotation, _targetRotation, _currentTimer / _maxTimer);
-                    if (!WillTankOverlapOtherColliders(rigidBody.position, newRot)) { rigidBody.MoveRotation(newRot); }
+                    float maxAngle = Quaternion.Angle(oldRot, newRot);
+                    if(Quaternion.Angle(rigidBody.rotation, newRot) > maxAngle)
+                    {
+                        ResetStateMachine();
+                    }
+                    else
+                    {
+                        if (!WillTankOverlapOtherColliders(rigidBody.position, newRot)) { rigidBody.MoveRotation(newRot); }
+                    }
                 }
                 else if(_tankState == TankState.TurretRotating)
                 {
                     _turret.transform.rotation = Quaternion.Lerp(_oldRotation, _targetRotation, _currentTimer / _maxTimer);
                 }
                 else if(_tankState == TankState.Shooting) { }
+                _prevCurrentTimer = _currentTimer;
             }
             else { ResetStateMachine(); }
         }
@@ -115,12 +135,14 @@ public class TankController : ColoredObject
     public override void ResetObject()
     {
         ResetStateMachine();
+        gameObject.SetActive(true);
         base.ResetObject();
     }
 
     public override void HitWithBullet(Vector3 position)
     {
         Debug.Log("Tank Exploded with color: " + GetColorID);
+        ResetStateMachine();
         gameObject.SetActive(false);
         base.HitWithBullet(position);
     }
