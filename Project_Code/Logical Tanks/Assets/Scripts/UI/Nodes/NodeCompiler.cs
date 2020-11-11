@@ -119,7 +119,6 @@ public class NodeCompiler : NodeArrangementManager
 
     private void CurrentNodeFinished(Node nodeThatFinished)
     {
-        Debug.Log("Finished node name: " + nodeThatFinished.name);
         if(_currentNode == nodeThatFinished)
         {
             if (nodeThatFinished)
@@ -129,7 +128,6 @@ public class NodeCompiler : NodeArrangementManager
                 if (_currentNode)
                 {
                     _currentNode.OnFinishedExecution += CurrentNodeFinished;
-                    Debug.Log("Execute node name: " + _currentNode.name);
                     _currentNode.Execute();
                 }
                 else { Stop(); }

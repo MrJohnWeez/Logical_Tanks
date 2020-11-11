@@ -171,9 +171,9 @@ public class TankController : ColoredObject
     public override void HitWithBullet(Vector3 position)
     {
         Debug.Log("Tank Exploded with color: " + GetColorID);
-        ResetStateMachine();
         gameObject.SetActive(false);
         _tankState = TankState.Disabled;
+        ResetStateMachine();
         base.HitWithBullet(position);
     }
 
@@ -185,10 +185,7 @@ public class TankController : ColoredObject
         Collider[] hitObjects = Physics.OverlapBox(center, boxCollider.size / 2, rotation, ~0, QueryTriggerInteraction.Ignore);
         foreach(Collider c in hitObjects)
         {
-            if(!c.Equals(boxCollider))
-            {
-                return true;
-            }
+            if(!c.Equals(boxCollider)) { return true; }
         }
         return false;
     }

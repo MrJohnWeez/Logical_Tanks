@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _levelNumber = 0;
     [SerializeField] private int _numberOfTanksToWin = 1;
     private int _currentNumberOfTanks = 0;
+    private TankController[] _tankControllers = null;
     private float _gameSpeed = 0;
     private float _oldGameSpeed = 1.0f;
     private float _normalGameSpeed = 1.0f;
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
         _helpButton?.onClick.AddListener(OpenHelpMenu);
     }
 
+    private void Start() { UpdateTanks(); }
     public void ResetGameSpeed() { SetGameSpeed(_normalGameSpeed); }
 
     public void Pause()
@@ -86,6 +88,17 @@ public class GameManager : MonoBehaviour
         OnGameSpeedChanged?.Invoke(_gameSpeed);
     }
 
+    public void UpdateTanks()
+    {
+        TankController[] controllers = FindObjectsOfType<TankController>(true);
+        _tankControllers = new TankController[controllers.Length];
+        foreach(TankController tc in controllers)
+        {
+            if(tc) { _tankControllers[(int)tc.GetColorID] = tc; }
+        }
+    }
+
+    public TankController GetTankController(ColorID color) { return _tankControllers[(int)color]; }
     public void OpenSettingsMenu() { SpawnMenu(_pauseMenu); }
     public void OpenHelpMenu() { SpawnMenu(_helpMenu); }
     public void OpenLevelCompleteMenu() { SpawnMenu(_levelCompleteMenu); }
