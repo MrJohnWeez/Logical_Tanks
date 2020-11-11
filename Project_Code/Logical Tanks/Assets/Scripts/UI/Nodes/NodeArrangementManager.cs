@@ -31,6 +31,7 @@ public class NodeArrangementManager : NodeMovementManager
     [SerializeField] private float _positionVariation = 5.0f;
     private Button[] _nodeSelectionButtons = null;
     private int _addState = 0;
+    private int _nodeUUID = 0;
 
     protected override void Awake()
     {
@@ -55,7 +56,9 @@ public class NodeArrangementManager : NodeMovementManager
 
     public void AddNode(NodeType nodeType)
     {
+        _nodeUUID++;
         GameObject newNode = Instantiate(_nodePrefabs[(int)nodeType], _nodesParent, false);
+        newNode.name = string.Format("Node ({0})", _nodeUUID);
         RectTransform rt = newNode.GetComponent<RectTransform>();
         Vector3 newPos = _nodeSpawnPoint.position;
         newPos.x += _addState > 1 ? _positionVariation : -_positionVariation;

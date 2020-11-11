@@ -12,7 +12,8 @@ public class TankController : ColoredObject
         TankMoving,
         TankRotating,
         TurretRotating,
-        Shooting
+        Shooting,
+        Disabled
     }
 
     public Action OnTankStateChangedToIdle;
@@ -40,7 +41,7 @@ public class TankController : ColoredObject
 
     protected virtual void FixedUpdate()
     {
-        if(_tankState != TankState.Idle)
+        if(_tankState != TankState.Idle && _tankState != TankState.Disabled)
         {
             if(_currentTimer < _maxTimer && rigidBody && _turret)
             {
@@ -87,37 +88,65 @@ public class TankController : ColoredObject
 
     public void MoveTank(float meters)
     {
-        _tankState = TankState.TankMoving;
-        _currentTimer = 0;
-        _maxTimer = Mathf.Abs(meters / MAX_MOVE_SPEED);
-        _oldPosition = rigidBody.position;
-        _targetPosition = rigidBody.position + transform.forward * meters;
+        if(_tankState == TankState.Idle)
+        {
+            _tankState = TankState.TankMoving;
+            _currentTimer = 0;
+            _maxTimer = Mathf.Abs(meters / MAX_MOVE_SPEED);
+            _oldPosition = rigidBody.position;
+            _targetPosition = rigidBody.position + transform.forward * meters;
+        }
+        else
+        {
+            ResetStateMachine();
+        }
     }
 
     public void RotateTank(float degrees)
     {
-        _tankState = TankState.TankRotating;
-        _currentTimer = 0;
-        _maxTimer = Mathf.Abs(degrees / MAX_ROTATION_SPEED);
-        _oldRotation = rigidBody.rotation;
-        _targetRotation = rigidBody.rotation * Quaternion.AngleAxis(degrees, Vector3.up);
+        if(_tankState == TankState.Idle)
+        {
+            _tankState = TankState.TankRotating;
+            _currentTimer = 0;
+            _maxTimer = Mathf.Abs(degrees / MAX_ROTATION_SPEED);
+            _oldRotation = rigidBody.rotation;
+            _targetRotation = rigidBody.rotation * Quaternion.AngleAxis(degrees, Vector3.up);
+        }
+        else
+        {
+            ResetStateMachine();
+        }
     }
     
     public void RotateTurret(float degrees)
     {
-        _tankState = TankState.TurretRotating;
-        _currentTimer = 0;
-        _maxTimer = Mathf.Abs(degrees / MAX_TURN_TURRET_SPEED);
-        _oldRotation = _turret.transform.rotation;
-        _targetRotation = _turret.transform.rotation * Quaternion.AngleAxis(degrees, Vector3.up);
+        if(_tankState == TankState.Idle)
+        {
+            _tankState = TankState.TurretRotating;
+            _currentTimer = 0;
+            _maxTimer = Mathf.Abs(degrees / MAX_TURN_TURRET_SPEED);
+            _oldRotation = _turret.transform.rotation;
+            _targetRotation = _turret.transform.rotation * Quaternion.AngleAxis(degrees, Vector3.up);
+        }
+        else
+        {
+            ResetStateMachine();
+        }
     }
 
     public void ShootTurret()
     {
-        _tankState = TankState.Shooting;
-        _currentTimer = 0;
-        _maxTimer = RELOAD_DELAY;
-        _tankShooter.Shoot(boxCollider);
+        if(_tankState == TankState.Idle)
+        {
+            _tankState = TankState.Shooting;
+            _currentTimer = 0;
+            _maxTimer = RELOAD_DELAY;
+            _tankShooter.Shoot(boxCollider);
+        }
+        else
+        {
+            ResetStateMachine();
+        }
     }
 
     public void ResetStateMachine()
@@ -142,8 +171,9 @@ public class TankController : ColoredObject
     public override void HitWithBullet(Vector3 position)
     {
         Debug.Log("Tank Exploded with color: " + GetColorID);
-        ResetStateMachine();
         gameObject.SetActive(false);
+        _tankState = TankState.Disabled;
+        ResetStateMachine();
         base.HitWithBullet(position);
     }
 
@@ -155,10 +185,7 @@ public class TankController : ColoredObject
         Collider[] hitObjects = Physics.OverlapBox(center, boxCollider.size / 2, rotation, ~0, QueryTriggerInteraction.Ignore);
         foreach(Collider c in hitObjects)
         {
-            if(!c.Equals(boxCollider))
-            {
-                return true;
-            }
+            if(!c.Equals(boxCollider)) { return true; }
         }
         return false;
     }
