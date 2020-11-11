@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 // TODO:
-// Fix tank rotation and possible movement glitches
+// Fix tank explosion node freeze bug
 // Test on WebGL
 
 // Start making actual levels

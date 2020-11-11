@@ -12,8 +12,16 @@ public class TankNode : Node
     {
         RunNodeColor(true);
         UpdateTankController();
-        if(_tankController)
+        if(_tankController && _tankController.gameObject.activeSelf)
+        {
+            Debug.Log("activeSelf");
             _tankController.OnTankStateChangedToIdle += OnExecuteFinished;
+        }
+        else
+        {
+            Debug.Log("No tank found!");
+            OnExecuteFinished();
+        }
     }
 
     public override void OnExecuteFinished()
@@ -24,7 +32,7 @@ public class TankNode : Node
 
     protected virtual void UpdateTankController()
     {
-        TankController[] controllers = FindObjectsOfType<TankController>();
+        TankController[] controllers = FindObjectsOfType<TankController>(false);
         ColorID tankColor = colorSelection.GetColorID();
         foreach(TankController tc in controllers)
         {
