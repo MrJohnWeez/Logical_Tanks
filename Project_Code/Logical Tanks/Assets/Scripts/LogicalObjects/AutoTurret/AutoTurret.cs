@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class AutoTurret : ColoredObject
 {
     [Header("AutoTurret")]
@@ -12,14 +11,7 @@ public class AutoTurret : ColoredObject
     [SerializeField] private GameObject _bulletStart = null;
     [SerializeField] private GameObject _bulletPrefab = null;
     private List<Bullet> _bullets = new List<Bullet>();
-    private BoxCollider _boxCollider = null;
     
-    protected override void Awake()
-    {
-        base.Awake();
-        _boxCollider = GetComponent<BoxCollider>();
-    }
-
     protected virtual void Update()
     {
         if(_currentCooldown >= 0)
@@ -30,22 +22,30 @@ public class AutoTurret : ColoredObject
                 _currentCooldown = _fireRate;
                 Shoot();
             }
-        } 
+        }
     }
 
     public void Shoot()
     {
         GameObject bulletGO = Instantiate(_bulletPrefab, _bulletStart.transform.position, _bulletStart.transform.rotation);
         Bullet bullet = bulletGO.GetComponent<Bullet>();
-        bullet.IgnoreCollider(_boxCollider);
+        bullet.IgnoreCollider(boxCollider);
         bullet.SetSpeed(_bulletSpeed);
         _bullets.Add(bullet);
+    }
+
+    public override void HitWithBullet(Vector3 position)
+    {
+        Debug.Log("Hit shooter with name: " + name);
+        gameObject.SetActive(false);
+        base.HitWithBullet(position);
     }
 
     public override void ResetObject()
     {
         _currentCooldown = 0;
         _bullets.Clear();
+        gameObject.SetActive(true);
         base.ResetObject();
     }
 }

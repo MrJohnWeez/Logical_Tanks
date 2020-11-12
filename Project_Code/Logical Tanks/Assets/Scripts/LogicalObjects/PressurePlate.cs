@@ -9,6 +9,7 @@ public class PressurePlate : LogicGateBase
     [SerializeField] private GameObject _coloredObject = null;
     private ColorID _colorID = ColorID.Green;
     private BoxCollider _trigger = null;
+    private TankController _currentTank = null;
 
     public ColorID GetColorID => _colorID;
 
@@ -19,18 +20,24 @@ public class PressurePlate : LogicGateBase
         _colorID = _coloredObject.GetComponent<Renderer>().material.GetMatchingColor();
     }
 
-    private void OnTriggerEnter(Collider other) { Activate(other); }
-    private void OnTriggerExit(Collider other) { Deactivate(other); }
-
-    private void Activate(Collider other)
+    private void OnTriggerEnter(Collider other) { SetEnergy(other, true); }
+    private void OnTriggerExit(Collider other) { SetEnergy(other, false); }
+    private void Update()
     {
-        TankController tankController = other.gameObject.GetComponent<TankController>();
-        if(tankController && tankController.GetColorID == _colorID) { EnergizeOutCable(true); }
+        if(_currentTank && !_currentTank.IsReady)
+        {
+            _currentTank = null;
+            EnergizeOutCable(false);
+        }
     }
 
-    private void Deactivate(Collider other)
+    private void SetEnergy(Collider other, bool hasEnergy)
     {
         TankController tankController = other.gameObject.GetComponent<TankController>();
-        if(tankController && tankController.GetColorID == _colorID) { EnergizeOutCable(false); }
+        if(tankController && tankController.GetColorID == _colorID || (tankController && _colorID == ColorID.None))
+        {
+            _currentTank = tankController;
+            EnergizeOutCable(hasEnergy);
+        }
     }
 }

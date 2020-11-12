@@ -8,10 +8,7 @@ public class Bullet : VariableCycledObject
     [SerializeField] private BoxCollider _boxCollider = null;
     private float _speed = 500.0f;
 
-    public void IgnoreCollider(Collider ignoreThis)
-    {
-        Physics.IgnoreCollision(ignoreThis, _boxCollider);
-    }
+    public void IgnoreCollider(Collider ignoreThis) { Physics.IgnoreCollision(ignoreThis, _boxCollider); }
 
     protected virtual void FixedUpdate()
     {
@@ -19,10 +16,7 @@ public class Bullet : VariableCycledObject
         _rigidBody.angularVelocity = Vector3.zero;
     }
 
-    public void SetSpeed(float newSpeed)
-    {
-        _speed = newSpeed;
-    }
+    public void SetSpeed(float newSpeed) { _speed = newSpeed; }
 
     private void OnCollisionEnter(Collision other)
     {
@@ -31,8 +25,5 @@ public class Bullet : VariableCycledObject
         Destroy(gameObject);
     }
 
-    public override void ResetObject()
-    {
-        Destroy(gameObject);
-    }
+    public override void ResetObject() { Destroy(gameObject); }
 }

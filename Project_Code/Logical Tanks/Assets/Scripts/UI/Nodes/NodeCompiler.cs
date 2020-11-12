@@ -130,9 +130,7 @@ public class NodeCompiler : NodeArrangementManager
                     _currentNode.OnFinishedExecution += CurrentNodeFinished;
                     _currentNode.Execute();
                 }
-                else { Stop(); }
             }
-            else { Stop(); }
         }
     }
 

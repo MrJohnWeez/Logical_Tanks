@@ -17,7 +17,7 @@ public class TankController : ColoredObject
     }
 
     public Action OnTankStateChangedToIdle;
-
+    [HideInInspector] public bool IsReady => _tankState != TankState.Disabled;
     [SerializeField] private GameObject _turret = null;
     private const float RELOAD_DELAY = 0.3f;
     private const float MAX_MOVE_SPEED = 1.0f; // m/s
@@ -125,8 +125,8 @@ public class TankController : ColoredObject
             _tankState = TankState.TurretRotating;
             _currentTimer = 0;
             _maxTimer = Mathf.Abs(degrees / MAX_TURN_TURRET_SPEED);
-            _oldRotation = _turret.transform.rotation;
-            _targetRotation = _turret.transform.rotation * Quaternion.AngleAxis(degrees, Vector3.up);
+            _oldRotation = _turret.transform.localRotation;
+            _targetRotation = _turret.transform.localRotation * Quaternion.AngleAxis(degrees, Vector3.up);
         }
         else
         {
@@ -164,6 +164,7 @@ public class TankController : ColoredObject
     public override void ResetObject()
     {
         ResetStateMachine();
+        _turret.transform.localRotation = Quaternion.identity;
         gameObject.SetActive(true);
         base.ResetObject();
     }
@@ -171,10 +172,11 @@ public class TankController : ColoredObject
     public override void HitWithBullet(Vector3 position)
     {
         Debug.Log("Tank Exploded with color: " + GetColorID);
+        gameObject.transform.position -= Vector3.up * 100;
         gameObject.SetActive(false);
-        _tankState = TankState.Disabled;
         ResetStateMachine();
         base.HitWithBullet(position);
+        _tankState = TankState.Disabled;
     }
 
     private bool WillTankOverlapOtherColliders(Vector3 position, Quaternion rotation)

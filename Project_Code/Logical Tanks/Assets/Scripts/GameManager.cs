@@ -6,9 +6,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 // TODO:
-// Fix tank explosion node freeze bug
-// Test on WebGL
-
 // Start making actual levels
 
 // List of features:
@@ -19,7 +16,7 @@ using UnityEngine.SceneManagement;
 // - **** Loop Node
 // - **** JumpTo Node
 // - **** ReRout Node
-// - Pressure Plate that triggers for all
+// - **** Pressure Plate that triggers for all
 // - **** Pressure plate that triggers for tank color
 // - **** Black Door raises and lowers dependent on power received
 // - **** Logic gates (And,Or,Not)
