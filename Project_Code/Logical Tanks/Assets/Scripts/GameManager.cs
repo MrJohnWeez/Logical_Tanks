@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] _descriptions = null;
     [SerializeField] private Button _menuButton = null;
     [SerializeField] private Button _helpButton = null;
+    [SerializeField] private GameObject _titleMenu = null;
     [SerializeField] private GameObject _pauseMenu = null;
     [SerializeField] private GameObject _helpMenu = null;
     [SerializeField] private GameObject _levelCompleteMenu = null;
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _levelNumber = 0;
     [SerializeField] private int _numberOfTanksToWin = 1;
     private int _currentNumberOfTanks = 0;
-    private TankController[] _tankControllers = null;
+    private TankController[] _tankControllers = new TankController[7];
     private float _gameSpeed = 0;
     private float _oldGameSpeed = 1.0f;
     private float _normalGameSpeed = 1.0f;
@@ -89,7 +90,6 @@ public class GameManager : MonoBehaviour
     public void UpdateTanks()
     {
         TankController[] controllers = FindObjectsOfType<TankController>(true);
-        _tankControllers = new TankController[controllers.Length];
         foreach(TankController tc in controllers)
         {
             if(tc) { _tankControllers[(int)tc.GetColorID] = tc; }
@@ -101,11 +101,18 @@ public class GameManager : MonoBehaviour
     public void OpenHelpMenu() { SpawnMenu(_helpMenu); }
     public void OpenLevelCompleteMenu() { SpawnMenu(_levelCompleteMenu); }
     public void ToTitleScreen() { SceneManager.LoadScene("MainMenu"); }
+    public void ToLevelSelection()
+    {
+        GameObject menu = SpawnMenu(_titleMenu);
+        TitleScreenMenu titleScreenMenu = menu.GetComponent<TitleScreenMenu>();
+        titleScreenMenu.ForceOpenLevelMenu();
+    }
 
-    private void SpawnMenu(GameObject prefabToSpawn)
+    private GameObject SpawnMenu(GameObject prefabToSpawn)
     {
         _nodeManager.Pause();
-        Instantiate(prefabToSpawn, _inGameMenuCanvas.gameObject.transform, false);
+        GameObject menu = Instantiate(prefabToSpawn, _inGameMenuCanvas.gameObject.transform, false);
+        return menu;
     }
 
     private void CompleteTankChanged(bool increased)

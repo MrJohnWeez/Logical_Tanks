@@ -65,10 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'You have completed this level.
-
-    Return to the main menu to play the
-    next unlocked level.'
+  m_text: You have completed this level.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -448,7 +445,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1313297956475932537, guid: 0be59d04fd451ec46ad8fd67975a7972, type: 3}
       propertyPath: m_Name
-      value: MainMenu
+      value: Ok
       objectReference: {fileID: 0}
     - target: {fileID: 1313297956475932538, guid: 0be59d04fd451ec46ad8fd67975a7972, type: 3}
       propertyPath: m_Pivot.x
@@ -536,7 +533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1313297958070054646, guid: 0be59d04fd451ec46ad8fd67975a7972, type: 3}
       propertyPath: m_text
-      value: Main Menu
+      value: OK
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0be59d04fd451ec46ad8fd67975a7972, type: 3}

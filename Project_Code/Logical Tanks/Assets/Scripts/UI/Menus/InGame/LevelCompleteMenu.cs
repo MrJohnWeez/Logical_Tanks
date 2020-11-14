@@ -14,5 +14,5 @@ public class LevelCompleteMenu : BaseInGameMenu
         _title.text = string.Format("Level {0} Completed!", gameManager.LevelNumber + 1);
     }
 
-    protected override void CloseMenu() { ToMainMenu(); }
+    protected override void CloseMenu() { gameManager.ToLevelSelection(); }
 }

@@ -20,4 +20,6 @@ public class TitleScreenMenu : BaseMenu
         _settingsButton.onClick.AddListener(() => SpawnMenu(_settingsMenu));
         _aboutButton.onClick.AddListener(() => SpawnMenu(_aboutMenu));
     }
+
+    public void ForceOpenLevelMenu() { SpawnMenu(_levelSelectionMenu); }
 }
