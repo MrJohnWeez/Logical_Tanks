@@ -341,7 +341,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 668766633360165693, guid: 403c222ff5035e8488c1817b2b8f2ab9, type: 3}
   _hitMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 513
   _runtimeRayPrefab: {fileID: 5570642069081862328, guid: eb245eff06725aa4da07e8d8c93836f7, type: 3}
 --- !u!1 &215757964086821259
 GameObject:

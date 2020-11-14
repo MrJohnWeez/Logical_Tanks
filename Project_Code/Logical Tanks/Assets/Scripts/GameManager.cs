@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 // TODO:
+// Fix shoot line render bug
 // Start making actual levels
 
 // List of features:
@@ -111,5 +112,6 @@ public class GameManager : MonoBehaviour
     {
         _currentNumberOfTanks += increased ? 1 : -1;
         OnTankValueChanged?.Invoke(_currentNumberOfTanks);
+        if(_currentNumberOfTanks >= _numberOfTanksToWin) { OpenLevelCompleteMenu(); }
     }
 }

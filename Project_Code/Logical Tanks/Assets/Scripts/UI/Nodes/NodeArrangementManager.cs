@@ -78,7 +78,9 @@ public class NodeArrangementManager : NodeMovementManager
             Node copyNode = copyThisObject.GetComponent<Node>();
             if(copyNode.IsDuplicateable)
             {
+                _nodeUUID++;
                 GameObject newNode = Instantiate(copyThisObject, _nodesParent, false);
+                newNode.name = string.Format("Node ({0})", _nodeUUID);
                 RectTransform rt = newNode.GetComponent<RectTransform>();
                 Vector3 newPos = copyThisObject.transform.position;
                 newPos.x += _positionVariation;

@@ -10,7 +10,6 @@ public class TankShooter : MonoBehaviour
     [SerializeField] private GameObject _runtimeRayPrefab = null;
     private LineRenderer _lineRenderRay = null;
     private RaycastHit hit;
-    private Vector3 forwardDirection;
 
     private void Start()
     {
@@ -22,12 +21,10 @@ public class TankShooter : MonoBehaviour
 
     private void Update()
     {
-        // Does the ray intersect any objects excluding the player layer
-        forwardDirection = _bulletStart.transform.TransformDirection(Vector3.forward);
-        if (Physics.Raycast(_bulletStart.transform.position, forwardDirection, out hit, Mathf.Infinity, _hitMask))
+        if (Physics.Raycast(_bulletStart.transform.position, _bulletStart.transform.forward, out hit, Mathf.Infinity, _hitMask))
         {
             _lineRenderRay.SetPosition(0, hit.point);
-            _lineRenderRay.SetPosition(1, hit.point - forwardDirection * hit.distance);
+            _lineRenderRay.SetPosition(1, _bulletStart.transform.position);
         }
     }
 
