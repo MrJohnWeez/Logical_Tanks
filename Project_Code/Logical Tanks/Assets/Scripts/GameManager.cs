@@ -6,8 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 // TODO:
-// Fix shoot line render bug
-// Start making actual levels
+// Add max node target
 
 // List of features:
 // - **** Move Tank Node
@@ -44,6 +43,8 @@ public class GameManager : MonoBehaviour
     private float _oldGameSpeed = 1.0f;
     private float _normalGameSpeed = 1.0f;
     private NodeManager _nodeManager = null;
+    private Action OnTankEnter;
+    private Action OnTankExit;
 
     public float GameSpeed => _gameSpeed;
     public GameObject[] Descriptions => _descriptions;
@@ -52,14 +53,23 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        OnTankEnter = () => CompleteTankChanged(true);
+        OnTankExit = () => CompleteTankChanged(true);
         _nodeManager = GameObject.FindObjectOfType<NodeManager>();
-        GoalArea.OnTankEnter += () => CompleteTankChanged(true);
-        GoalArea.OnTankExit += () => CompleteTankChanged(false);
+        GoalArea.OnTankEnter += OnTankEnter;
+        GoalArea.OnTankExit += OnTankExit;
         _menuButton?.onClick.AddListener(OpenSettingsMenu);
         _helpButton?.onClick.AddListener(OpenHelpMenu);
     }
 
     private void Start() { UpdateTanks(); }
+
+    void OnDestroy()
+    {
+        GoalArea.OnTankEnter -= OnTankEnter;
+        GoalArea.OnTankExit -= OnTankExit;
+    }
+
     public void ResetGameSpeed() { SetGameSpeed(_normalGameSpeed); }
 
     public void Pause()
@@ -90,9 +100,9 @@ public class GameManager : MonoBehaviour
     public void UpdateTanks()
     {
         TankController[] controllers = FindObjectsOfType<TankController>(true);
-        foreach(TankController tc in controllers)
+        foreach (TankController tc in controllers)
         {
-            if(tc) { _tankControllers[(int)tc.GetColorID] = tc; }
+            if (tc) { _tankControllers[(int)tc.GetColorID] = tc; }
         }
     }
 
@@ -101,6 +111,7 @@ public class GameManager : MonoBehaviour
     public void OpenHelpMenu() { SpawnMenu(_helpMenu); }
     public void OpenLevelCompleteMenu() { SpawnMenu(_levelCompleteMenu); }
     public void ToTitleScreen() { SceneManager.LoadScene("MainMenu"); }
+
     public void ToLevelSelection()
     {
         GameObject menu = SpawnMenu(_titleMenu);
@@ -119,6 +130,6 @@ public class GameManager : MonoBehaviour
     {
         _currentNumberOfTanks += increased ? 1 : -1;
         OnTankValueChanged?.Invoke(_currentNumberOfTanks);
-        if(_currentNumberOfTanks >= _numberOfTanksToWin) { OpenLevelCompleteMenu(); }
+        if (_currentNumberOfTanks >= _numberOfTanksToWin) { OpenLevelCompleteMenu(); }
     }
 }

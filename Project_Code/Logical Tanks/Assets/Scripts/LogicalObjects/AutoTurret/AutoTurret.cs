@@ -11,6 +11,13 @@ public class AutoTurret : ColoredObject
     [SerializeField] private GameObject _bulletStart = null;
     [SerializeField] private GameObject _bulletPrefab = null;
     private List<Bullet> _bullets = new List<Bullet>();
+    private float _startCooldown = 0;
+
+    protected override void Start()
+    {
+        base.Start();
+        _startCooldown = _currentCooldown;
+    }
     
     protected virtual void Update()
     {
@@ -43,7 +50,7 @@ public class AutoTurret : ColoredObject
 
     public override void ResetObject()
     {
-        _currentCooldown = 0;
+        _currentCooldown = _startCooldown;
         _bullets.Clear();
         gameObject.SetActive(true);
         base.ResetObject();
