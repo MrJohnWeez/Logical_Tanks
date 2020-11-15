@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         OnTankEnter = () => CompleteTankChanged(true);
-        OnTankExit = () => CompleteTankChanged(true);
+        OnTankExit = () => CompleteTankChanged(false);
         _nodeManager = GameObject.FindObjectOfType<NodeManager>();
         GoalArea.OnTankEnter += OnTankEnter;
         GoalArea.OnTankExit += OnTankExit;

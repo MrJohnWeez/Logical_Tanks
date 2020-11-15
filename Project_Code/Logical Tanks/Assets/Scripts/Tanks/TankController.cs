@@ -77,7 +77,7 @@ public class TankController : ColoredObject
                 }
                 else if(_tankState == TankState.TurretRotating)
                 {
-                    _turret.transform.rotation = Quaternion.Lerp(_oldRotation, _targetRotation, _currentTimer / _maxTimer);
+                    _turret.transform.localRotation = Quaternion.Lerp(_oldRotation, _targetRotation, _currentTimer / _maxTimer);
                 }
                 else if(_tankState == TankState.Shooting) { }
                 _prevCurrentTimer = _currentTimer;
