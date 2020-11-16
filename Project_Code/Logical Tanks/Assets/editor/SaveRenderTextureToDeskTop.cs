@@ -5,23 +5,36 @@ using UnityEngine;
 
 
 public class SaveRenderTextureToDeskTop : MonoBehaviour
-{    
-    [MenuItem("Logical_Tanks/Save Selected RenderTexture To DeskTop")]
-    static void SaveTexture () {
-        RenderTexture textureToSave = Selection.activeObject as RenderTexture;
-        if(textureToSave)
-        {
-            byte[] bytes = toTexture2D(textureToSave).EncodeToPNG();
-            System.IO.File.WriteAllBytes("C:\\Users\\John\\Desktop\\test.png", bytes);
-        }
-    }
-    
-    static Texture2D toTexture2D(RenderTexture rTex)
+{
+    private const string SAVE_PATH = "Images/LevelPreviews";
+
+    [MenuItem("Logical_Tanks/Save Level Preview")]
+    static void SaveTexture (MenuCommand command)
     {
-        Texture2D tex = new Texture2D(rTex.width, rTex.height, TextureFormat.RGB9e5Float, false, true);
-        RenderTexture.active = rTex;
-        tex.ReadPixels(new Rect(0, 0, rTex.width, rTex.height), 0, 0);
+        Camera camera = GameObject.FindGameObjectWithTag("MapCamera").GetComponent<Camera>();
+        RenderTexture oldRT = camera.targetTexture;
+        RenderTexture tempRT = new RenderTexture(512, 512, oldRT.depth, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
+
+        var tex = new Texture2D(tempRT.width, tempRT.height, TextureFormat.ARGB32, false);
+        camera.targetTexture = tempRT;
+        camera.Render();
+        RenderTexture.active = tempRT;
+
+        tex.ReadPixels(new Rect(0, 0, tempRT.width, tempRT.height), 0, 0);
         tex.Apply();
-        return tex;
+
+        GameManager gm = GameObject.FindObjectOfType<GameManager>();
+        string fileName = string.Format("{0} {1}.png", "LevelPreview", gm.LevelNumber);
+        System.IO.File.WriteAllBytes(System.IO.Path.Combine(Application.dataPath, SAVE_PATH, fileName), tex.EncodeToPNG());
+
+        DestroyImmediate(tex);
+
+        camera.targetTexture = oldRT;
+        camera.Render();
+        RenderTexture.active = oldRT;
+
+        DestroyImmediate(tempRT);
+
+        AssetDatabase.Refresh();
     }
 }

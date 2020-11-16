@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class LevelCompleteMenu : BaseInGameMenu
 {
@@ -14,5 +13,14 @@ public class LevelCompleteMenu : BaseInGameMenu
         _title.text = string.Format("Level {0} Completed!", gameManager.LevelNumber + 1);
     }
 
+    private void Start()
+    {
+        SaveData.SetLevelComplete(gameManager.LevelNumber, true);
+        if(SaveData.LastUnlockedLevel < gameManager.LevelNumber + 1)
+        {
+            SaveData.LastUnlockedLevel = gameManager.LevelNumber + 1;
+        }
+        SaveData.SaveGameData();
+    }
     protected override void CloseMenu() { gameManager.ToLevelSelection(); }
 }
