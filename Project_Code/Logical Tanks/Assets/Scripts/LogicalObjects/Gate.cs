@@ -12,7 +12,6 @@ public class Gate : LogicGateBase
     {
         base.Awake();
         _animator = GetComponent<Animator>();
-        gameManager.OnGameSpeedChanged += UpdateAnimationSpeed;
     }
 
     protected override void StateSwitched(bool isOn)
@@ -34,10 +33,5 @@ public class Gate : LogicGateBase
             _animator.ResetTrigger("Reset");
             _animator.SetTrigger("Reset");
         }
-    }
-
-    private void UpdateAnimationSpeed(float newSpeed)
-    {
-        _animator.SetFloat("GameSpeed", newSpeed);
     }
 }

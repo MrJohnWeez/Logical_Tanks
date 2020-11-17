@@ -21,7 +21,7 @@ public class ColorManager : VariableCycledObject
     {
         if (currentFadeTime < fadeTime)
         {
-            currentFadeTime += Time.deltaTime * gameManager.GameSpeed;
+            currentFadeTime += Time.deltaTime * gameManager.IndirectMultiplier;
             if (currentFadeTime > fadeTime) { currentFadeTime = fadeTime; }
             newColor = Color.Lerp(oldColor, targetColor, currentFadeTime / fadeTime);
             UpdateColor();

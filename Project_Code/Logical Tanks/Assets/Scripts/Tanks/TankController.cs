@@ -45,7 +45,7 @@ public class TankController : ColoredObject
         {
             if(_currentTimer < _maxTimer && rigidBody && _turret)
             {
-                float timerAddition = Time.deltaTime * gameManager.GameSpeed;
+                float timerAddition = Time.deltaTime * gameManager.IndirectMultiplier;
                 _currentTimer = Mathf.Clamp(_currentTimer + timerAddition, 0, _maxTimer);
                 if(_tankState == TankState.TankMoving)
                 {
@@ -69,6 +69,7 @@ public class TankController : ColoredObject
                     if(Quaternion.Angle(rigidBody.rotation, newRot) > maxAngle)
                     {
                         ResetStateMachine();
+                        Debug.Log("ResetRotation Moving on now!");
                     }
                     else
                     {

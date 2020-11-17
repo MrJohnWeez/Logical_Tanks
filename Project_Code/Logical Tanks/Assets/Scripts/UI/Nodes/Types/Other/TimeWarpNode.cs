@@ -11,7 +11,7 @@ public class TimeWarpNode : Node
         RunNodeColor(true);
         float newSpeed = timeWarpSelection.GetValue();
         if (newSpeed == 0) { nodeManager.Pause(); }
-        else { gameManager.SetGameSpeed(newSpeed); }
+        else { Time.timeScale = newSpeed; }
         OnExecuteFinished();
     }
 }
