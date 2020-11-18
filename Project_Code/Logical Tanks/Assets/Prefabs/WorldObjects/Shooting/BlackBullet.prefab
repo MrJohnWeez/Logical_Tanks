@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 668766633360165680}
   - component: {fileID: 668766633360165695}
   - component: {fileID: 668766633360165694}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BlackBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 8744627951124067085}
   - component: {fileID: 8744627951121199917}
   - component: {fileID: 8744627951122166253}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

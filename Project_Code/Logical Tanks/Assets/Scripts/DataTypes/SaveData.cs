@@ -30,4 +30,10 @@ public static class SaveData
 
     public static void ResetGameData() { PlayerPrefs.DeleteAll(); }
     public static void SaveGameData() { PlayerPrefs.Save(); }
+    
+    public static void UnlockAllLevels()
+    {
+        LastUnlockedLevel = 20;
+        PlayerPrefs.Save();
+    }
 }

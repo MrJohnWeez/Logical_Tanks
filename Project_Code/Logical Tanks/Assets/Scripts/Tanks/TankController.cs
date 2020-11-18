@@ -19,6 +19,7 @@ public class TankController : ColoredObject
     public Action OnTankFinished;
     [HideInInspector] public bool IsReady => _tankState != TankState.Disabled;
     [SerializeField] private GameObject _turret = null;
+    [SerializeField] private LayerMask _moveDetectionHits;
     private const float RELOAD_DELAY = 0.3f;
     private const float MAX_MOVE_SPEED = 1.0f; // m/s
     private const float MAX_ROTATION_SPEED = 90.0f; // deg/s
@@ -175,7 +176,7 @@ public class TankController : ColoredObject
         Vector3 center = boxCollider.transform.TransformPoint(boxCollider.center);
         center -= transform.position;
         center += position;
-        Collider[] hitObjects = Physics.OverlapBox(center, boxCollider.size / 2, rotation, ~0, QueryTriggerInteraction.Ignore);
+        Collider[] hitObjects = Physics.OverlapBox(center, boxCollider.size / 2, rotation, _moveDetectionHits, QueryTriggerInteraction.Ignore);
         foreach(Collider c in hitObjects)
         {
             if(!c.Equals(boxCollider)) { return true; }
