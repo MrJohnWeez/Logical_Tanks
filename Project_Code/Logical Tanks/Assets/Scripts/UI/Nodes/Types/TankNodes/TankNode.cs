@@ -12,13 +12,13 @@ public class TankNode : Node
     {
         RunNodeColor(true);
         _tankController = gameManager.GetTankController(colorSelection.GetColorID());
-        if(_tankController && _tankController.gameObject.activeSelf) { _tankController.OnTankStateChangedToIdle += OnExecuteFinished; }
+        if(_tankController && _tankController.gameObject.activeSelf) { _tankController.OnTankFinished += OnExecuteFinished; }
         else { OnExecuteFinished(); }
     }
 
     public override void OnExecuteFinished()
     {
-        if(_tankController) { _tankController.OnTankStateChangedToIdle -= OnExecuteFinished; }
+        if(_tankController) { _tankController.OnTankFinished -= OnExecuteFinished; }
         base.OnExecuteFinished();
     }
 }

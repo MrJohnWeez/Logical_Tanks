@@ -53,6 +53,5 @@ public class AutoTurret : ColoredObject
         _currentCooldown = _startCooldown;
         _bullets.Clear();
         gameObject.SetActive(true);
-        base.ResetObject();
     }
 }
