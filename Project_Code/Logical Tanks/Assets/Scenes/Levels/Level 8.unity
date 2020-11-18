@@ -3049,7 +3049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8468808708994529266, guid: 63b2c35c8f1eb474ead9c723abb00a5d, type: 3}
       propertyPath: _numberOfTanksToWin
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8468808708994529266, guid: 63b2c35c8f1eb474ead9c723abb00a5d, type: 3}
       propertyPath: _descriptions.Array.size
