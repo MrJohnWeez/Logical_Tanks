@@ -24,7 +24,7 @@ public class AutoTurret : ColoredObject
         if(_currentCooldown >= 0)
         {
             _currentCooldown -= Time.deltaTime * gameManager.IndirectMultiplier;
-            if(_currentCooldown < 0)
+            if(_currentCooldown <= 0)
             {
                 _currentCooldown = _fireRate;
                 Shoot();
