@@ -29,6 +29,7 @@ public class NodeCompiler : NodeArrangementManager
     private CanvasGroup _stopButtonCanvasGroup = null;
     private GameManager _gameManager = null;
     private NodeCompilerState _nodeCompilerState = NodeCompilerState.Idle;
+    private Node _lastInvalidNode = null;
 
     protected override void Awake()
     {
@@ -72,6 +73,8 @@ public class NodeCompiler : NodeArrangementManager
                 animator.SetTrigger("Show");
                 Destroy(errorMessage, 8);
                 Stop();
+                _lastInvalidNode.SetIsSelected(true);
+                _lastInvalidNode = null;
             }
         }
     }
@@ -151,7 +154,7 @@ public class NodeCompiler : NodeArrangementManager
         {
             if(visitedNodes.Contains(checkThisNode))
             {
-                checkThisNode.SetIsSelected(true);
+                _lastInvalidNode = checkThisNode;
                 return false;
             }
             visitedNodes.Add(checkThisNode);

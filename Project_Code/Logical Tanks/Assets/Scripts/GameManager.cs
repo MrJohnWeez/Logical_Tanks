@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         _nodeManager = GameObject.FindObjectOfType<NodeManager>();
         GoalArea.OnTankEnter += OnTankEnter;
         GoalArea.OnTankExit += OnTankExit;
-        _menuButton?.onClick.AddListener(OpenSettingsMenu);
+        _menuButton?.onClick.AddListener(OpenPauseMenu);
         _helpButton?.onClick.AddListener(OpenHelpMenu);
     }
 
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     }
 
     public TankController GetTankController(ColorID color) { return _tankControllers[(int)color]; }
-    public void OpenSettingsMenu() { SpawnMenu(_pauseMenu); }
+    public void OpenPauseMenu() { SpawnMenu(_pauseMenu); }
     public void OpenHelpMenu() { SpawnMenu(_helpMenu); }
     public void OpenLevelCompleteMenu() { SpawnMenu(_levelCompleteMenu); }
     public void ToTitleScreen() { SceneManager.LoadScene("MainMenu"); }
