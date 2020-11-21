@@ -34,7 +34,6 @@ public class AboutMenu : BaseMenu
 
     private void Update()
     {
-        Debug.Log(_resetType);
         // TODO: This is just a quick way to implementing this
         switch(_resetType)
         {

@@ -484,5 +484,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenuAudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1467057927644733089, guid: 98af872aedd675d438339beca27b2cdf, type: 3}
+      propertyPath: _soundtracks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467057927644733089, guid: 98af872aedd675d438339beca27b2cdf, type: 3}
+      propertyPath: _soundtracks.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c4e76fbc9b133584c835a3a3048544be, type: 3}
+    - target: {fileID: 1467057927644733089, guid: 98af872aedd675d438339beca27b2cdf, type: 3}
+      propertyPath: _soundtracks.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5fe56aedbee69684e9be9a50f8abe735, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98af872aedd675d438339beca27b2cdf, type: 3}

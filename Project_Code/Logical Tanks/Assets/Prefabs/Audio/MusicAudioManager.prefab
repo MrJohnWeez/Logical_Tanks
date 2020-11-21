@@ -51,6 +51,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7844925243413554040, guid: 315a309c28a9e9e43b607214409b3287, type: 3}
+      propertyPath: _soundtracks.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7844925243413554040, guid: 315a309c28a9e9e43b607214409b3287, type: 3}
+      propertyPath: _soundtracks.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 58a7c31cda87b3b4fb42fa790a90251b, type: 3}
+    - target: {fileID: 7844925243413554040, guid: 315a309c28a9e9e43b607214409b3287, type: 3}
+      propertyPath: _soundtracks.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 84d9fa67c1cfdc84d832dba2d8b61f05, type: 3}
+    - target: {fileID: 7844925243413554040, guid: 315a309c28a9e9e43b607214409b3287, type: 3}
+      propertyPath: _soundtracks.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: af10600ac383d7c45b9342ffbe6ab3b3, type: 3}
+    - target: {fileID: 7844925243413554040, guid: 315a309c28a9e9e43b607214409b3287, type: 3}
+      propertyPath: _soundtracks.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5ba59ad4d9d7b7f40811e85836e36561, type: 3}
+    - target: {fileID: 7844925243413554040, guid: 315a309c28a9e9e43b607214409b3287, type: 3}
+      propertyPath: _soundtracks.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: f68ecdeec1f79f84a97c1bcb62f09e94, type: 3}
+    - target: {fileID: 7844925243413554040, guid: 315a309c28a9e9e43b607214409b3287, type: 3}
+      propertyPath: _soundtracks.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5fe56aedbee69684e9be9a50f8abe735, type: 3}
+    - target: {fileID: 7844925243413554040, guid: 315a309c28a9e9e43b607214409b3287, type: 3}
+      propertyPath: _soundtracks.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: aaadf4e3ed545204da4757f93345d2e5, type: 3}
     - target: {fileID: 7844925243413554041, guid: 315a309c28a9e9e43b607214409b3287, type: 3}
       propertyPath: m_Name
       value: MusicAudioManager
