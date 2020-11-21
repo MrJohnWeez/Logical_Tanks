@@ -27,4 +27,10 @@ public class SettingsMenu : BaseMenu
         SaveData.QualityLevel = (int)newValue;
         QualitySettings.SetQualityLevel(SaveData.QualityLevel);
     }
+
+    protected override void CloseMenu()
+    {
+        SaveData.SaveGameData();
+        base.CloseMenu();
+    }
 }

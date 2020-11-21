@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    [SerializeField] private AudioClip[] _soundtracks = null;
     private AudioSource _audioSource = null;
-    private AudioClip[] _soundtracks = null;
 
     private void Awake()
     {

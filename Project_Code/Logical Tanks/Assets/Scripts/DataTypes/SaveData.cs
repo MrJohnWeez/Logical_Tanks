@@ -16,7 +16,10 @@ public static class SaveData
     public static int LastUnlockedLevel
     {
         get { return PlayerPrefs.GetInt(LAST_UNLOCKED_LEVEL_KEY, 0); }
-        set { PlayerPrefs.SetInt(LAST_UNLOCKED_LEVEL_KEY, value); }
+        set
+        {
+            PlayerPrefs.SetInt(LAST_UNLOCKED_LEVEL_KEY, value);
+        }
     }
 
     public static int QualityLevel
@@ -49,12 +52,16 @@ public static class SaveData
         PlayerPrefs.SetInt(key, isComplete ? 1 : 0);
     }
 
-    public static void ResetGameData() { PlayerPrefs.DeleteAll(); }
+    public static void ResetGameData()
+    {
+        PlayerPrefs.DeleteAll();
+        SaveGameData();
+    }
     public static void SaveGameData() { PlayerPrefs.Save(); }
     
     public static void UnlockAllLevels()
     {
         LastUnlockedLevel = 17;
-        PlayerPrefs.Save();
+        SaveGameData();
     }
 }

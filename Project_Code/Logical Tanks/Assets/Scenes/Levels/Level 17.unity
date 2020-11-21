@@ -6242,14 +6242,14 @@ Transform:
   m_Children:
   - {fileID: 2064796648}
   - {fileID: 1656204279}
-  - {fileID: 533938619}
   - {fileID: 2128321281}
-  - {fileID: 828361600}
+  - {fileID: 533938619}
   - {fileID: 877866287}
+  - {fileID: 828361600}
   - {fileID: 911090940}
   - {fileID: 161190095}
-  - {fileID: 311607267}
   - {fileID: 778674148}
+  - {fileID: 311607267}
   m_Father: {fileID: 970646163}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7641,7 +7641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8468808708994529266, guid: 63b2c35c8f1eb474ead9c723abb00a5d, type: 3}
       propertyPath: _numberOfTanksToWin
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8468808708994529266, guid: 63b2c35c8f1eb474ead9c723abb00a5d, type: 3}
       propertyPath: _descriptions.Array.data[0]
