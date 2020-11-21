@@ -34,7 +34,6 @@ public class AutoPopupMenu : MonoBehaviour
             case 5:
                 SpawnMenu(_menus[13]);
                 SpawnMenu(_menus[12]);
-                
                 break;
             case 6:
                 SpawnMenu(_menus[5]);
@@ -45,6 +44,22 @@ public class AutoPopupMenu : MonoBehaviour
                 break;
             case 9:
                 SpawnMenu(_menus[10]);
+                break;
+            case 10:
+                SpawnMenu(_menus[9]);
+                SpawnMenu(_menus[3]);
+                break;
+            case 12:
+                SpawnMenu(_menus[1]);
+                break;
+            case 13:
+                SpawnMenu(_menus[0]);
+                break;
+            case 14:
+                SpawnMenu(_menus[8]);
+                break;
+            case 15:
+                SpawnMenu(_menus[7]);
                 break;
         }
     }

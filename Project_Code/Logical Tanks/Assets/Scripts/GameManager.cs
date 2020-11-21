@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
         GoalArea.OnTankExit += OnTankExit;
         _menuButton?.onClick.AddListener(OpenPauseMenu);
         _helpButton?.onClick.AddListener(OpenHelpMenu);
+        QualitySettings.SetQualityLevel(SaveData.QualityLevel);
     }
 
     private void Start() { UpdateTanks(); }
