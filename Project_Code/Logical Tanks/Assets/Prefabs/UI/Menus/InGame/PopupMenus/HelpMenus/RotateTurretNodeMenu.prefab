@@ -114,8 +114,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1975112566539505448, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_text
-      value: 'The Rotate Turret Node will rotate just a tank''s turret 90 degrees
-        left or right.
+      value: 'The Rotate Turret Node will rotate a tank''s turret 90 degrees left
+        or right.
 
 
         In the example the green tank''s turret would rotate
@@ -123,7 +123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809872, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Name
-      value: RotateTurretMenu
+      value: RotateTurretNodeMenu
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809879, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Pivot.x

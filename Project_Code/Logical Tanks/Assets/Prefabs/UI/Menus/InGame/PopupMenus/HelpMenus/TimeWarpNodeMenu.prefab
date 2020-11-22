@@ -136,11 +136,11 @@ PrefabInstance:
 
         Speeding
         up to 10x will run the nodes and game 10 times faster.  Slowing down to 0.5x
-        will run  everything 1/2 times slower. Setting it to 0 will auto pause the
+        will run everything 1/2 times slower. Setting it to 0 will auto pause the
         simulation at that node.
 
 
-        In the example time starts at 10x, moves
+        In the example, time starts at 10x, moves
         the green tank 1 meter, then slows down to normal speed again.'
       objectReference: {fileID: 0}
     - target: {fileID: 1975112566539505449, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
@@ -153,7 +153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809872, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Name
-      value: TimeWarpMenu
+      value: TimeWarpNodeMenu
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809879, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Pivot.x

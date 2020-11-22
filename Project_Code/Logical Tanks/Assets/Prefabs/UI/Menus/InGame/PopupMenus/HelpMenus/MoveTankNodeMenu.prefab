@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1975112566539505448, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_text
-      value: 'The move node allows you to move a tank forwards and backwards.
+      value: 'The Move Tank Node allows you to move a tank forwards and backwards.
 
 
         Looking
@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809872, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Name
-      value: MoveNodeMenu Variant
+      value: MoveTankNodeMenu
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809879, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Pivot.x

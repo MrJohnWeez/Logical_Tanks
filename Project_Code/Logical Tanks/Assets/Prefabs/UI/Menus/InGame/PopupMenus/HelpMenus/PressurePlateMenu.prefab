@@ -37,8 +37,8 @@ PrefabInstance:
         color tank is on them.
 
 
-        There are gray pressure plates that any
-        tank can trigger.'
+        There are also gray pressure plates that
+        any tank can trigger.'
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809872, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Name

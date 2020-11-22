@@ -136,8 +136,8 @@ PrefabInstance:
 
         In the example
         there is only one Move Tank node but since there is a 2 Loop with another
-        2 Loop (2*2 = 4), there blue tank will move 8 meters, than the green tank
-        will shoot.'
+        2 Loop (2*2 = 4), the blue tank will move 8 meters, then the green tank will
+        shoot.'
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809872, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Name
