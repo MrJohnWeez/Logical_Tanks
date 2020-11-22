@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelCell : MonoBehaviour
 {
-    private const string SCENE_PREFIX = "Level_";
+    private const string SCENE_PREFIX = "Level ";
     [SerializeField] private GameObject _lockImage = null;
     [SerializeField] private GameObject _checkmarkImage = null;
     [SerializeField] private GameObject _lockedPanel = null;

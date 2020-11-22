@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class LevelCompleteMenu : BaseInGameMenu
 {
     [SerializeField] private TMP_Text _title = null;
+    [SerializeField] private GameObject _finalWinMenu = null;
+    private const int FINAL_LEVEL = 16;
 
     protected override void Awake()
     {
@@ -14,5 +15,20 @@ public class LevelCompleteMenu : BaseInGameMenu
         _title.text = string.Format("Level {0} Completed!", gameManager.LevelNumber + 1);
     }
 
-    protected override void CloseMenu() { ToMainMenu(); }
+    private void Start()
+    {
+        SaveData.SetLevelComplete(gameManager.LevelNumber, true);
+        if(SaveData.LastUnlockedLevel < gameManager.LevelNumber + 1)
+        {
+            SaveData.LastUnlockedLevel = gameManager.LevelNumber + 1;
+        }
+        SaveData.SaveGameData();
+
+        if(gameManager.LevelNumber == FINAL_LEVEL)
+        {
+            SpawnMenu(_finalWinMenu);
+        }
+    }
+
+    protected override void CloseMenu() { gameManager.ToLevelSelection(); }
 }

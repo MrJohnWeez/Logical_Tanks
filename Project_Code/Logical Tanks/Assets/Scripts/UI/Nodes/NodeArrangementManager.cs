@@ -76,7 +76,7 @@ public class NodeArrangementManager : NodeMovementManager
         {
             GameObject copyThisObject = _selectedNodes[i].gameObject;
             Node copyNode = copyThisObject.GetComponent<Node>();
-            if(copyNode.IsDuplicateable)
+            if (copyNode.IsDuplicateable)
             {
                 _nodeUUID++;
                 GameObject newNode = Instantiate(copyThisObject, _nodesParent, false);

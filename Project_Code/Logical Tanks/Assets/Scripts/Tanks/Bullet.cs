@@ -12,8 +12,7 @@ public class Bullet : VariableCycledObject
 
     protected virtual void FixedUpdate()
     {
-        _rigidBody.velocity = transform.forward * _speed * Time.deltaTime * gameManager.GameSpeed;
-        _rigidBody.angularVelocity = Vector3.zero;
+        _rigidBody.velocity = transform.forward * _speed * Time.deltaTime * gameManager.IndirectMultiplier;
     }
 
     public void SetSpeed(float newSpeed) { _speed = newSpeed; }

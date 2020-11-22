@@ -20,6 +20,7 @@ public class NodeCompiler : NodeArrangementManager
     [SerializeField] private Node _startNode = null;
     [SerializeField] private GameObject _nodeUIBlocker = null;
     [SerializeField] private GameObject _playingOverlay = null;
+    [SerializeField] private GameObject _infLoopError = null;
     private Node _currentNode = null;
     private Button _runButton = null;
     private Button _pauseButton = null;
@@ -28,6 +29,7 @@ public class NodeCompiler : NodeArrangementManager
     private CanvasGroup _stopButtonCanvasGroup = null;
     private GameManager _gameManager = null;
     private NodeCompilerState _nodeCompilerState = NodeCompilerState.Idle;
+    private Node _lastInvalidNode = null;
 
     protected override void Awake()
     {
@@ -56,14 +58,23 @@ public class NodeCompiler : NodeArrangementManager
         if(_nodeCompilerState != NodeCompilerState.Running)
         {
             Stop();
+            SetCompilerState(NodeCompilerState.Running);
+            _gameManager.ResetGameSpeed();
             if(IsNodeStructureValid(_startNode))
             {
-                SetCompilerState(NodeCompilerState.Running);
-                
-                _gameManager.ResetGameSpeed();
                 _currentNode = _startNode;
                 _currentNode.OnFinishedExecution += CurrentNodeFinished;
                 _currentNode.Execute();
+            }
+            else
+            {
+                GameObject errorMessage = Instantiate(_infLoopError, transform.parent, false);
+                Animator animator = errorMessage.GetComponent<Animator>();
+                animator.SetTrigger("Show");
+                Destroy(errorMessage, 8);
+                Stop();
+                _lastInvalidNode.SetIsSelected(true);
+                _lastInvalidNode = null;
             }
         }
     }
@@ -143,7 +154,7 @@ public class NodeCompiler : NodeArrangementManager
         {
             if(visitedNodes.Contains(checkThisNode))
             {
-                checkThisNode.SetIsSelected(true);
+                _lastInvalidNode = checkThisNode;
                 return false;
             }
             visitedNodes.Add(checkThisNode);

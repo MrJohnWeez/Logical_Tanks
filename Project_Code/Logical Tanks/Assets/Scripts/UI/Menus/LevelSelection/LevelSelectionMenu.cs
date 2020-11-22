@@ -25,7 +25,7 @@ public class LevelSelectionMenu : BaseMenu
         {
             GameObject newCell = Instantiate(_cellPrefab, _content);
             LevelCell levelCell = newCell.GetComponent<LevelCell>();
-            levelCell.PopulateCell(levelNum + 1, _levelTitles[levelNum], _levelPreviews[levelNum], false, false);
+            levelCell.PopulateCell(levelNum + 1, _levelTitles[levelNum], _levelPreviews[levelNum], SaveData.IsLevelLocked(levelNum), SaveData.IsLevelComplete(levelNum));
         }
     }
 }

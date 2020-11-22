@@ -325,6 +325,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _coloredModel: {fileID: 215757964086821263}
   _turret: {fileID: 215757964086821263}
+  _moveDetectionHits:
+    serializedVersion: 2
+    m_Bits: 513
 --- !u!114 &6476035660804899175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,7 +344,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 668766633360165693, guid: 403c222ff5035e8488c1817b2b8f2ab9, type: 3}
   _hitMask:
     serializedVersion: 2
-    m_Bits: 513
+    m_Bits: 1537
   _runtimeRayPrefab: {fileID: 5570642069081862328, guid: eb245eff06725aa4da07e8d8c93836f7, type: 3}
 --- !u!1 &215757964086821259
 GameObject:

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TitleScreenMenu : BaseMenu
 {
@@ -12,6 +13,7 @@ public class TitleScreenMenu : BaseMenu
     [SerializeField] private GameObject _levelSelectionMenu = null;
     [SerializeField] private GameObject _settingsMenu = null;
     [SerializeField] private GameObject _aboutMenu = null;
+    [SerializeField] private TMP_Text _versionText = null;
 
     protected override void Awake()
     {
@@ -20,4 +22,12 @@ public class TitleScreenMenu : BaseMenu
         _settingsButton.onClick.AddListener(() => SpawnMenu(_settingsMenu));
         _aboutButton.onClick.AddListener(() => SpawnMenu(_aboutMenu));
     }
+
+    private void Start()
+    {
+        string versionString = string.Format("v{0}_u{1}", Application.version, Application.unityVersion);
+        _versionText.text = versionString;
+    }
+
+    public void ForceOpenLevelMenu() { SpawnMenu(_levelSelectionMenu); }
 }

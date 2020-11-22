@@ -65,10 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'You have completed this level.
-
-    Return to the main menu to play the
-    next unlocked level.'
+  m_text: You have completed this level.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -163,7 +160,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6198240206718899306}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -402.7076}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 177296159463403376}
@@ -200,6 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backButton: {fileID: 8194635357447879941}
   _title: {fileID: 1285377273970732579}
+  _finalWinMenu: {fileID: 7744900022979778028, guid: 13d968a2fd0572144a1a653ff376ea9f, type: 3}
 --- !u!1001 &6198240207139948359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -448,7 +446,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1313297956475932537, guid: 0be59d04fd451ec46ad8fd67975a7972, type: 3}
       propertyPath: m_Name
-      value: MainMenu
+      value: Ok
       objectReference: {fileID: 0}
     - target: {fileID: 1313297956475932538, guid: 0be59d04fd451ec46ad8fd67975a7972, type: 3}
       propertyPath: m_Pivot.x
@@ -536,7 +534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1313297958070054646, guid: 0be59d04fd451ec46ad8fd67975a7972, type: 3}
       propertyPath: m_text
-      value: Main Menu
+      value: OK
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0be59d04fd451ec46ad8fd67975a7972, type: 3}
