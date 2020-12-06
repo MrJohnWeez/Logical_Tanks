@@ -123,7 +123,7 @@ PrefabInstance:
     - target: {fileID: 915517987, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: da353d278ca9be3489d87c55ef54c3c6, type: 3}
+      objectReference: {fileID: 21300000, guid: f909014ba95b2714e8a03ea79d24e41f, type: 3}
     - target: {fileID: 975050087994265572, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_text
       value: Loop Node
@@ -134,10 +134,23 @@ PrefabInstance:
         in a row. This saves on the number of required nodes.
 
 
-        In the example
-        there is only one Move Tank node but since there is a 2 Loop with another
-        2 Loop (2*2 = 4), the blue tank will move 8 meters, then the green tank will
-        shoot.'
+        After the
+        loop has been completed the nodes connected to OUT are ran.
+
+
+        In
+        the example, the loop is reached, then the nodes connected to LOOP are ran
+        the numder of times listed on "# of loops". In this case the green tank will
+        move 3 meters. Then the OUT nodes are ran, in this case the green tank rotates
+        90 degrees'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975112566539505449, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 759.8639
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975112566539505449, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -268.4
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809872, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Name

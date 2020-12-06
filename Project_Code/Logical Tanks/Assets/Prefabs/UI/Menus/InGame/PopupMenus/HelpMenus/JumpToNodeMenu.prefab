@@ -130,22 +130,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1975112566539505448, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_text
-      value: 'The Jump To Node will branch off, run nodes connected to the "RUN FIRST"
-        connection then continue from the "OUT" connection.
+      value: 'The Jump To Node allows for reusablilty of nodes. Nodes connected to
+        the "RUN FIRST" connection will be ran until a dead end is reached then execution
+        will continue from the "OUT" connection.
 
 
-        This node is
-        useful for organzing code or executing nodes like a function would.
+        This node is useful for
+        organzing code or executing nodes like a function would.
 
 
-        In
-        the example, the first Jump To node is reached, Green tank moves then shoots.
-        The Rotate Tank node is then executed and the last Jump To node Moves and
-        Shoots the green tank.'
+        In the
+        example, the first Jump To node is reached, the Move Tank node is ran and
+        since there is nothing connected to the Move Tank node the Rotate Tank node
+        is ran. The 2nd Jump To node is reached and the same Move Tank node is ran
+        again.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975112566539505449, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 832.296
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975112566539505449, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 623.4114
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975112566539505449, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -269
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975112566539505449, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -106.59
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809872, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Name
-      value: JumpToMenu
+      value: JumpToNodeMenu
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809879, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Pivot.x
