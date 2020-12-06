@@ -141,11 +141,23 @@ PrefabInstance:
 
 
         In the example, time starts at 10x, moves
-        the green tank 1 meter, then slows down to normal speed again.'
+        the green tank 1 meter, then slows down to normal speed again.
+
+
+        Adding
+        more thank one Time Warp node of the same speed will do nothing!'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975112566539505449, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 828.18787
       objectReference: {fileID: 0}
     - target: {fileID: 1975112566539505449, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_SizeDelta.y
       value: 623.41125
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975112566539505449, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -257
       objectReference: {fileID: 0}
     - target: {fileID: 1975112566539505449, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_AnchoredPosition.y

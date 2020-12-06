@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 7.5004272, y: -21.290009}
+  m_AnchoredPosition: {x: 7.5004272, y: -21.29004}
   m_SizeDelta: {x: -14.99913, y: -42.580933}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7059697760298957067
@@ -147,12 +147,10 @@ MonoBehaviour:
 
 
 
-    In the example (right), the move and shoot nodes
+    In the example (right), the green tank will move
+    1
 
-    are
-    ran twice in two different sections of the
-
-    node map.'
+    meter, rotate, then move again.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
