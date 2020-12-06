@@ -37,7 +37,7 @@ PrefabInstance:
         speeds when shot from an Auto Turret.
 
 
-        They can only move in a strait
+        They can only move in a straight
         line.'
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809872, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
