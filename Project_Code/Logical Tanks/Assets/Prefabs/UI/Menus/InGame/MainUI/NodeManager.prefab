@@ -414,6 +414,7 @@ MonoBehaviour:
   _nodeUIBlocker: {fileID: 8199243993277013691}
   _playingOverlay: {fileID: 0}
   _infLoopError: {fileID: 4921976805552454121, guid: 317b7a5dead85084f9395e5888b5f318, type: 3}
+  _tankCollisionError: {fileID: 4809903944808662548, guid: b0a7824ed0952a1409e34d51755364bb, type: 3}
 --- !u!1 &8199243992709810642
 GameObject:
   m_ObjectHideFlags: 0

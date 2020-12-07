@@ -21,6 +21,7 @@ public class NodeCompiler : NodeArrangementManager
     [SerializeField] private GameObject _nodeUIBlocker = null;
     [SerializeField] private GameObject _playingOverlay = null;
     [SerializeField] private GameObject _infLoopError = null;
+    [SerializeField] private GameObject _tankCollisionError = null;
     private Node _currentNode = null;
     private Button _runButton = null;
     private Button _pauseButton = null;
@@ -68,10 +69,7 @@ public class NodeCompiler : NodeArrangementManager
             }
             else
             {
-                GameObject errorMessage = Instantiate(_infLoopError, transform.parent, false);
-                Animator animator = errorMessage.GetComponent<Animator>();
-                animator.SetTrigger("Show");
-                Destroy(errorMessage, 8);
+                SpawnError(_infLoopError);
                 Stop();
                 _lastInvalidNode.SetIsSelected(true);
                 _lastInvalidNode = null;
@@ -108,6 +106,15 @@ public class NodeCompiler : NodeArrangementManager
         }
     }
 
+    public void SpawnTankCollisionError() { SpawnError(_tankCollisionError); }
+
+    private void SpawnError(GameObject errorPrefab)
+    {
+        GameObject errorMessage = Instantiate(errorPrefab, transform.parent, false);
+        Animator animator = errorMessage.GetComponent<Animator>();
+        animator.SetTrigger("Show");
+        Destroy(errorMessage, 8);
+    }
     private void SetCompilerState(NodeCompilerState newState)
     {
         _nodeCompilerState = newState;

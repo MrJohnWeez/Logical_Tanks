@@ -145,7 +145,7 @@ MonoBehaviour:
   _nodeSelectionMenuPrefab: {fileID: 7437986802481177283, guid: ecae75e579119b2438317cb5f31d83eb, type: 3}
   _playControlsMenuPrefab: {fileID: 8538420219725993799, guid: 4ca541a5a50cde14b82ccfbcafd4d151, type: 3}
   _logicObjectsMenuPrefab: {fileID: 3967775944003651374, guid: c1a396cd81d1d2849a94a20e1287048a, type: 3}
-  _errorsMenuPrefab: {fileID: 822658860801920542, guid: 0475fecaa6158954fabc5d8c40036d1d, type: 3}
+  _errorsMenuPrefab: {fileID: 7320474146972429676, guid: 5c1a8e7278f85c741b6cb42071db9c45, type: 3}
 --- !u!1001 &558728300881084418
 PrefabInstance:
   m_ObjectHideFlags: 0
