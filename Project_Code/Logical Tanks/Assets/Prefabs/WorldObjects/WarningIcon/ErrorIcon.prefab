@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5979554329395118513}
   m_Layer: 0
-  m_Name: WarningIcon
+  m_Name: ErrorIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

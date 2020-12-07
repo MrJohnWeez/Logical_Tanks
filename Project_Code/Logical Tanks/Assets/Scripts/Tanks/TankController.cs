@@ -34,11 +34,13 @@ public class TankController : ColoredObject
     private Vector3 _targetPosition;
     private Quaternion _oldRotation;
     private Quaternion _targetRotation;
+    private NodeManager _nodeManager = null;
 
     protected override void Awake()
     {
         base.Awake();
         _tankShooter = GetComponent<TankShooter>();
+        _nodeManager = GameObject.FindObjectOfType<NodeManager>();
     }
 
     private void Update()
@@ -86,10 +88,7 @@ public class TankController : ColoredObject
             }
             else
             {
-                ResetStateVaribles();
-                _warningIcon.SetActive(true);
-                OnTankFinished?.Invoke(1);
-                Debug.Log("Skipped due to collision");
+                TankCollisionError();
             }
         }
         else
@@ -112,10 +111,7 @@ public class TankController : ColoredObject
             }
             else
             {
-                ResetStateVaribles();
-                _warningIcon.SetActive(true);
-                OnTankFinished?.Invoke(1);
-                Debug.Log("Skipped due to collision");
+                TankCollisionError();
             }
         }
         else
@@ -136,7 +132,6 @@ public class TankController : ColoredObject
         }
         else
         {
-            Debug.Log("Skipped!");
             OnTankFinished?.Invoke(0);
         }
     }
@@ -152,7 +147,6 @@ public class TankController : ColoredObject
         }
         else
         {
-            Debug.Log("Skipped!");
             OnTankFinished?.Invoke(0);
         }
     }
@@ -190,6 +184,14 @@ public class TankController : ColoredObject
         ResetStateMachineToIdle();
         base.HitWithBullet(position);
         _tankState = TankState.Disabled;
+    }
+
+    private void TankCollisionError()
+    {
+        ResetStateVaribles();
+        _nodeManager.SpawnTankCollisionError();
+        _warningIcon.SetActive(true);
+        OnTankFinished?.Invoke(1);
     }
 
     private bool WillTankOverlapOtherColliders(Vector3 position, Quaternion rotation)

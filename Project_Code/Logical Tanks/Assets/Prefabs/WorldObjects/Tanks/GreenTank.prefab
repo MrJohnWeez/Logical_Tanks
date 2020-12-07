@@ -504,7 +504,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 942373467692991143, guid: 5cecbc0449e87c54d96f63db64dec43e, type: 3}
       propertyPath: m_Name
-      value: WarningIcon
+      value: ErrorIcon
       objectReference: {fileID: 0}
     - target: {fileID: 942373467692991143, guid: 5cecbc0449e87c54d96f63db64dec43e, type: 3}
       propertyPath: m_IsActive
