@@ -80,7 +80,7 @@ public class Node : DraggableUI
         OnExecuteFinished();
     }
 
-    public virtual void OnExecuteFinished()
+    public virtual void OnExecuteFinished(int errorCode = 0)
     {
         RunNodeColor(false);
         OnFinishedExecution?.Invoke(this);

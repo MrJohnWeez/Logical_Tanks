@@ -16,8 +16,9 @@ public class TankController : ColoredObject
         Disabled
     }
 
-    public Action OnTankFinished;
+    public Action<int> OnTankFinished;
     [HideInInspector] public bool IsReady => _tankState != TankState.Disabled;
+    [SerializeField] private GameObject _warningIcon = null;
     [SerializeField] private GameObject _turret = null;
     [SerializeField] private LayerMask _moveDetectionHits;
     private const float RELOAD_DELAY = 0.3f;
@@ -86,12 +87,14 @@ public class TankController : ColoredObject
             else
             {
                 ResetStateVaribles();
+                _warningIcon.SetActive(true);
+                OnTankFinished?.Invoke(1);
                 Debug.Log("Skipped due to collision");
             }
         }
         else
         {
-            OnTankFinished?.Invoke();
+            OnTankFinished?.Invoke(0);
         }
     }
 
@@ -110,12 +113,14 @@ public class TankController : ColoredObject
             else
             {
                 ResetStateVaribles();
+                _warningIcon.SetActive(true);
+                OnTankFinished?.Invoke(1);
                 Debug.Log("Skipped due to collision");
             }
         }
         else
         {
-            OnTankFinished?.Invoke();
+            OnTankFinished?.Invoke(0);
         }
     }
     
@@ -132,7 +137,7 @@ public class TankController : ColoredObject
         else
         {
             Debug.Log("Skipped!");
-            OnTankFinished?.Invoke();
+            OnTankFinished?.Invoke(0);
         }
     }
 
@@ -148,7 +153,7 @@ public class TankController : ColoredObject
         else
         {
             Debug.Log("Skipped!");
-            OnTankFinished?.Invoke();
+            OnTankFinished?.Invoke(0);
         }
     }
 
@@ -156,7 +161,7 @@ public class TankController : ColoredObject
     {
         ResetStateVaribles();
         _tankState = TankState.Idle;
-        OnTankFinished?.Invoke();
+        OnTankFinished?.Invoke(0);
     }
 
     private void ResetStateVaribles()
@@ -173,6 +178,7 @@ public class TankController : ColoredObject
     {
         ResetStateMachineToIdle();
         _turret.transform.localRotation = Quaternion.identity;
+        _warningIcon.SetActive(false);
         gameObject.SetActive(true);
         base.ResetObject();
     }

@@ -16,9 +16,17 @@ public class TankNode : Node
         else { OnExecuteFinished(); }
     }
 
-    public override void OnExecuteFinished()
+    public override void OnExecuteFinished(int errorCode = 0)
     {
         if(_tankController) { _tankController.OnTankFinished -= OnExecuteFinished; }
-        base.OnExecuteFinished();
+        if(errorCode > 0)
+        {
+            if(errorCode == 1) { ChangeColor(Color.red); }
+        }
+        else
+        {
+            RunNodeColor(false);
+        }
+        OnFinishedExecution?.Invoke(this);
     }
 }
