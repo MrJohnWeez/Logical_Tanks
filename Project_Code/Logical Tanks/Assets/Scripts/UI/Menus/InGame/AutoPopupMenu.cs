@@ -25,6 +25,7 @@ public class AutoPopupMenu : MonoBehaviour
                 SpawnMenu(_menus[17]);
                 break;
             case 2:
+                SpawnMenu(_menus[18]);
                 SpawnMenu(_menus[11]);
                 break;
             case 4:

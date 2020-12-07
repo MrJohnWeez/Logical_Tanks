@@ -1,53 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4697457208802271374
+--- !u!1001 &4329942358736047008
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 915517986, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 650.3694
-      objectReference: {fileID: 0}
-    - target: {fileID: 915517986, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 532.6211
-      objectReference: {fileID: 0}
-    - target: {fileID: 915517986, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 375.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 915517986, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -34
-      objectReference: {fileID: 0}
-    - target: {fileID: 915517987, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 4e43cf8e929b94448b56b243b02223b5, type: 3}
     - target: {fileID: 975050087994265572, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_text
-      value: Errors
+      value: Infinite Loop Error
       objectReference: {fileID: 0}
     - target: {fileID: 1975112566539505448, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_text
-      value: 'Having errors means that there are nodes that cannot be simulated with
-        out a crash.
+      value: 'This error appears when a infinite loop is detected within the node
+        graph.
 
 
-        When an error is thrown, a popup descriptor is shown
-        at the bottom of the screen. The problem node is also highlighted / selected.
+        The selected nodes are the trouble nodes.
 
 
-        To
-        fix errors try removing selected nodes and/or eliminate connected nodes that
-        look like an infinity symbol.'
+        To fix
+        this error delete the selected nodes and make sure no infinity symboles are
+        present.'
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809872, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Name
-      value: ErrorHelpMenu
+      value: InfLoopErrorMenu
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809879, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_Pivot.x
@@ -131,18 +110,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5357616221932809879, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7534437825043954857, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
-      propertyPath: m_text
-      value: Inf Loop Error Example
-      objectReference: {fileID: 0}
-    - target: {fileID: 8137050170032829991, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 420.84918
-      objectReference: {fileID: 0}
-    - target: {fileID: 8137050170032829991, guid: 47cfd9e9943291c4ebef6592be9fe7bc, type: 3}
-      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
