@@ -57,6 +57,7 @@ MonoBehaviour:
   _inGameMenuCanvas: {fileID: 8468808708436200178}
   _levelNumber: 0
   _numberOfTanksToWin: 1
+  _debugText: {fileID: 6145316409612758341}
 --- !u!1 &8468808710094631593
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,3 +740,14 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 6462703018608546835, guid: 2c8d095ecec90a34aa359cdd0c93f30e, type: 3}
   m_PrefabInstance: {fileID: 3186123567579455201}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6145316409612758341 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8754978116785025956, guid: 2c8d095ecec90a34aa359cdd0c93f30e, type: 3}
+  m_PrefabInstance: {fileID: 3186123567579455201}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

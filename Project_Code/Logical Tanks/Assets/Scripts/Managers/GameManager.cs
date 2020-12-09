@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Canvas _inGameMenuCanvas = null;
     [SerializeField] private int _levelNumber = 0;
     [SerializeField] private int _numberOfTanksToWin = 1;
+    [SerializeField] private TMP_Text _debugText = null;
     private int _currentNumberOfTanks = 0;
     private TankController[] _tankControllers = new TankController[7];
     private int _indirectMultiplier = 0;
@@ -43,7 +45,22 @@ public class GameManager : MonoBehaviour
         QualitySettings.SetQualityLevel(SaveData.QualityLevel);
     }
 
-    private void Start() { UpdateTanks(); }
+    private void Start()
+    {
+        UpdateTanks();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            SaveManager.PlayerSaveData.testInt++;
+            SaveManager.Save();
+            Debug.Log("Saved: " + SaveManager.PlayerSaveData.testInt);
+        }
+        //_debugText.text = "Test Int: " + SaveManager.PlayerSaveData.testInt.ToString();
+        _debugText.text = "\nPath: " + SaveManager.GetSaveDataPath();
+    }
 
     void OnDestroy()
     {
