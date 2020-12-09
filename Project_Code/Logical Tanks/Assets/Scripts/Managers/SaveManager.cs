@@ -11,10 +11,10 @@ public static class SaveManager
     {
         get
         {
-            if(_playerSaveData == null)
+            if (_playerSaveData == null)
             {
                 Load();
-                if(_playerSaveData == null)
+                if (_playerSaveData == null)
                 {
                     // First time setup
                     _playerSaveData = new PlayerSaveData();
@@ -32,9 +32,21 @@ public static class SaveManager
     [DllImport("__Internal")]
     private static extern void WindowAlert(string message);
 #endif
-    private static string _fileName = "MJW_Logical_Tanks_SaveData_v1.json";
+    private static string _fileName
+    {
+        get
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            return "MJW_Logical_Tanks_SaveData_v1.dat";
+#else
+            return "MJW_Logical_Tanks_SaveData_v1.json";
+#endif
+        }
+    }
+    private const string _webGLRoot = "idbfs";
+    private const string _appName = "LogicalTanks";
+    private const string _companyName = "MrJohnWeez";
     private static PlayerSaveData _playerSaveData = null;
-    
 
     public static void Save()
     {
@@ -43,8 +55,8 @@ public static class SaveManager
         using (StreamWriter saveFile = new StreamWriter(savePath))
         {
             saveFile.Write(saveJson);
-#if UNITY_WEBGL
-            if (Application.platform == RuntimePlatform.WebGLPlayer) { SyncFiles(); }
+#if UNITY_WEBGL && !UNITY_EDITOR
+            SyncFiles();
 #endif
         }
     }
@@ -52,15 +64,42 @@ public static class SaveManager
     public static void Load()
     {
         string saveJson = "";
-        using (StreamReader saveFile = new StreamReader(GetSaveDataPath()))
+        if (File.Exists(GetSaveDataPath()))
         {
-            saveJson = saveFile.ReadToEnd();
+            using (StreamReader saveFile = new StreamReader(GetSaveDataPath()))
+            {
+                saveJson = saveFile.ReadToEnd();
+            }
+            _playerSaveData = JsonUtility.FromJson<PlayerSaveData>(saveJson);
         }
-        _playerSaveData = JsonUtility.FromJson<PlayerSaveData>(saveJson);
+    }
+
+    public static void Delete()
+    {
+        if (File.Exists(GetSaveDataPath()))
+        {
+            // Makes sure all data is newly generated in case of corrupt files
+            File.Delete(GetSaveDataPath());
+            _playerSaveData = new PlayerSaveData();
+            Save();
+        }
     }
 
     public static string GetSaveDataPath()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        return Path.Combine(_webGLRoot, _companyName, _appName, _fileName);
+#else
         return Path.Combine(Application.persistentDataPath, _fileName);
+#endif
+    }
+
+    public static void PlatformSafeMessage(string message)
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        WindowAlert(message);
+#else
+        Debug.Log(message);
+#endif
     }
 }

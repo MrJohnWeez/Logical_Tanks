@@ -58,8 +58,8 @@ public class GameManager : MonoBehaviour
             SaveManager.Save();
             Debug.Log("Saved: " + SaveManager.PlayerSaveData.testInt);
         }
-        //_debugText.text = "Test Int: " + SaveManager.PlayerSaveData.testInt.ToString();
-        _debugText.text = "\nPath: " + SaveManager.GetSaveDataPath();
+        _debugText.text = "Test Int: " + SaveManager.PlayerSaveData.testInt.ToString();
+        _debugText.text += "\nPath: " + SaveManager.GetSaveDataPath();
     }
 
     void OnDestroy()
