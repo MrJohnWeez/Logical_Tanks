@@ -1,4 +1,3 @@
-  
 var HandleIO = {
     WindowAlert : function(message)
     {

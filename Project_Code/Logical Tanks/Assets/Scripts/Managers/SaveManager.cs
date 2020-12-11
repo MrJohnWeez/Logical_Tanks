@@ -24,8 +24,8 @@ public static class SaveManager
             return _playerSaveData;
         }
     }
-
-#if UNITY_WEBGL
+    
+#if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
     private static extern void SyncFiles();
 
@@ -43,9 +43,6 @@ public static class SaveManager
 #endif
         }
     }
-    private const string _webGLRoot = "idbfs";
-    private const string _appName = "LogicalTanks";
-    private const string _companyName = "MrJohnWeez";
     private static PlayerSaveData _playerSaveData = null;
 
     public static void Save()
@@ -87,19 +84,15 @@ public static class SaveManager
 
     public static string GetSaveDataPath()
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
-        return Path.Combine(_webGLRoot, _companyName, _appName, _fileName);
-#else
         return Path.Combine(Application.persistentDataPath, _fileName);
-#endif
     }
 
     public static void PlatformSafeMessage(string message)
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
-        WindowAlert(message);
-#else
-        Debug.Log(message);
+            WindowAlert(message);
 #endif
+
+        Debug.Log(message);
     }
 }
