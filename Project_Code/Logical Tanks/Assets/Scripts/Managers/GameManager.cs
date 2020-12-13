@@ -45,24 +45,7 @@ public class GameManager : MonoBehaviour
         QualitySettings.SetQualityLevel(SaveData.QualityLevel);
     }
 
-    private void Start()
-    {
-        UpdateTanks();
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            SaveManager.PlayerSaveData.testInt++;
-            SaveManager.Save();
-            Debug.Log("Saved: " + SaveManager.PlayerSaveData.testInt);
-        }
-        _debugText.text = "Test Int: " + SaveManager.PlayerSaveData.testInt.ToString();
-        _debugText.text += "\nPath GetSaveDataPath: " + SaveManager.GetSaveDataPath();
-        _debugText.text += "\nPath streamingAssetsPath: " + Application.streamingAssetsPath;
-        _debugText.text += "\nPath dataPath: " + Application.dataPath;
-    }
+    private void Start() { UpdateTanks(); }
 
     void OnDestroy()
     {

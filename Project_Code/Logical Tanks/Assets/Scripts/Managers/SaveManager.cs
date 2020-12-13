@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-
 public static class SaveManager
 {
     public static PlayerSaveData PlayerSaveData
@@ -82,17 +81,13 @@ public static class SaveManager
         }
     }
 
-    public static string GetSaveDataPath()
-    {
-        return Path.Combine(Application.persistentDataPath, _fileName);
-    }
+    public static string GetSaveDataPath() { return Path.Combine(Application.persistentDataPath, _fileName); }
 
     public static void PlatformSafeMessage(string message)
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
-            WindowAlert(message);
+        WindowAlert(message);
 #endif
-
-        Debug.Log(message);
+        Debug.Log("WEBGL WINDOW ALERT: " + message);
     }
 }
