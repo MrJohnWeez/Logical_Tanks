@@ -31,7 +31,6 @@ public class NodeArrangementManager : NodeMovementManager
     [SerializeField] private float _positionVariation = 5.0f;
     private Button[] _nodeSelectionButtons = null;
     private int _addState = 0;
-    private int _nodeUUID = 0;
 
     protected override void Awake()
     {
@@ -56,17 +55,15 @@ public class NodeArrangementManager : NodeMovementManager
 
     public void AddNode(NodeType nodeType)
     {
-        _nodeUUID++;
         GameObject newNode = Instantiate(_nodePrefabs[(int)nodeType], _nodesParent, false);
-        newNode.name = string.Format("Node ({0})", _nodeUUID);
+        newNode.name = string.Format("Node {0}", Guid.NewGuid());
         RectTransform rt = newNode.GetComponent<RectTransform>();
         Vector3 newPos = _nodeSpawnPoint.position;
         newPos.x += _addState > 1 ? _positionVariation : -_positionVariation;
         newPos.y += _addState % 2 == 0 ? _positionVariation : -_positionVariation;
         rt.position = newPos;
         _addState++;
-        if (_addState > 3)
-            _addState = 0;
+        if (_addState > 3) { _addState = 0; }
     }
 
     public void DuplicateSelected()
@@ -78,9 +75,8 @@ public class NodeArrangementManager : NodeMovementManager
             Node copyNode = copyThisObject.GetComponent<Node>();
             if (copyNode.IsDuplicateable)
             {
-                _nodeUUID++;
                 GameObject newNode = Instantiate(copyThisObject, _nodesParent, false);
-                newNode.name = string.Format("Node ({0})", _nodeUUID);
+                newNode.name = string.Format("Node {0}", Guid.NewGuid());
                 RectTransform rt = newNode.GetComponent<RectTransform>();
                 Vector3 newPos = copyThisObject.transform.position;
                 newPos.x += _positionVariation;

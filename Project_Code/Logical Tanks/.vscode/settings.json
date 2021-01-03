@@ -1,4 +1,4 @@
-﻿{
+{
     "files.exclude":
     {
         "**/.DS_Store":true,
@@ -55,6 +55,7 @@
     },
     "cSpell.words": [
         "ARGB",
+        "Dont",
         "Rese",
         "idbfs"
     ]
